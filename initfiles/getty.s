@@ -7,8 +7,8 @@ setup()
 	then
 		iregister -s getty virtual
 		
-		# Make it need 6 new gettys
-		for SE in tty1 tty2 tty3 tty4 tty5 tty6
+		# Make it need 5 new gettys
+		for SE in tty2 tty3 tty4 tty5 tty6
 		do
 			iset -s getty need = getty/$SE
 		done
