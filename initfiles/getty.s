@@ -19,6 +19,7 @@ setup()
 	# else its a getty termainal
 	iregister daemon
 	iset need = initial bootmisc
+	iset use = keymaps
 	iset term_timeout = 3
 	iset exec daemon = "@/sbin/getty@ 38400 $NAME"
 	iset respawn

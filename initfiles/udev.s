@@ -31,7 +31,7 @@ setup()
 	# Add execution in this local script
 	iexec -s udev/mountdev start = mountdev_start
 	iexec -s udev/set_hotplug start = set_hotplug_start
-	iexec -s udev/set_hotplug stop = hotplug_stop
+	iexec -s udev/set_hotplug stop = set_hotplug_stop
 	iexec -s udev/filldev start = fill_udev_start
 #ifd gentoo
 	iexec -s udev/filldev stop = fill_udev_stop
