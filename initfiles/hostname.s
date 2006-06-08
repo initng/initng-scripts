@@ -5,7 +5,6 @@ setup()
     iregister service
     iset need = initial
 	iexec start
-	iexec stop
     idone
 }
 
