@@ -7,10 +7,12 @@ SET(S_FILES
 	fake-default.s
 	getty.s
 	hostname.s
+	ifupdown-debian.s
 	initial.s
 	modules.s
 	mountfs.s
 	mountroot.s
+	net.s
 	test.s
 	udev.s
 	up-fake.s
