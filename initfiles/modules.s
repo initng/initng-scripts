@@ -45,14 +45,18 @@ depmod_start()
 
 		# Here we should fail, as a modular kernel do need
 		# depmod command ...
-		if [ ! -e /lib/modules/`/bin/uname -r`/modules.dep ]
+		if [ ! -e /lib/modules/`@uname@ -r`/modules.dep ]
 		then
-			if [ ! -x /sbin/depmod ]
+			if [ ! -x @/sbin/depmod@ ]
 			then
-				echo "ERROR:  system is missing /sbin/depmod !"
+				echo "ERROR:  system is missing @/sbin/depmod@ !"
 				exit 1
 			fi
-			/sbin/depmod
+#ifdist gentoo
+			@/sbin/modules-update@
+#elsed
+			@/sbin/depmod@
+#endd
 			exit 0
 		else
 			echo "Found modules.dep, skipping depmod ..."
@@ -64,22 +68,28 @@ depmod_start()
 		if [ /etc/modules.d -nt /etc/modules.conf ]
 		then
 			echo "Calculating module dependencies ..."
-			if [ ! -x /sbin/depmod ]
+			if [ ! -x @/sbin/depmod@ ]
 			then
-				echo "ERROR:  system is missing /sbin/depmod !"
+				echo "ERROR:  system is missing @/sbin/depmod@ !"
 				exit 1
 			fi
-			/sbin/depmod
+#ifdist gentoo
+			@/sbin/modules-update@
+#elsed
+			@/sbin/depmod@
+#endd
 			exit 0
 		else
 			echo "Module dependencies up to date ..."
 		fi
 
+#ifd debian
 		wait
-		if [ -x /sbin/lrm-manager ]
+		if [ -x @/sbin/lrm-manager@ ]
 		then
-			/sbin/lrm-manager --quick
+			@/sbin/lrm-manager@ --quick
 		fi
+#endd
 		wait
 		exit 0
 }
@@ -88,33 +98,33 @@ depmod_start()
 
 mod_load()
 {
-	/sbin/modprobe ${NAME} || true
+	@/sbin/modprobe@ ${NAME} || true
 }
 
 mod_unload()
 {
-	/sbin/modprobe -r ${NAME} || true
+	@/sbin/modprobe@ -r ${NAME} || true
 }
 
 modules_start()
 {
 		load_modules() {
 			[ -r "${1}" ] || return 1
-			/bin/grep -v "^#" "${1}" | /bin/grep -v "^$" | while read MODULE MODARGS
+			@grep@ -v "^#" "${1}" | @grep@ -v "^$" | while read MODULE MODARGS
 			do
 				echo "Loading module \"${MODULE}\" ..."
-				/sbin/modprobe -q ${MODULE} ${MODARGS}
+				@/sbin/modprobe@ -q ${MODULE} ${MODARGS}
 			done
 		}
 		# GENTOO: Don't probe kernel version, initng, requires 2.6 anyway
 		load_modules /etc/modules.autoload.d/kernel-2.6
 		load_modules /etc/modules
-		if [ -n "`/sbin/modprobe -l -t boot \*`" ]
+		if [ -n "`@/sbin/modprobe@ -l -t boot \*`" ]
 		then	
 			echo "Loading of modules in /lib/modules/boot is broken!"
 			# Don't add -l here - it suppresses the error message,
 			# but it also prevents the modules from being loaded
-			/sbin/modprobe -a -t boot \*
+			@/sbin/modprobe@ -a -t boot \*
 		fi
 		exit 0  # Bad things happen if we fail
 }

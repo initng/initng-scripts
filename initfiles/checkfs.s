@@ -1,7 +1,9 @@
 #!/sbin/runiscript
 
+#ifd debian
 source /etc/default/rcS
 FSCK_LOGFILE=/var/log/fsck/checkfs
+#endd
 
 setup()
 {
@@ -13,8 +15,11 @@ setup()
     idone
 }
 
+
+
 start()
 {
+#ifd debian
 		handle_failed_fsck() {
 			echo "File system check failed."
 			echo "A log is being saved in ${FSCK_LOGFILE} if that location is writable. Please repair the file system manually."
@@ -28,9 +33,9 @@ start()
 
 		# See if we're on AC Power
 		# If not, we're not gonna run our check
-		if [ -x "/usr/bin/on_ac_power" ]
+		if [ -x "@on_ac_power@" ]
 		then
-			/usr/bin/on_ac_power >/dev/null 2>&1
+			@on_ac_power@ >/dev/null 2>&1
 			[ ${?} -eq 1 ] && BAT=yes
 		fi
 
@@ -52,7 +57,7 @@ start()
 			if [ "${VERBOSE}" = no ]
 			then
 				echo "Checking file systems"
-				/sbin/logsave -s ${FSCK_LOGFILE} /sbin/fsck ${spinner} -T -R -A ${fix} ${force} ${FSCKTYPES_OPT}
+				@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -T -R -A ${fix} ${force} ${FSCKTYPES_OPT}
 				FSCKCODE=${?}
 				if [ ${FSCKCODE} -gt 1 ]
 				then
@@ -66,7 +71,7 @@ start()
 				else
 					echo "Will now check all file systems"
 				fi
-				/sbin/logsave -s ${FSCK_LOGFILE} /sbin/fsck ${spinner} -V -R -A ${fix} ${force} ${FSCKTYPES_OPT}
+				@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -V -R -A ${fix} ${force} ${FSCKTYPES_OPT}
 				FSCKCODE=${?}
 				if [ ${FSCKCODE} -gt 1 ]
 				then
@@ -78,7 +83,22 @@ start()
 			fi
 		fi
 
-		/bin/rm -f /fastboot /forcefsck
+		@rm@ -f /fastboot /forcefsck
+#elsed
+		if [ -f /fastboot ]
+		then
+			@rm@ -f /fastboot
+		else
+			if [ -f /forcefsck ]
+			then
+				echo "A full fsck has been forced"
+				@logsave@ /dev/null @fsck@ -C -R -A -a -f || echo "fsck error: ${?}" >&2
+				@rm@ -f /forcefsck
+			else
+				@logsave@ /dev/null @fsck@ -C -T -R -A -a || echo "fsck error: ${?}" >&2
+			fi
+		fi
+#endd
 
 		exit 0
 }

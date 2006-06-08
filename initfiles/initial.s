@@ -42,12 +42,12 @@ mountvirtfs_start()
 		then
 			echo "The dir \"${dir}\" is missing, cant mount it!" >&2
 			echo "Please sulogin, remount rw and create them." >&2
-			exit 1 # It can't work. Critical!
+			exit 1 # It cant work. Critical!
 		fi
 	done
 
-	mount -n -t proc proc /proc &
-	mount -n -t sysfs sys /sys &
+	@mount@ -n -t proc proc /proc &
+	@mount@ -n -t sysfs sys /sys &
 
 	wait
 	exit 0
@@ -56,15 +56,15 @@ mountvirtfs_start()
 filldev_start()
 {
 	echo "Mounting devpts at /dev/pts ..."
-	/bin/mkdir -p /dev/pts && /bin/mount -n -t devpts -o gid=5,mode=0620 none /dev/pts &
+	@/bin/mkdir@ -p /dev/pts && @/bin/mount@ -n -t devpts -o gid=5,mode=0620 none /dev/pts &
 
 	echo "Mounting devshm at /dev/shm ..."
-	/bin/mkdir -p /dev/shm && /bin/mount -n -t tmpfs none /dev/shm &
+	@/bin/mkdir@ -p /dev/shm && @/bin/mount@ -n -t tmpfs none /dev/shm &
 
 	# who needs this? only user, who needs this.
 	# so i think, we should make this link, if somebody needs this.
 	[ ! -e /dev/MAKEDEV -a /sbin/MAKEDEV ] && \
-		/bin/ln -fs /sbin/MAKEDEV /dev/MAKEDEV &
+		@/bin/ln@ -fs /sbin/MAKEDEV /dev/MAKEDEV &
 
 	wait
 	exit 0

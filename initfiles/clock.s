@@ -1,6 +1,13 @@
 #!/sbin/runiscript
 
-source /etc/default/rcS
+
+#ifd debian linspire
+source /etc/default/rcS;
+#elsed fedora
+source /etc/sysconf/clock;
+#elsed
+source /etc/conf.d/clock;
+#endd
 
 setup()
 {
@@ -21,12 +28,17 @@ setup()
 start()
 {
 		setupopts() {
-			if /bin/grep -q ' cobd$' /proc/devices 
+			if @grep@ -q ' cobd$' /proc/devices 
 			then
 				TBLURB="coLinux"
 				return 0
+#ifd debian linspire
 			elif [ "${UTC}" = "yes" ]
 			then
+#elsed
+			elif [ "${CLOCK}" = "UTC" -o "${UTC}" = "true" ]
+			then
+#endd
 				myopts="--utc"
 				TBLURB="UTC"
 			else
@@ -52,7 +64,7 @@ start()
 			myopts="${myopts} ${CLOCK_OPTS}"
 
 		# Make sure user isn't using rc.conf anymore.
-			if /bin/grep -qs ^CLOCK= /etc/rc.conf
+			if @grep@ -qs ^CLOCK= /etc/rc.conf
 			then
 				echo "CLOCK should not be set in /etc/rc.conf but in /etc/conf.d/clock"
 			fi
@@ -78,23 +90,28 @@ start()
 		if [ "${TBLURB}" = "UML" -o "${TBLURB}" = "coLinux" ]
 		then
 			true
-		elif [ -x /sbin/hwclock ]
+		elif [ -x @/sbin/hwclock@ ]
 		then
 			# Since hwclock always exit's with a 0, need to check its output.
-			/sbin/hwclock ${myadj} ${myopts}
-			/sbin/hwclock --hctosys ${myopts}
+			@/sbin/hwclock@ ${myadj} ${myopts}
+			@/sbin/hwclock@ --hctosys ${myopts}
 		fi
 }
 
 stop()
 {
 		setupopts() {
-			if /bin/grep -q ' cobd$' /proc/devices
+			if @grep@ -q ' cobd$' /proc/devices
 			then
 				TBLURB="coLinux"
 				return 0
+#ifd debian linspire
 			elif [ "${UTC}" = "yes" ]
 			then
+#elsed
+			elif [ "${CLOCK}" = "UTC" -o "${UTC}" = "true" ]
+			then
+#endd
 				myopts="--utc"
 				TBLURB="UTC"
 			else
@@ -120,7 +137,7 @@ stop()
 			myopts="${myopts} ${CLOCK_OPTS}"
 
 			# Make sure user isn't using rc.conf anymore.
-			if /bin/grep -qs ^CLOCK= /etc/rc.conf
+			if @grep@ -qs ^CLOCK= /etc/rc.conf
 			then
 				echo "CLOCK should not be set in /etc/rc.conf but in /etc/conf.d/clock"
 			fi
@@ -138,9 +155,9 @@ stop()
 		if [ "${CLOCK}" = "UML" ]
 		then
 			true
-		elif [ -x /sbin/hwclock ]
+		elif [ -x @/sbin/hwclock@ ]
 		then
-			/sbin/hwclock --systohc ${myopts}
+			@/sbin/hwclock@ --systohc ${myopts}
 
 			if [ -n "${errstr}" ]
 			then

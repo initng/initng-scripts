@@ -20,7 +20,7 @@ setup()
 	iregister daemon
 	iset need = initial bootmisc
 	iset term_timeout = 3
-	iset exec daemon = "/sbin/getty 38400 $NAME"
+	iset exec daemon = "@/sbin/getty@ 38400 $NAME"
 	iset respawn
 	idone
 }

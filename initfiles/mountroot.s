@@ -31,8 +31,8 @@ setup()
 	iset -s mountroot/rootrw never_kill
 
 	# execute targets:
-	iset -s mountroot/dmsetup exec start = "/sbin/dmsetup mknodes"
-	iset -s mountroot/evms exec start = "/sbin/evms_activate"
+	iset -s mountroot/dmsetup exec start = "@/sbin/dmsetup@ mknodes"
+	iset -s mountroot/evms exec start = "@/sbin/evms_activate@"
 	iexec -s mountroot/lvm start = lvm_start
 	iexec -s mountroot/check start = check_start
 	iexec -s mountroot/rootrw start = rootrw_start
@@ -50,16 +50,16 @@ setup()
 
 lvm_start()
 {
-		/bin/mknod --mode=600 /dev/lvm c 109 0
+		@mknod@ --mode=600 /dev/lvm c 109 0
 		if [ ! -f /dev/.devfsd ]
 		then
-			major=`/bin/grep "[0-9] misc$" /proc/devices | /bin/sed 's/[ ]\+misc//'`
-			minor=`/bin/grep "[0-9] device-mapper$" /proc/misc | /bin/sed 's/[ ]\+device-mapper//'`
-			[ -d ${dm_dir} ] || /bin/mkdir --mode=755 ${dm_dir}
-			[ -c ${dm_file} -o -z "${major}" -o -z "${minor}" ] || /bin/mknod --mode=600 ${dm_file} c ${major} ${minor}
+			major=`@grep@ "[0-9] misc$" /proc/devices | @sed@ 's/[ ]\+misc//'`
+			minor=`@grep@ "[0-9] device-mapper$" /proc/misc | @sed@ 's/[ ]\+device-mapper//'`
+			[ -d ${dm_dir} ] || @mkdir@ --mode=755 ${dm_dir}
+			[ -c ${dm_file} -o -z "${major}" -o -z "${minor}" ] || @mknod@ --mode=600 ${dm_file} c ${major} ${minor}
 		fi
-		/sbin/vgscan --ignorelockingfailure --mknodes
-		/sbin/vgchange --ignorelockingfailure -a y
+		@vgscan@ --ignorelockingfailure --mknodes
+		@vgchange@ --ignorelockingfailure -a y
 }
 
 check_start()
@@ -70,8 +70,8 @@ check_start()
 			if [ -f /forcefsck ]
 			then
 				echo "Checking root filesystem (full fsck forced)"
-				/bin/mount -n -o remount,ro /
-				/sbin/logsave /dev/null /sbin/fsck -C -a -f /
+				@mount@ -n -o remount,ro /
+				@logsave@ /dev/null @fsck@ -C -a -f /
 				# /forcefsck isn't deleted because system/mountfs need it.
 				# it'll be deleted in that script.
 				retval=${?}
@@ -85,14 +85,14 @@ check_start()
 				# d="${s}${s}*"
 				# S="[^ ${t}]"
 				# D="${S}${S}*"
-				# /bin/sed -ne "'/^#/!s/^$s*$D$d\/$d$D$d$D$d$D$d\($D\)$s/\1/p'" /etc/fstab
+				# @sed@ -ne "'/^#/!s/^$s*$D$d\/$d$D$d$D$d$D$d\($D\)$s/\1/p'" /etc/fstab
 
 				# DON'T STORE sort, awk, uniq .... ON AN OTHER PARTITION!!!
-				if ! /usr/bin/awk '$1!~/^#/ && $2=="/" {exit $6}' /etc/fstab
+				if ! @awk@ '$1!~/^#/ && $2=="/" {exit $6}' /etc/fstab
 				then
 					echo "Checking root filesystem ..."
-					/bin/mount -n -o remount,ro /
-					/sbin/logsave /dev/null /sbin/fsck -C -T -a /
+					@mount@ -n -o remount,ro /
+					@logsave@ /dev/null @fsck@ -C -T -a /
 					retval=${?}
 				else
 					echo "Skipping root filesystem check (fstab's passno == 0) ..."
@@ -121,9 +121,9 @@ check_start()
 					exit 1
 				elif [ "${retval}" -gt 1 ]
 				then
-					error "The file system check corrected errors on the root partition 
+					echo "The file system check corrected errors on the root partition 
 						but requested that the system be restarted."
-					error "The system will be restarted in 5 seconds."
+					echo "The system will be restarted in 5 seconds."
 					sleep 5
 					echo "Will now restart"
 					ngc -6
@@ -135,10 +135,16 @@ check_start()
 
 rootrw_start()
 {
-		if /bin/mount -vf -o remount / | /bin/grep "\(.*rw.*\)"
+		if @mount@ -vf -o remount / | @grep@ "\(.*rw.*\)"
 		then
-			/bin/mount -n -o remount,rw / >/dev/null 2>&1
+			@mount@ -n -o remount,rw / >/dev/null 2>&1
+#ifd pingwinek
+			# code 32 means 'not implemented', we got it on livecd using
+			# unionfs combined with squashfs
+			if [ ${?} -ne 0 -a ${?} -ne 32 ]
+#elsed
 			if [ ${?} -ne 0 ]
+#endd
 				then
 				echo "Root filesystem could not be mounted read/write :("
 				exit 1
@@ -149,43 +155,43 @@ rootrw_start()
 rootrw_stop()
 {
 		echo "Unmounting all non-unmounted submounts ..."
-		/usr/bin/awk 'NF && $1!~/^#/ && $2!~/^\/(|proc|sys|dev)$/ {print $2}' /proc/mounts | while read mp
+		@awk@ 'NF && $1!~/^#/ && $2!~/^\/(|proc|sys|dev)$/ {print $2}' /proc/mounts | while read mp
 		do
 			echo "Unmounting: ${mp}"
-			/bin/umount -rdf ${mp}
+			@umount@ -rdf ${mp}
 		done
 
-		/bin/mount -n -o remount,ro /
-		/bin/sync
+		@mount@ -n -o remount,ro /
+		@sync@
 		exit 0
 }
 
 mountroot_start()
 {
-		/bin/rm /etc/mtab
+		@rm@ /etc/mtab
 		if ! /bin/echo -n "" >> /etc/mtab
 		then
 			echo "Skipping /etc/mtab initialization (ro root?)"
 			exit 0
 		fi
 		# Add the entry for / to mtab
-		/bin/mount -f /
+		@mount@ -f /
 
 		# Don't list root more than once
-		/bin/grep -v " / " /proc/mounts >>/etc/mtab
+		@grep@ -v " / " /proc/mounts >>/etc/mtab
 		# Now make sure /etc/mtab have additional info (gid, etc) in there
 
 		# debian doesn't based on GNU, so we must do it a little different.
 		# without GNU-tools, like uniq, sort or awk. i hope sed supports extended
 		# regexp on debian. because it isn't posix-conform.
-		/usr/bin/awk 'NF && $1!~/^#/ {print $2}' /etc/fstab /etc/mtab | /usr/bin/sort | /usr/bin/uniq -d | while read mp
+		@awk@ 'NF && $1!~/^#/ {print $2}' /etc/fstab /etc/mtab | @sort@ | @uniq@ -d | while read mp
 		do
 			echo "Mounting ${mp} rw ..."
-			/bin/mount -f -o remount "${mp}"
+			@mount@ -f -o remount "${mp}"
 		done
 
 		# Remove stale backups
-		/bin/rm -f /etc/mtab~ /etc/mtab~~
+		@rm@ -f /etc/mtab~ /etc/mtab~~
 		# Return Happily., or sulogin will be executed.
 		exit 0
 }
