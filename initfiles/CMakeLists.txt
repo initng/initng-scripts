@@ -9,10 +9,12 @@ SET(S_FILES
 	hostname.s
 	ifupdown-debian.s
 	initial.s
+	keymaps.s
 	modules.s
 	mountfs.s
 	mountroot.s
 	net.s
+	sysctl.s
 	test.s
 	udev.s
 	up-fake.s

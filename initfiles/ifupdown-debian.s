@@ -6,7 +6,10 @@
 
 RUN_DIR=/etc/network/run
 IFSTATE=/etc/network/run/ifstate
-source /etc/default/ifupdown
+if [ -e /etc/default/ifupdown ]
+then
+	source /etc/default/ifupdown
+fi
 
 setup()
 {
