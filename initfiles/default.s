@@ -3,6 +3,6 @@
 setup()
 {
     iregister runlevel
-	iset need = "clock getty initial udev"
+	iset need = "clock getty initial udev hostname"
 	idone
 }

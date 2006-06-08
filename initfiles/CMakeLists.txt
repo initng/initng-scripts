@@ -6,6 +6,7 @@ SET(S_FILES
 	default.s
 	fake-default.s
 	getty.s
+	hostname.s
 	initial.s
 	modules.s
 	mountfs.s
