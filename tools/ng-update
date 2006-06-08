@@ -1,0 +1,312 @@
+#!/bin/bash
+
+export   RED='\E[31;01m'
+export   GREEN='\E[32;01m'
+export   YELLOW='\E[33;01m'
+export   NORMAL="\033[0m"
+
+#Conf
+export   DEFAULT="default"
+export   VERBOSE=0 #This dosen't work well
+
+export   script_dirs="$( ls -lA /etc/initng | grep '^d' | awk '{ print $NF }' )"
+export   all_levels="$( ls -l /etc/initng/*.runlevel | awk '{ print $NF }' | cut -d / -f4 | cut -d . -f1 )"
+
+message() {
+   case "$1" in
+      -e)
+         shift
+         echo -e $RED"Error:"$NORMAL" $*"
+      ;;
+      -w)
+         shift
+         echo -e $YELLOW"Warning:"$NORMAL" $*"
+      ;;
+      -s)
+         shift
+         echo -e $GREEN"Success:"$NORMAL" $*"
+      ;;
+   esac
+}
+
+usage() {
+cat << FOO
+usage: ng-update a|add script1 [script2 ...] [runlevel1] [runlevel2 ...]
+       ng-update d|del|delete script1 [script2 ...] [runlevel1] [runlevel2 ...]
+       ng-update s|show|view [script] [runlevel]
+
+note:  After ng-update executes, the script dependency cache is automatically
+       updated.
+
+examples:
+       ng-update add net/eth0 default
+       Adds the eth0 script (in /etc/initng) to the "default" runlevel.
+
+       ng-update del daemon/sysklogd
+       Removes sysklogd from all runlevels.
+
+       ng-update del net/eth2 default wumpus
+       Removes net/eth2 from runlevel default and wumpus
+
+FOO
+exit 1
+}
+
+add() {
+   shift
+   for q in "$@"
+   do
+      check_script ${q}
+      if [[ $? -eq 0 ]]
+      then
+         myscripts="${myscripts} ${myscript}"
+      else
+         check_level ${q}
+         if [[ $? -eq 0 ]]
+         then
+            mylevels="${mylevels} ${q}"
+         else
+            message -w "\"${q}\" isn't a script or a runlevel, it's being removed from list"
+         fi
+      fi
+   done
+
+   if [[ -z $( echo ${myscripts} | tr -d " " ) ]]
+   then
+      message -e "you didn't specify any script"
+      exit 1
+   fi
+   if [[ -z ${mylevels} ]]
+   then
+      mylevels=$DEFAULT
+   fi
+
+    
+   for h in ${myscripts}
+   do
+   
+    # Print some info when ng-update add if any in file.
+    if [[ -e "/etc/initng/${h}.i" ]]
+    then
+	echo
+	grep -e "# ng-update all" -e "# ng-update add" "/etc/initng/${h}.i" | sed "s/# ng-update all//" | sed "s/# ng-update add//" && echo && echo
+    fi
+   
+   
+      for i in ${mylevels}
+      do
+         if [[ -z $( grep /etc/initng/${i}.runlevel -e ${h}\$ ) ]]
+         then
+            echo ${h} | tr -d " " >> /etc/initng/${i}.runlevel
+            message -s "added \"${h}\" to runlevel \"${i}\""
+         else
+            message -w "\"${h}\" already installed in runlevel \"${i}\""
+         fi
+      done
+   done
+   exit 0
+}
+
+del() {
+   shift
+   for q in "$@"
+   do
+      check_level ${q}
+      if [[ $? -eq 0 ]]
+      then
+         mylevels="${mylevels} ${q}"
+      else
+	 check_script ${q}
+	 if [[ $? -eq 0 ]]
+	 then
+	   myscripts="${myscripts} ${myscript}"
+	 else
+           myscripts="${myscripts} ${q}"
+	 fi
+      fi
+   done
+
+   if [[ -z $( echo ${myscripts} | tr -d " " ) ]]
+   then
+      message -e "you didn't specify any script"
+      exit 1
+   fi
+   if [[ -z ${mylevels} ]]
+   then
+      mylevels=$all_levels
+   fi
+
+   for h in ${myscripts}
+   do
+      remlevels=""
+
+    # Print some info when ng-update add if any in file.
+    if [[ -e "/etc/initng/${h}.i" ]]
+    then
+	echo
+	grep -e "# ng-update all" -e "# ng-update del" "/etc/initng/${h}.i" | sed "s/# ng-update all//" | sed "s/# ng-update del//" && echo && echo
+    fi
+
+
+      for i in ${mylevels}
+      do
+         if [[ -n $( grep /etc/initng/${i}.runlevel -x -e ${h}\$ ) ]]
+         then
+            grep /etc/initng/${i}.runlevel -x -v -e ${h} > /etc/initng/${i}.new
+            mv /etc/initng/${i}.new /etc/initng/${i}.runlevel
+            remlevels="${remlevels} ${i}"
+         fi
+      done
+      [[ -n $( echo ${remlevels} | tr -d " " ) ]] && message -s "removed \"${h}\" from the runlevel(s):${remlevels}"
+      [[ -z $( echo ${remlevels} | tr -d " " ) ]] && message -w "\"${h}\" missing from all runlevels specified"
+   done
+   exit 0
+}
+
+show() {
+   case "$#" in
+      1)
+         for g in ${script_dirs} 
+         do
+            [[ $VERBOSE -eq 0 ]] || [[ -z $VERBOSE ]] && allscripts="${allscripts} $( ls -l /etc/initng/${g}/*.i 2>/dev/null | cut -d / -f5 | sed 's/\.i//g' )"
+            [[ $VERBOSE -eq 1 ]] && allscripts="${allscripts} $( ls -l /etc/initng/system/*.i 2>/dev/null | sed 's/\.i//g' | awk '{ print $NF }' | sed 's/\/etc\/initng\///' )"
+         done
+
+         for e in ${all_levels}
+         do
+            if [[ -n $( grep /etc/initng/$e.runlevel -e net/ ) ]]
+            then
+            [[ $VERBOSE -eq 0 ]] || [[ -z $VERBOSE ]] && allscripts="${allscripts} $( grep /etc/initng/${e}.runlevel -e net/ | sed 's/net\///' )"
+            [[ $VERBOSE -eq 1 ]] && allscripts="${allscripts} $( grep /etc/initng/${e}.runlevel -e net/eth )"
+            fi
+            export myscript_${e}="$( cat /etc/initng/${e}.runlevel )"
+         done
+
+         for f in ${allscripts}
+         do
+            [[ $VERBOSE -eq 0 ]] || [[ -z $VERBOSE ]] && printf "%20s | " ${f:0:19}
+            [[ $VERBOSE -eq 1 ]] && printf "%30s | " ${f:0:29}
+            for c in ${all_levels}
+            do
+               eval myscript=\$myscript_${c}
+               if [[ -n $( echo $myscript | grep $f ) ]]
+               then
+                  echo -n "${c} "
+               else
+                  printf "%${#c}s " " "
+               fi
+            done
+            echo ""
+         done
+      ;;
+      
+      2)
+         shift
+         check_script $1
+         if [[ $? -eq 0 ]]
+         then
+            [[ $VERBOSE -eq 0 ]] || [[ -z $VERBOSE ]] && printf "%20s | " ${1:0:19}
+            [[ $VERBOSE -eq 1 ]] && printf "%30s | " ${myscript:0:29}
+            for w in ${all_levels}
+            do
+               if [[ -n $( grep /etc/initng/$w.runlevel -e $1 ) ]]
+               then
+                  echo -n "${w} "
+               else
+                  printf "%${#w}s " " "
+               fi
+            done
+            echo ""
+         else
+            check_level $1
+            if [[ $? -eq 0 ]]
+            then
+               for o in $( cat /etc/initng/$1.runlevel | cut -d / -f2 )
+               do
+                  [[ $VERBOSE -eq 0 ]] || [[ -z $VERBOSE ]] && printf "%20s | " ${o:0:19}
+                  [[ $VERBOSE -eq 1 ]] && printf "%30 | " ${o:0:19}
+                  echo -n "$1 "
+                  echo ""
+               done
+            else
+               message -e "\"$1\" isn't a script or a runlevel"
+            fi
+         fi
+      ;;
+      
+      *)
+         usage
+      ;;
+   esac
+}
+         
+check_script() {
+   local spath
+   if [[ -e /etc/initng/$1.i ]] || [[ -n $( echo $1 | grep net/ ) ]]
+   then
+      myscript="$1"
+      return 0
+   fi
+   for z in ${script_dirs}
+   do
+      if [[ -n $( echo "${all_levels}" | grep $1 ) ]]
+      then
+         break
+      else
+         if [ -e /etc/initng/${z}/$1.i ]
+         then
+            myscript="${z}/$1"
+            return 0
+         fi
+     fi
+   done
+   spath="$1"
+   while ( echo "$spath" | grep / >/dev/null )
+   do
+     spath="$( echo $spath | sed -r 's/^(.*)\/(.*)/\1/' )"
+     echo $spath
+     if [[ -e /etc/initng/$spath.i ]]
+     then
+	 message -w "Cannot check \"$1\" is a valid script"
+	 myscript="$1"
+	 return 0
+     fi
+   done
+   myscript="$1"
+   return 1
+}
+
+check_level() {
+   if [ -n "$( echo ${all_levels} | grep $1 )" ]
+   then
+      return 0
+   else
+      return 1
+   fi
+}
+
+check_am_root() {
+    if [[ "${EUID}" -ne 0 ]]
+    then
+	message -e "must be root"
+	exit 1
+    fi
+}
+
+case $1 in
+   add|a)
+      check_am_root
+      add $@
+      ;;
+   del|d|delete)
+      check_am_root
+      del $@
+      ;;
+   show|s|view)
+      show $@
+      ;;
+   *)
+      usage
+      ;;
+esac
+
