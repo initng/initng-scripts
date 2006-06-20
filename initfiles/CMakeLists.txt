@@ -3,9 +3,11 @@ SET(S_FILES
 	bootmisc.s
 	checkfs.s
 	clock.s
+	dbus.s
 	default.s
 	fake-default.s
 	getty.s
+	hald.s
 	hostname.s
 	ifupdown-debian.s
 	initial.s
@@ -14,6 +16,7 @@ SET(S_FILES
 	mountfs.s
 	mountroot.s
 	net.s
+	speedstep.s
 	sysctl.s
 	test.s
 	udev.s
