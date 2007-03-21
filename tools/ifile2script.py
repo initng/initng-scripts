@@ -53,10 +53,12 @@ virtual_list = []
 service_and_daemon_list = []
 env_list = []
 new_file_list = []
-env_list_mode = None
+env_list_mode = 0
 iexec_list_mode = None
-iset_list_mode = None
+iset_list_mode = 0
 ifd_mode = None
+elsed_mode = 0
+ifd_list = []
 file_mode = "0"
 file_int = 0
 
@@ -101,9 +103,11 @@ for i in file_list:
 				_sel = "also_start = "
 			elif  i.startswith("pid_file"):
 				_sel = "pid_file = "
-			if iset_list_mode != ifd_mode and ifd_mode != None:
-				iset_list.append(ifd_mode)
-				iset_list_mode = ifd_mode
+			
+			if iset_list_mode != elsed_mode and elsed_mode != 0:
+				for i in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
+					iset_list.append(ifd_list[i])
+				iset_list_mode = elsed_mode
 			iset_list.append(_sel + '"' + _str + '"')
 		
 		elif i.startswith("env"):
@@ -111,30 +115,57 @@ for i in file_list:
 			if i.split()[0].strip() == "env_file":
 				_str = _str.strip(" ;=")
 				_str = "source " + _str
-			if env_list_mode != ifd_mode and ifd_mode != None:
-				env_list.append(ifd_mode)
-				env_list_mode = ifd_mode
+			if env_list_mode != elsed_mode and elsed_mode != 0:
+				for i in range(-1 - env_list_mode, -1 - len(ifd_list), -1):
+					env_list.append(ifd_list[i])
+				env_list_mode = elsed_mode
 			env_list.append(_str)
 				
 		elif i.startswith("exec"):
 			_list = i.split(" ", 1)[-1].strip(" ;").split("=")
 			_sel = "exec "
-			if iset_list_mode != ifd_mode and ifd_mode != None:
-				iset_list.append(ifd_mode)
-				iset_list_mode = ifd_mode
+			if iset_list_mode != elsed_mode and elsed_mode != 0:
+				for i in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
+					iset_list.append(ifd_list[i])
+				iset_list_mode = elsed_mode
 			iset_list.append(_sel + _list[0].strip() + ' = "' + _list[1].strip() + '"')
 		
-		elif i.startswith("#ifd") or i.startswith("#elsed"):
+		elif i.startswith("#ifd"):
 			ifd_mode = i.strip()
-			
+			elsed_mode = i.strip()
+			ifd_list.insert(0, i.strip())
+			elsed_mode = len(ifd_list)
+				
+		elif i.startswith("#elsed"):
+			elsed_mode = i.strip()
+			ifd_list.insert(0, i.strip())
+			elsed_mode = len(ifd_list)
+				
 		elif i.startswith("#endd"):
-			ifd_mode = None
-			if env_list_mode != None:
+			for g in range(len(ifd_list)):
+				if ifd_list[g].startswith("#ifd"):
+					ifd_list = ifd_list[g + 1:]
+					if ifd_list == []:
+						ifd_mode = None
+						elsed_mode = 0
+					else:
+						if len(ifd_list) == 1:
+							ifd_mode = ifd_list[0]
+							elsed_mode = 1
+						else:
+							elsed_mode = len(ifd_list)
+							for h in ifd_list:
+								if h.startswith("#ifd"):
+									ifd_mode = h
+									break
+					break
+				
+			if env_list_mode != 0:
 				env_list.append("#endd")
-				env_list_mode = None
-			if iset_list_mode != None:
+				env_list_mode = elsed_mode
+			if iset_list_mode != 0:
 				iset_list.append("#endd")
-				iset_list_mode = None
+				iset_list_mode = elsed_mode
 				
 		elif i != "" and i != "}" and not i.startswith("#"):
 			if "#" in i:
