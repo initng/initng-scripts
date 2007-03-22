@@ -241,6 +241,8 @@ static const char *probe_distribution(void)
         return ("suse");
     if (is_file("/etc/kanotix-version"))
         return ("kanotix");
+    if (is_file("/etc/enlisy-release"))
+        return ("enlisy");
 
     D_("Probe failed\n");
     return ("unknown");
