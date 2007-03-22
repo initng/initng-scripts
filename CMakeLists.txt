@@ -1,4 +1,4 @@
-PROJECT(initng-ifiles C)
+PROJECT(initng-scripts C)
 
 SET(VERSION "0.0.1-svn" CACHE STRING "Version number of the project")
 
