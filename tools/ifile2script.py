@@ -111,15 +111,14 @@ for i in file_list:
 					iset_list.append(ifd_list[i])
 				iset_list_mode = elsed_mode
 			iset_list.append(_sel + '"' + _str + '"')
-
+			
 		elif i.startswith("env"):
-			_str = i.split(" ", 1)[1].strip(" ;")
-			if i.split()[0].strip() == "env_file":
-				_str = _str.strip(" ;=")
-				_str = "source " + _str
+			if i.startswith("env_file"):
+				_str = "source " + i.split("=", 1)[1].strip(" ;")
 			else:
+				_str = i.split(" ", 1)[1].strip(" ;")
 				_str = _str.split("=")[0] + '="'+ _str.split("=")[1] + '"'
-
+		
 			if env_list_mode != elsed_mode and elsed_mode != 0:
 				for i in range(-1 - env_list_mode, -1 - len(ifd_list), -1):
 					env_list.append(ifd_list[i])
