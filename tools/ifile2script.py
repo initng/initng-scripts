@@ -264,7 +264,7 @@ for i in iexec_list:
 		if len_service_and_daemon_list == 1:
 			new_file.write("\tiexec %s\n" %(i.lstrip("&")))
 		else:
-			new_file.write("\tiexec -s\"%s\" %s\n" %(_service, i.lstrip("&")))
+			new_file.write("\tiexec -s \"%s\" %s\n" %(_service, i.lstrip("&")))
 	elif i.startswith("#"):
 		new_file.write(i + "\n")
 	elif i in service_and_daemon_list:
