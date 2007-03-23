@@ -214,14 +214,19 @@ if env_list != []:
 
 new_file.write("setup()\n{\n")
 
+if len(service_and_daemon_list) == 1:
+	_flag = ""
+else:
+	_flag = "-s "
+	
 for i in virtual_list:
-	new_file.write("\tiregister -s \"%s\" virtual\n" %(i))
+	new_file.write("\tiregister %s\"%s\" virtual\n" %(_flag, i))
 
 for i in service_list:
-	new_file.write("\tiregister -s \"%s\" service\n" %(i))
+	new_file.write("\tiregister %s\"%s\" service\n" %(_flag, i))
 
 for i in daemon_list:
-	new_file.write("\tiregister -s \"%s\" daemon\n" %(i))
+	new_file.write("\tiregister %s\"%s\" daemon\n" %(_flag, i))
 
 new_file.write("\n")
 
@@ -231,7 +236,7 @@ for i in iset_list:
 	elif i.startswith("#"):
 		new_file.write(i + "\n")
 	else:
-		new_file.write("\tiset -s \"%s\" %s\n" %(_service, i))
+		new_file.write("\tiset %s\"%s\" %s\n" %(_flag, _service, i))
 
 new_file.write("\n")
 
@@ -242,9 +247,9 @@ for i in iexec_list:
 		if _func_prefix.endswith("*"):
 			_func_prefix = _func_prefix.replace("/*","_any")
 
-		new_file.write("\tiexec -s \"%s\" %s = %s_%s\n" %(_service, _func, os.path.basename(_func_prefix), _func))
+		new_file.write("\tiexec %s\"%s\" %s = %s_%s\n" %(_flag, _service, _func, os.path.basename(_func_prefix), _func))
 	elif i.startswith("&"):
-		new_file.write("\tiexec -s \"%s\" %s\n" %(_service, i.lstrip("&")))
+		new_file.write("\tiexec %s\"%s\" %s\n" %(_flag, _service, i.lstrip("&")))
 	elif i.startswith("#"):
 		new_file.write(i + "\n")
 	elif i in service_and_daemon_list:
@@ -253,7 +258,7 @@ for i in iexec_list:
 new_file.write("\n")
 
 for i in service_and_daemon_list:
-	new_file.write("\tidone -s \"%s\"\n" %(i))
+	new_file.write("\tidone %s\"%s\"\n" %(_flag, i))
 
 new_file.write("}\n\n")
 
