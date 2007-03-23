@@ -279,7 +279,7 @@ for i in iexec_list:
 
 		new_file.write("%s_%s()\n{\n" %(os.path.basename(_func_prefix), i.strip("%")))
 		_mode = "2"
-	if i.startswith("&"):
+	elif i.startswith("&"):
 		if _mode == "2":
 			new_file.write("}\n\n")
 		_mode = "0"
