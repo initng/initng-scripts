@@ -938,7 +938,10 @@ int main(int argc, char **argv)
         fprintf(stderr, "  **\tcould not open output file!\n");
         exit(1);
     }
-
+	
+	/* Print header */
+	fprintf(out, "#!/sbin/runiscript\n# This is an init script file, used by initng.\n\n");
+	
     /* Okay, go parse every line */
     while (fgets(line, LINE_LEN, in))
     {
