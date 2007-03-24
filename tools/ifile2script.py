@@ -62,14 +62,15 @@ iset_list_mode = 0
 iset_list_mode_1 = 0
 script_list_mode = 0
 script_list_mode_1 = 0
+iregister_list_mode = 0
+iregister_list_mode_1 = 0
 ifd_mode = 0
 elsed_mode = 0
 ifd_list = []
 file_mode = "0"
-file_int = 0
 
 for i in file_list:
-	i_int = len(i)
+	
 	if i.startswith("#ifd"):
 			ifd_mode = ifd_mode + 1
 			elsed_mode = i.strip()
@@ -111,26 +112,52 @@ for i in file_list:
 				script_list.append("#endd")
 				script_list_mode = elsed_mode
 				script_list_mode_1 = script_list_mode_1 - 1
-	
+			if iregister_list_mode != 0 and iregister_list_mode_1 == ifd_mode + 1:
+				iregister_list.append("#endd")
+				iregister_list_mode = elsed_mode
+				iregister_list_mode_1 = iregister_list_mode_1 - 1
+				
 	elif i.startswith("service"):
 		_service = i.split()[1].strip("{").strip()
-		service_list.append(_service)
 		iset_list.append(_service)
 		service_and_daemon_list.append(_service)
+		if iset_list_mode != elsed_mode and elsed_mode != 0:
+				for g in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
+					iset_list.append(ifd_list[g])
+					if ifd_list[g].startswith("#ifd"):
+						iset_list_mode_1 = iset_list_mode_1 + 1
+				iset_list_mode = elsed_mode
 		file_mode = "1"
-
+		
+		if iregister_list_mode != elsed_mode and elsed_mode != 0:
+				for g in range(-1 - iregister_list_mode, -1 - len(ifd_list), -1):
+					iregister_list.append(ifd_list[g])
+					if ifd_list[g].startswith("#ifd"):
+						iregister_list_mode_1 = iregister_list_mode_1 + 1
+				iregister_list_mode = elsed_mode
+		
+		file_mode = "1"
+		iregister_list.append(_service)
+		iregister_list.append("service")
+		
 	elif i.startswith("daemon"):
 		_service = i.split()[1].strip("{").strip()
 		daemon_list.append(_service)
 		iset_list.append(_service)
+		iset_list.append("%daemon")
 		service_and_daemon_list.append(_service)
+		iregister_list.append(_service)
+		iregister_list.append("daemon")
 		file_mode = "1"
 
 	elif i.startswith("virtual"):
 		_service = i.split()[1].strip("{").strip()
 		virtual_list.append(_service)
 		iset_list.append(_service)
+		iset_list.append("%virtual")
 		service_and_daemon_list.append(_service)
+		iregister_list.append(_service)
+		iregister_list.append("virtual")
 		file_mode = "1"
 
 	elif file_mode == "1":
@@ -200,6 +227,7 @@ for i in file_list:
 					if ifd_list[g].startswith("#ifd"):
 						iexec_list_mode_1 = iexec_list_mode_1 + 1
 				iexec_list_mode = elsed_mode
+			iexec_list.append(_service)
 			iexec_list.append("&" + _list[0].strip() + ' = "' + _list[1].strip() + '"')
 
 		elif i != "" and i != "}" and not i.startswith("#"):
@@ -223,10 +251,6 @@ for i in file_list:
 				script_list_mode = elsed_mode
 			
 			script_list.append(i)
-			
-			
-
-	file_int = file_int + i_int
 
 
 new_file = open(os.getcwd() + "/" + scriptname.rstrip("i") + "s", "w")
@@ -256,23 +280,14 @@ new_file.write("setup()\n{\n")
 
 len_service_and_daemon_list = len(service_and_daemon_list)
 
-for i in virtual_list:
-	if len_service_and_daemon_list == 1:
-		new_file.write("\tiregister virtual\n")
-	else:
-		new_file.write("\tiregister -s \"%s\" virtual\n" %(i))
-	
-for i in service_list:
-	if len_service_and_daemon_list == 1:
-		new_file.write("\tiregister service\n")
-	else:
-		new_file.write("\tiregister -s \"%s\" service\n" %(i))
-
-for i in daemon_list:
-	if len_service_and_daemon_list == 1:
-		new_file.write("\tiregister daemon\n")
-	else:
-		new_file.write("\tiregister -s \"%s\" daemon\n" %(i))
+for i in iregister_list:
+	if i.startswith("#"):
+		new_file.write("%s\n" %(i))
+	elif i in service_and_daemon_list:
+		if len_service_and_daemon_list == 1:
+			new_file.write("\tiregister %s\n" %(iregister_list[iregister_list.index(i) + 1].lstrip("%")))
+		else:
+			new_file.write("\tiregister -s \"%s\" %s\n" %(i, iregister_list[iregister_list.index(i) + 1].lstrip("%")))
 
 new_file.write("\n")
 
@@ -281,7 +296,7 @@ for i in iset_list:
 		_service = i
 	elif i.startswith("#"):
 		new_file.write(i + "\n")
-	else:
+	elif not i.startswith("%"):
 		if len_service_and_daemon_list == 1:
 			new_file.write("\tiset %s\n" %(i))
 		else:
@@ -298,7 +313,6 @@ for i in iexec_list:
 		_func_prefix = _service
 		if _func_prefix.endswith("*"):
 			_func_prefix = _func_prefix.replace("/*","_any")
-		
 		if len_service_and_daemon_list == 1:
 			new_file.write("\tiexec %s = %s_%s\n" %(_func, os.path.basename(_func_prefix), _func))
 		else:
@@ -315,11 +329,14 @@ for i in iexec_list:
 
 new_file.write("\n")
 
-for i in service_and_daemon_list:
-	if len_service_and_daemon_list == 1:
-		new_file.write("\tidone\n")
-	else:
-		new_file.write("\tidone -s \"%s\"\n" %(i))
+for i in iregister_list:
+	if i.startswith("#"):
+		new_file.write("%s\n" %(i))
+	elif i in service_and_daemon_list:
+		if len_service_and_daemon_list == 1:
+			new_file.write("\tidone\n")
+		else:
+			new_file.write("\tidone -s \"%s\"\n" %(i))
 
 new_file.write("}\n\n")
 
