@@ -127,7 +127,6 @@ for i in file_list:
 					if ifd_list[g].startswith("#ifd"):
 						iset_list_mode_1 = iset_list_mode_1 + 1
 				iset_list_mode = elsed_mode
-		file_mode = "1"
 		
 		if iregister_list_mode != elsed_mode and elsed_mode != 0:
 				for g in range(-1 - iregister_list_mode, -1 - len(ifd_list), -1):
@@ -142,20 +141,44 @@ for i in file_list:
 		
 	elif i.startswith("daemon"):
 		_service = i.split()[1].strip("{").strip()
-		daemon_list.append(_service)
 		iset_list.append(_service)
-		iset_list.append("%daemon")
 		service_and_daemon_list.append(_service)
+		if iset_list_mode != elsed_mode and elsed_mode != 0:
+				for g in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
+					iset_list.append(ifd_list[g])
+					if ifd_list[g].startswith("#ifd"):
+						iset_list_mode_1 = iset_list_mode_1 + 1
+				iset_list_mode = elsed_mode
+		
+		if iregister_list_mode != elsed_mode and elsed_mode != 0:
+				for g in range(-1 - iregister_list_mode, -1 - len(ifd_list), -1):
+					iregister_list.append(ifd_list[g])
+					if ifd_list[g].startswith("#ifd"):
+						iregister_list_mode_1 = iregister_list_mode_1 + 1
+				iregister_list_mode = elsed_mode
+		
 		iregister_list.append(_service)
 		iregister_list.append("daemon")
 		file_mode = "1"
 
 	elif i.startswith("virtual"):
 		_service = i.split()[1].strip("{").strip()
-		virtual_list.append(_service)
 		iset_list.append(_service)
-		iset_list.append("%virtual")
 		service_and_daemon_list.append(_service)
+		if iset_list_mode != elsed_mode and elsed_mode != 0:
+				for g in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
+					iset_list.append(ifd_list[g])
+					if ifd_list[g].startswith("#ifd"):
+						iset_list_mode_1 = iset_list_mode_1 + 1
+				iset_list_mode = elsed_mode
+		
+		if iregister_list_mode != elsed_mode and elsed_mode != 0:
+				for g in range(-1 - iregister_list_mode, -1 - len(ifd_list), -1):
+					iregister_list.append(ifd_list[g])
+					if ifd_list[g].startswith("#ifd"):
+						iregister_list_mode_1 = iregister_list_mode_1 + 1
+				iregister_list_mode = elsed_mode
+				
 		iregister_list.append(_service)
 		iregister_list.append("virtual")
 		file_mode = "1"
