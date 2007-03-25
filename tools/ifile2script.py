@@ -206,28 +206,18 @@ for i in file_list:
 			script_list.append("%" + i.split()[1].strip())
 			
 		elif i.startswith("need") or i.startswith("use") or i.startswith("also_start") or \
-				i.startswith("pid_file") or i.startswith("provide") or i.startswith("conflict"):
-			_str = i.split("=")[-1].strip(" ;")
-			if i.startswith("need"):
-				_sel = "need = "
-			elif  i.startswith("use"):
-				_sel = "use = "
-			elif  i.startswith("also_start"):
-				_sel = "also_start = "
-			elif  i.startswith("pid_file"):
-				_sel = "pid_file = "
-			elif  i.startswith("provide"):
-				_sel = "provide = "
-			elif  i.startswith("conflict"):
-				_sel = "conflict = "
-				
+				i.startswith("pid_file") or i.startswith("provide") or i.startswith("conflict") or \
+				i.startswith("also_stop"):
+			str_0 = i.split("=")[0].strip()
+			str_1 = i.split("=")[-1].strip(" ;")
+			
 			if iset_list_mode != elsed_mode and elsed_mode != 0:
 				for g in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
 					iset_list.append(ifd_list[g])
 					if ifd_list[g].startswith("#ifd"):
 						iset_list_mode_1 = iset_list_mode_1 + 1
 				iset_list_mode = elsed_mode
-			iset_list.append(_sel + '"' + _str + '"')
+			iset_list.append(str_0 + ' = "' + str_1 + '"')
 			
 		elif i.startswith("env"):
 			if i.startswith("env_file"):
