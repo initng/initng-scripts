@@ -206,7 +206,7 @@ for i in file_list:
 			script_list.append("%" + i.split()[1].strip())
 			
 		elif i.startswith("need") or i.startswith("use") or i.startswith("also_start") or \
-				i.startswith("pid_file") or i.startswith("provide"):
+				i.startswith("pid_file") or i.startswith("provide") or i.startswith("conflict"):
 			_str = i.split("=")[-1].strip(" ;")
 			if i.startswith("need"):
 				_sel = "need = "
@@ -218,7 +218,9 @@ for i in file_list:
 				_sel = "pid_file = "
 			elif  i.startswith("provide"):
 				_sel = "provide = "
-
+			elif  i.startswith("conflict"):
+				_sel = "conflict = "
+				
 			if iset_list_mode != elsed_mode and elsed_mode != 0:
 				for g in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
 					iset_list.append(ifd_list[g])
