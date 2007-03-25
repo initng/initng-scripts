@@ -2,7 +2,7 @@
 
 """
 Usage:
-	add_all_scripts.py /path/to/initng-ifiles/trunk/initfiles /path/to/initng-scripts/trunk/initfiles 
+	add_all_scripts.py /path/to/initng-ifiles/trunk/initfiles /path/to/initng-scripts/trunk/initfiles
 """
 
 #######################
@@ -23,7 +23,8 @@ except:
 	print "You must specify two paths.\n"
 	sys.exit()
 
-dir_list = ["system", "service", "daemon", "net"]
+dir_list = ["system", "service", "net", "daemon", "daemon/bluetooth",
+            "daemon/exim", "daemon/lirc", "daemon/nut", "daemon/vmware"]
 _cwd = os.getcwd()
 
 ####################################
