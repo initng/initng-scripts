@@ -1,0 +1,19 @@
+# NAME:
+# DESCRIPTION:
+# WWW:
+
+setup()
+{
+	iregister daemon
+
+	iset need = "system/bootmisc daemon/dbus"
+	iset use = "system/coldplug system/modules/depmod"
+	iset stdall = /dev/null
+	iset pid_of = hcid
+	iset respawn
+
+	iexec daemon = "@/usr/sbin/hcid@ -f /etc/bluetooth/hcid.conf"
+
+	idone
+}
+

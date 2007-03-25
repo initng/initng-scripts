@@ -1,0 +1,105 @@
+# NAME:
+# DESCRIPTION:
+# WWW:
+
+RC_TTY_NUMBER="11"
+#ifd fedora pingwinek mandriva
+#elsed lfs
+source /etc/sysconfig/console
+#elsed debian ubuntu
+source /etc/console-tools/config
+#elsed
+source /etc/rc.conf
+source /etc/conf.d/consolefont
+#endd
+
+setup()
+{
+	iregister service
+
+	iset need = "system/bootmisc system/keymaps"
+
+#ifd fedora pingwinek
+	iexec start = "/sbin/setsysfont"
+#elsed
+	iexec start = consolefont_start
+#endd
+
+	idone
+}
+
+#ifd fedora pingwinek
+#elsed
+consolefont_start()
+{
+#ifd debian
+		if [ -d /etc/console-tools/config.d ]
+		then
+			for i in `@run-parts@ --list /etc/console-tools/config.d`
+			do
+				. ${i}
+			done
+		fi
+#endd
+		[ -n "${SCREEN_FONT}" ] && CONSOLEFONT="${SCREEN_FONT}"
+		[ -n "${SYSFONT}" ] && CONSOLEFONT="${SYSFONT}"
+		[ -n "${FONT}" ] && CONSOLEFONT="${FONT}"
+
+		if [ -z "${CONSOLEFONT}" ]
+		then
+			echo "Using the default console font"
+			exit 0
+		fi
+
+		retval=1
+
+		if [ -x @/bin/setfont@ ]
+		then
+			SETFONT=@/bin/setfont@
+		elif [ -x @/usr/bin/consolechars@ ]
+		then
+			SETFONT=@/usr/bin/consolechars@
+			CONSOLEFONT="-f '${CONSOLEFONT}'"
+		else
+			echo "Could not find set font utils ..."
+			exit 1
+		fi
+		# Get additional parameters
+		[ -n "${CONSOLETRANSLATION}" ] && param="-m ${CONSOLETRANSLATION}"
+		if [ -n "${SYSFONTACM}" ]
+		then
+			[ -f "/lib/kbd/consoletrans/${SYSFONTACM}_to_uni.trans" ] || SYSFONTACM=`echo ${SYSFONTACM} | @sed@ "s|iso0|8859-|g;s|iso|8859-|g"`
+			ARGS="${ARGS} -m ${SYSFONTACM}"
+		fi
+
+		# Set the console font
+
+		# We patched setfont to have --tty support ...
+		if ${SETFONT} --help 2>&1 | @grep@ -qe --tty || ${SETFONT} --help 2>&1 | @grep@ -qe -C
+			then
+			if ${SETFONT} --help 2>&1 | @grep@ -qe --tty
+			then
+				sf_param="--tty="
+			else
+				sf_param="-C "
+			fi
+
+			for x in `@seq@ 1 ${RC_TTY_NUMBER}`
+			do
+#ifd fedora
+				echo -n -e "\033%G" > /dev/tty${x}
+#endd
+				${SETFONT} ${CONSOLEFONT} ${param} \
+				${sf_param}/dev/tty${x} >/dev/null
+#ifd fedora
+				echo -n -e "\033(K" > /dev/tty${x}
+#endd
+				retval=0
+			done
+		else
+			${SETFONT} ${CONSOLEFONT} ${param} >/dev/null
+			retval=0
+		fi
+		exit ${retval}
+}
+#endd
