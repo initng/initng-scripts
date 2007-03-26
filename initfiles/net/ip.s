@@ -26,5 +26,4 @@ ip_any_stop()
 {
 		@ip@ link set ${NAME} down
 		@ip@ addr del ${config_$NAME} ${NAME}
-	}
 }

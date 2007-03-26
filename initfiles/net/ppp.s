@@ -8,9 +8,7 @@ setup()
 
 	iset need = "system/bootmisc system/modules"
 	iset use = "system/coldplug daemon/bluetooth/rfcomm"
-
-	iexec daemon = "@/usr/sbin/pppd@ call $NAME nodetach"
+	iset exec daemon = "@/usr/sbin/pppd@ call $NAME nodetach"
 
 	idone
 }
-
