@@ -17,7 +17,7 @@ setup()
 	iset -s "daemon/samba/nmbd" need = "system/bootmisc"
 	iset -s "daemon/samba/nmbd" use = "daemon/cupsd daemon/slapd"
 	iset -s "daemon/samba/nmbd" respawn
-	iset -s "daemon/samba" also_stop = daemon/samba/smbd daemon/samba/nmbd
+	iset -s "daemon/samba" also_stop = "daemon/samba/smbd daemon/samba/nmbd"
 	iset -s "daemon/samba" need = "daemon/samba/smbd daemon/samba/nmbd"
 
 	iexec -s "daemon/samba/winbind" daemon = "@/usr/sbin/winbindd@ -F"
@@ -29,4 +29,3 @@ setup()
 	idone -s "daemon/samba/nmbd"
 	idone -s "daemon/samba"
 }
-

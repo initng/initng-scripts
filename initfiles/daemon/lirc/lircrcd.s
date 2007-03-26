@@ -22,8 +22,7 @@ setup()
 
 lircrcd_daemon()
 {
-		[ "${socket}" ] && socket="--output=${socket}"
-		[ "${permission}" ] && permission"--permission=${permission}"
-		@lircrcd@ --output="${socket}" ${permission} "${conf}"
-	}
+	[ -n "${socket}" ] && socket="--output=${socket}"
+	[ -n "${permission}" ] && permission="--permission=${permission}"
+	@lircrcd@ --output="${socet}" ${permission} "${conf}"
 }

@@ -10,7 +10,5 @@ setup()
 	iset use = "daemon/vmware/vmware-serverd"
 	iset also_stop = daemon/vmware/vmnet
 
-
 	idone
 }
-
