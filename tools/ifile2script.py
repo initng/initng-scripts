@@ -220,17 +220,6 @@ for i in file_list:
 				env_list_mode = elsed_mode
 			env_list.append(_str)
 
-		elif i.startswith("exec"):
-			_list = i.split(" ", 1)[-1].strip(" ;").split("=")
-			if iexec_list_mode != elsed_mode and elsed_mode != 0:
-				for g in range(-1 - iexec_list_mode, -1 - len(ifd_list), -1):
-					iexec_list.append(ifd_list[g])
-					if ifd_list[g].startswith("#ifd"):
-						iexec_list_mode_1 = iexec_list_mode_1 + 1
-				iexec_list_mode = elsed_mode
-			iexec_list.append(_service)
-			iexec_list.append("&" + _list[0].strip() + ' = "' + _list[1].strip() + '"')
-		
 		elif "=" in i:
 			str_0 = i.split("=")[0].strip()
 			str_1 = i.split("=")[-1].strip(" ;")
