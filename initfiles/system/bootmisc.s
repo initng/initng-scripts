@@ -9,81 +9,77 @@ source /etc/conf.d/bootmisc
 setup()
 {
 	iregister service
-
 	iset need = "system/initial system/mountfs/essential"
 	iset use = "system/hdparm system/swap system/clock"
-
-	iexec start = bootmisc_start
-
+	iexec start
 	idone
 }
 
-bootmisc_start()
+start()
 {
 #ifd gentoo
-		[ "${DELAYLOGIN}" = "yes" ] &&
-			echo "System bootup in progress - please wait" > /etc/nologin &&
-			@cp@ /etc/nologin /etc/nologin.boot 2>&1 >/dev/null &
+	[ "${DELAYLOGIN}" = "yes" ] &&
+		echo "System bootup in progress - please wait" > /etc/nologin &&
+		@cp@ /etc/nologin /etc/nologin.boot 2>&1 >/dev/null &
 
-		if [ -x @/sbin/env-update.sh@ ]
+	if [ -x @/sbin/env-update.sh@ ]
+	then
+		if [ /etc/env.d -nt /etc/profile.env ]
 		then
-			if [ /etc/env.d -nt /etc/profile.env ]
-			then
-				echo "Updating environment ..."
-				@/sbin/env-update.sh@ -u >/dev/null
-			fi
-		fi &
+			echo "Updating environment ..."
+			@/sbin/env-update.sh@ -u >/dev/null
+		fi
+	fi &
 #endd
-		# Setup login records
-		echo -n "" > /var/run/utmp &
-		@touch@ /var/log/wtmp >/dev/null 2>&1 &
-		@chgrp@ utmp /var/run/utmp /var/log/wtmp >/dev/null 2>&1 &
-		@chmod@ 0664 /var/run/utmp /var/log/wtmp >/dev/null 2>&1 &
-		# Remove /var/run/utmpx (bug from the past)
-		@rm@ -f /var/run/utmpx >/dev/null 2>&1 &
 
-		#
-		# Clean up /tmp directory
-		#
-		@rm@ -f /tmp/.X*-lock /tmp/esrv* /tmp/kio* /tmp/jpsock.* /tmp/.fam* 2>&1 >/dev/null &
-		@rm@ -rf /tmp/.esd* /tmp/orbit-* /tmp/ssh-* /tmp/ksocket-* 2>&1 >/dev/null &
-		# Make sure our X11 stuff have the correct permissions
-		@rm@ -rf /tmp/.*-unix &&
-		@mkdir@ -p /tmp/.ICE-unix /tmp/.X11-unix &&
-		@chmod@ 1777 /tmp/.???-unix 2>&1 >/dev/null &
+	# Setup login records
+	echo -n "" > /var/run/utmp &
+	@touch@ /var/log/wtmp >/dev/null 2>&1 &
+	@chgrp@ utmp /var/run/utmp /var/log/wtmp >/dev/null 2>&1 &
+	@chmod@ 0664 /var/run/utmp /var/log/wtmp >/dev/null 2>&1 &
+	# Remove /var/run/utmpx (bug from the past)
+	@rm@ -f /var/run/utmpx >/dev/null 2>&1 &
 
-		#
-		# Clean up /var/lock and /var/run
-		#
-		@find@ /var/run/ ! -type d ! -name utmp ! -name innd.pid ! -name random-seed -exec @rm@ -f \{\} \; &
-		@find@ /var/lock -type f -exec @rm@ -f \{\} \; &
+	#
+	# Clean up /tmp directory
+	#
+	@rm@ -f /tmp/.X*-lock /tmp/esrv* /tmp/kio* /tmp/jpsock.* /tmp/.fam* 2>&1 >/dev/null &
+	@rm@ -rf /tmp/.esd* /tmp/orbit-* /tmp/ssh-* /tmp/ksocket-* 2>&1 >/dev/null &
+	# Make sure our X11 stuff have the correct permissions
+	@rm@ -rf /tmp/.*-unix &&
+	@mkdir@ -p /tmp/.ICE-unix /tmp/.X11-unix &&
+	@chmod@ 1777 /tmp/.???-unix 2>&1 >/dev/null &
+
+	#
+	# Clean up /var/lock and /var/run
+	#
+	@find@ /var/run/ ! -type d ! -name utmp ! -name innd.pid ! -name random-seed -exec @rm@ -f \{\} \; &
+	@find@ /var/lock -type f -exec @rm@ -f \{\} \; &
 
 #ifd fedora
-		#
-		# Clean up rpm database
-		#
-		@rm@ -f /var/lib/rpm/__db* 2>&1 >/dev/null &
+	#
+	# Clean up rpm database
+	#
+	@rm@ -f /var/lib/rpm/__db* 2>&1 >/dev/null &
 
-		#
-		# Kill nash process that isn't needed anymore
-		#
-		nashpid=$(pidof nash 2>/dev/null)
-		[ -n "$nashpid" ] && kill $nashpid >/dev/null 2>&1 &
-		unset nashpid
+	#
+	# Kill nash process that isn't needed anymore
+	#
+	@/bin/killall@ nash
 #endd
 
-		#
-		# Create an 'after-boot' dmesg log
-		#
-		@touch@ /var/log/dmesg >/dev/null &
-		@chmod@ 640 /var/log/dmesg >/dev/null &
-		@dmesg@ >/var/log/dmesg &
+	#
+	# Create an 'after-boot' dmesg log
+	#
+	@touch@ /var/log/dmesg >/dev/null &&
+	@chmod@ 640 /var/log/dmesg >/dev/null &&
+	@dmesg@ >/var/log/dmesg &
 
-		#
-		# Check for /etc/resolv.conf, and create if missing
-		#
-		[ -f /etc/resolv.conf ] || @touch@ /etc/resolv.conf 2>&1 >/dev/null &
+	#
+	# Check for /etc/resolv.conf, and create if missing
+	#
+	[ -f /etc/resolv.conf ] || @touch@ /etc/resolv.conf 2>&1 >/dev/null &
 
-		wait
-		exit 0
+	wait
+	exit 0
 }

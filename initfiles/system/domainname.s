@@ -7,15 +7,12 @@ source /etc/conf.d/domainname
 setup()
 {
 	iregister service
-
 	iset need = "system/initial"
-
-	iexec start = domainname_start
-
+	iexec start
 	idone
 }
 
-domainname_start()
+start()
 {
-		[ -n ${NISDOMAIN} ] && @/bin/domainname@ "${NISDOMAIN}"
+	[ -n "${NISDOMAIN}" ] && @/bin/domainname@ "${NISDOMAIN}"
 }

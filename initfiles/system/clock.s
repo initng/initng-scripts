@@ -12,126 +12,85 @@ source /etc/conf.d/clock
 setup()
 {
 	iregister service
-
 	iset need = "system/initial"
 	iset use = "system/modules"
-
-	iexec start = clock_start
-	iexec stop = clock_stop
-
+	iexec start
+	iexec stop
 	idone
 }
 
-clock_start()
-{
-		[ -x @/sbin/hwclock@ ] || exit 0
+[ -x @/sbin/hwclock@ ] || exit 0
 #ifd debian
-		[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
+[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
 #endd
 
-		setupopts() {
+setupopts() {
 #ifd debian linspire lfs
-			if [ "${UTC}" = "yes" ]
+	if [ "${UTC}" = "yes" ]
 #elsed
-			if [ "${CLOCK}" = "UTC" -o "${UTC}" = "true" ]
+	if [ "${CLOCK}" = "UTC" -o "${UTC}" = "true" ]
 #endd
-			then
-				myopts="--utc"
-				TBLURB="UTC"
-			else
-				myopts="--localtime"
-				TBLURB="Local Time"
-			fi
+	then
+		myopts="--utc"
+		TBLURB="UTC"
+	else
+		myopts="--localtime"
+		TBLURB="Local Time"
+	fi
 
-			if [ "${readonly}" = "yes" ]
-			then
-				myadj="--noadjfile"
-			else
-				myadj="--adjust"
-			fi
+	if [ "${readonly}" = "yes" ]
+	then
+		myadj="--noadjfile"
+	else
+		myadj="--adjust"
+	fi
 
-			if [ "${SRM}" = "yes" -o "${SRM}" = "true" ]
-			then
-				myopts="${myopts} --srm"
-			fi
-			if [ "${ARC}" = "arc" -o "${ARC}" = "true" ]
-			then
-				myopts="${myopts} --arc"
-			fi
-			myopts="${myopts} ${CLOCK_OPTS}"
+	if [ "${SRM}" = "yes" -o "${SRM}" = "true" ]
+	then
+		myopts="${myopts} --srm"
+	fi
 
-			# Make sure user isn't using rc.conf anymore.
-			@grep@ -qs ^CLOCK= /etc/rc.conf &&
-				echo "CLOCK should not be set in /etc/rc.conf but in /etc/conf.d/clock"
-		}
+	if [ "${ARC}" = "arc" -o "${ARC}" = "true" ]
+	then
+		myopts="${myopts} --arc"
+	fi
 
-		readonly="no"
+	myopts="${myopts} ${CLOCK_OPTS}"
 
-		if ! touch /etc/adjtime 2>/dev/null
-		then
-			readonly="yes"
-		elif [ ! -s /etc/adjtime ]
-		then
-			echo "0.0 0 0.0" > /etc/adjtime
-		fi
-
-		setupopts
-
-		# Since hwclock always exit's with a 0, need to check its output.
-		@/sbin/hwclock@ ${myadj} ${myopts}
-		@/sbin/hwclock@ --hctosys ${myopts}
+	# Make sure user isn't using rc.conf anymore.
+	@grep@ -qs ^CLOCK= /etc/rc.conf &&
+		echo "CLOCK should not be set in /etc/rc.conf but in /etc/conf.d/clock"
 }
 
-clock_stop()
+
+start()
 {
-		[ -x @/sbin/hwclock@ ] || exit 0
-#ifd debian
-		[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
-#endd
+	readonly="no"
 
-		setupopts() {
-#ifd debian linspire lfs
-			if [ "${UTC}" = "yes" ]
-#elsed
-			if [ "${CLOCK}" = "UTC" -o "${UTC}" = "true" ]
-#endd
-			then
-				myopts="--utc"
-				TBLURB="UTC"
-			else
-				myopts="--localtime"
-				TBLURB="Local Time"
-			fi
+	if ! touch /etc/adjtime 2>/dev/null
+	then
+		readonly="yes"
+	elif [ ! -s /etc/adjtime ]
+	then
+		echo "0.0 0 0.0" > /etc/adjtime
+	fi
 
-			if [ "${readonly}" = "yes" ]
-			then
-				myadj="--noadjfile"
-			else
-				myadj="--adjust"
-			fi
+	setupopts
 
-			if [ "${SRM}" = "yes" -o "${SRM}" = "true" ]
-			then
-				myopts="${myopts} --srm"
-			fi
-			if [ "${ARC}" = "arc" -o "${ARC}" = "true" ]
-			then
-				myopts="${myopts} --arc"
-			fi
-			myopts="${myopts} ${CLOCK_OPTS}"
+	# Since hwclock always exit's with a 0, need to check its output.
+	@/sbin/hwclock@ ${myadj} ${myopts}
+	@/sbin/hwclock@ --hctosys ${myopts}
+}
 
-			# Make sure user isn't using rc.conf anymore.
-			@grep@ -qs ^CLOCK= /etc/rc.conf &&
-				echo "CLOCK should not be set in /etc/rc.conf but in /etc/conf.d/clock"
-		}
+stop()
+{
+	# Don't tweak the hardware clock on LiveCD halt.
+	#[ -n ${CDBOOT} ] && return 0
 
-		# Don't tweak the hardware clock on LiveCD halt.
-		#[ -n ${CDBOOT} ] && return 0
+	#[ ${CLOCK_SYSTOHC} != "yes" ] && return 0
 
-		#[ ${CLOCK_SYSTOHC} != "yes" ] && return 0
+	setupopts
 
-		setupopts
-
-		echo "Syncing system clock to hardware clock [${TBLURB}] ..."
-		@/sbin/hwclock@ --systohc ${myopts}
+	echo "Syncing system clock to hardware clock [${TBLURB}] ..."
+	@/sbin/hwclock@ --systohc ${myopts}
 }
