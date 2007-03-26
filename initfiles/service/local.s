@@ -15,6 +15,5 @@ setup()
 	iset exec stop = "/etc/conf.d/local.stop"
 #endd
 
-
 	idone
 }

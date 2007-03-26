@@ -11,6 +11,5 @@ setup()
 	iset exec start = "@/usr/sbin/wifi-radar@ -d"
 	iset stdall = "/var/log/wifi-radar.log"
 
-
 	idone
 }

@@ -10,6 +10,5 @@ setup()
 	iset exec start = "@exportfs@ -ar"
 	iset exec stop = "@exportfs@ -au"
 
-
 	idone
 }

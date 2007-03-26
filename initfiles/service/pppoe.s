@@ -13,6 +13,5 @@ setup()
 	iset exec start = "@adsl-start:adsl-connect:pppoe-start:pppoe-connect@"
 	iset exec stop = "@adsl-stop:pppoe-stop@"
 
-
 	idone
 }

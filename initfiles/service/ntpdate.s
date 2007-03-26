@@ -7,7 +7,7 @@ NTPSERVERS="pool.ntp.org"
 NTPOPTIONS=""
 source /etc/default/ntpdate
 #elsed gentoo
-NTPCLIENT_OPTS =" -b -s pool.ntp.org"
+NTPCLIENT_OPTS="-b -s pool.ntp.org"
 source /etc/conf.d/ntp-client
 #elsed
 NTPSERVERS="pool.ntp.org"
@@ -27,7 +27,6 @@ setup()
 #elsed
 	iset exec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
 #endd
-
 
 	idone
 }

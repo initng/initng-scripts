@@ -3,9 +3,9 @@
 # WWW: 
 
 #ifd fedora
-RCDIR =" /etc/rc.d/init.d"
+RCDIR="/etc/rc.d/init.d"
 #elsed
-RCDIR =" /etc/init.d"
+RCDIR="/etc/init.d"
 #endd
 
 setup()
@@ -16,7 +16,6 @@ setup()
 	iset exec start = "${RCDIR}/${NAME} start"
 	iset exec stop = "${RCDIR}/${NAME} stop"
 	iset last
-
 
 	idone
 }

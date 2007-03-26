@@ -16,7 +16,6 @@ setup()
 	iset -s "service/fbsplash/stop" exec start = "${INITNG_PLUGIN_DIR}/scripts/splash/fbsplash.sh stop"
 	iset -s "service/fbsplash" need = "service/fbsplash/start service/fbsplash/stop"
 
-
 	idone -s "service/fbsplash/start"
 	idone -s "service/fbsplash/stop"
 	idone -s "service/fbsplash"

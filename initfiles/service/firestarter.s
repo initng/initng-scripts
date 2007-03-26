@@ -11,6 +11,5 @@ setup()
 	iset exec start = "@/etc/firestarter/firestarter.sh@ start"
 	iset exec stop = "@/etc/firestarter/firestarter.sh@ stop"
 
-
 	idone
 }

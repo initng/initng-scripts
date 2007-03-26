@@ -11,6 +11,5 @@ setup()
 	iset exec start = "@eciadsl-start@"
 	iset exec stop = "@eciadsl-stop@"
 
-
 	idone
 }

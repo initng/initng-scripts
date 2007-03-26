@@ -12,6 +12,5 @@ setup()
 	iset exec start = "@/sbin/shorewall@ -q start"
 	iset exec stop = "@/sbin/shorewall@ stop"
 
-
 	idone
 }

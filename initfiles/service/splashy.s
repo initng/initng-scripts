@@ -49,5 +49,4 @@ chvt_start()
 		done
 		[ "${x_vt}" -gt 0 ] && exit 0
 		exec @/usr/bin/chvt@ ${x_vt}
-	}
 }

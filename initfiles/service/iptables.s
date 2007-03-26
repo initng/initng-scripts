@@ -3,9 +3,9 @@
 # WWW: http://www.iptables.org/
 
 #ifd fedora mandriva
-STATEFILE =" /etc/sysconfig/iptables"
+STATEFILE="/etc/sysconfig/iptables"
 #elsed
-STATEFILE =" /var/lib/iptables/rules-save"
+STATEFILE="/var/lib/iptables/rules-save"
 #endd
 
 setup()
@@ -16,7 +16,6 @@ setup()
 	iset provide = "virtual/firewall"
 	iset stdin = "${STATEFILE}"
 	iset exec start = "@/sbin/iptables-restore@ -c"
-
 
 	idone
 }

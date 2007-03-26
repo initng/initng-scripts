@@ -10,6 +10,5 @@ setup()
 	iset last
 	iset exec start = "@chvt@ ${NAME}"
 
-
 	idone
 }
