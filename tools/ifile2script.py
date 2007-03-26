@@ -210,7 +210,7 @@ for i in file_list:
 				_str = "source " + i.split("=", 1)[1].strip(" ;")
 			else:
 				_str = i.split(" ", 1)[1].strip(" ;")
-				_str = _str.split("=")[0] + '="'+ _str.split("=")[1] + '"'
+				_str = _str.split("=")[0].strip() + '="'+ _str.split("=")[1].strip() + '"'
 		
 			if env_list_mode != elsed_mode and elsed_mode != 0:
 				for g in range(-1 - env_list_mode, -1 - len(ifd_list), -1):
@@ -329,7 +329,8 @@ for i in iexec_list:
 	elif i in service_and_daemon_list:
 		_service = i
 
-new_file.write("\n")
+if iexec_list != []:
+	new_file.write("\n")
 
 for i in iregister_list:
 	if i.startswith("#"):
