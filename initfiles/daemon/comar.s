@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec daemon = "@/usr/bin/comar@"
+	iset exec daemon = "@/usr/bin/comar@"
 
 	idone
 }

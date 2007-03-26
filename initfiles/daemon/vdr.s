@@ -24,7 +24,7 @@ setup()
 	iset suid = ${USER}
 	iset sgid = ${GROUP}
 
-	iexec daemon = vdr_daemon
+	iset exec daemon = vdr_daemon
 
 	idone
 }

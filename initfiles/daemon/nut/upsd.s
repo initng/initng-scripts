@@ -11,7 +11,7 @@ setup()
 	iset respawn
 	iset pid_file = "/var/lib/nut/upsd.pid"
 
-	iexec daemon = "@/usr/sbin/upsd@"
+	iset exec daemon = "@/usr/sbin/upsd@"
 
 	idone
 }

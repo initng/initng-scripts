@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc system/mountfs/essential system/modules/ipw3945"
 
-	iexec daemon = "@/sbin/ipw3945d@ --foreground --timeout"
+	iset exec daemon = "@/sbin/ipw3945d@ --foreground --timeout"
 
 	idone
 }

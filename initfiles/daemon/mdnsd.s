@@ -9,7 +9,7 @@ setup()
 	iset pid_file = "/var/run/mdnsd.pid"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/mdnsd@"
+	iset exec daemon = "@/usr/sbin/mdnsd@"
 
 	idone
 }

@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/initial daemon/portmap virtual/net"
 
-	iexec daemon = "@rpc.statd@ -F"
+	iset exec daemon = "@rpc.statd@ -F"
 
 	idone
 }

@@ -11,7 +11,7 @@ setup()
 	iset forks
 	iset daemon_stops_badly
 
-	iexec daemon = "@/usr/sbin/rlocated@"
+	iset exec daemon = "@/usr/sbin/rlocated@"
 
 	idone
 }

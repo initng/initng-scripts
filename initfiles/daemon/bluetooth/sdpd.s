@@ -11,7 +11,7 @@ setup()
 	iset forks
 	iset respawn
 
-	iexec daemon = "@/usr/sbin/sdpd@"
+	iset exec daemon = "@/usr/sbin/sdpd@"
 
 	idone
 }

@@ -15,9 +15,9 @@ setup()
 	iset forks
 
 #ifd debian
-	iexec daemon = "@/usr/sbin/hpssd@"
+	iset exec daemon = "@/usr/sbin/hpssd@"
 #elsed
-	iexec daemon = "@/usr/share/hplip/hpssd.py@"
+	iset exec daemon = "@/usr/share/hplip/hpssd.py@"
 #endd
 
 	idone

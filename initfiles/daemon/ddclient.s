@@ -13,7 +13,7 @@ setup()
 	iset forks
 	iset respawn
 
-	iexec daemon = "@/usr/sbin/ddclient@"
+	iset exec daemon = "@/usr/sbin/ddclient@"
 
 	idone
 }

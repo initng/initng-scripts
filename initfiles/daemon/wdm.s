@@ -11,7 +11,7 @@ setup()
 	iset provide = "virtual/dm"
 	iset use = "system/modules system/coldplug"
 
-	iexec daemon = "@/usr/bin/wdm@ -nodaemon"
+	iset exec daemon = "@/usr/bin/wdm@ -nodaemon"
 
 	idone
 }

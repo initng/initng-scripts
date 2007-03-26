@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/mDNSResponder.pid"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/mDNSResponder:/usr/bin/mDNSResponder@"
+	iset exec daemon = "@/usr/sbin/mDNSResponder:/usr/bin/mDNSResponder@"
 
 	idone
 }

@@ -23,11 +23,11 @@ setup()
 #endd
 
 #ifd fedora mandriva
-	iexec daemon = smartd_daemon
+	iset exec daemon = smartd_daemon
 #elsed debian
-	iexec daemon = "/usr/sbin/smartd -p /var/run/smartd.pid ${smartd_opts}"
+	iset exec daemon = "/usr/sbin/smartd -p /var/run/smartd.pid ${smartd_opts}"
 #elsed
-	iexec daemon = "/usr/sbin/smartd -p /var/run/smartd.pid ${SMARTD_OPTS}"
+	iset exec daemon = "/usr/sbin/smartd -p /var/run/smartd.pid ${SMARTD_OPTS}"
 #endd
 
 	idone

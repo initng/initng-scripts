@@ -9,7 +9,7 @@ setup()
 	iset need = "system/bootmisc"
 	iset respawn
 
-	iexec daemon = "/usr/bin/icecast -c /etc/icecast2/icecast.xml"
+	iset exec daemon = "/usr/bin/icecast -c /etc/icecast2/icecast.xml"
 
 	idone
 }

@@ -19,9 +19,9 @@ setup()
 	iset pid_of = portmap
 
 #ifd debian linspire
-	iexec daemon = "@/sbin/portmap@ ${OPTIONS}"
+	iset exec daemon = "@/sbin/portmap@ ${OPTIONS}"
 #elsed
-	iexec daemon = "@/sbin/portmap@ -d ${PORTMAP_OPTS}"
+	iset exec daemon = "@/sbin/portmap@ -d ${PORTMAP_OPTS}"
 #endd
 
 	idone

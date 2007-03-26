@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc daemon/mit-krb5kdc"
 
-	iexec daemon = "@kadmind@ -nofork"
+	iset exec daemon = "@kadmind@ -nofork"
 
 	idone
 }

@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc service/alsasound"
 
-	iexec daemon = "@/usr/sbin/slmodemd@ --country"
+	iset exec daemon = "@/usr/sbin/slmodemd@ --country"
 
 	idone
 }

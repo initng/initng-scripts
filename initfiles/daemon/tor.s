@@ -12,7 +12,7 @@ setup()
 	iset pid_of = tor
 	iset respawn
 
-	iexec daemon = "@/usr/sbin/tor@"
+	iset exec daemon = "@/usr/sbin/tor@"
 
 	idone
 }

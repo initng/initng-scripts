@@ -15,7 +15,7 @@ setup()
 #endd
 	iset forks
 
-	iexec daemon = "@/usr/sbin/cron@"
+	iset exec daemon = "@/usr/sbin/cron@"
 
 	idone
 }

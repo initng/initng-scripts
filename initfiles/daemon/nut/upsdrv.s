@@ -8,8 +8,8 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec start = "@/usr/sbin/upsdrvctl@ start"
-	iexec stop = "@/usr/sbin/upsdrvctl@ stop"
+	iset exec start = "@/usr/sbin/upsdrvctl@ start"
+	iset exec stop = "@/usr/sbin/upsdrvctl@ stop"
 
 	idone
 }

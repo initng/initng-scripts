@@ -16,7 +16,7 @@ setup()
 	iset suid = named
 	iset pid_file = "${PIDFILE}"
 
-	iexec daemon = "@named@ -n ${CPU} ${OPTIONS} -u named"
+	iset exec daemon = "@named@ -n ${CPU} ${OPTIONS} -u named"
 
 	idone
 }

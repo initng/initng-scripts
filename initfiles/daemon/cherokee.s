@@ -12,7 +12,7 @@ setup()
 	iset pid_file = "/var/run/cherokee.pid"
 	iset forks
 
-	iexec daemon = "@cherokee@"
+	iset exec daemon = "@cherokee@"
 
 	idone
 }

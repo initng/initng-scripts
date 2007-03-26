@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec daemon = "@/usr/sbin/ulogd@"
+	iset exec daemon = "@/usr/sbin/ulogd@"
 
 	idone
 }

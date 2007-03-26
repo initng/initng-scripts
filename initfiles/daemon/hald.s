@@ -25,11 +25,11 @@ setup()
 #endd
 
 #ifd debian
-	iexec daemon = hald_daemon
+	iset exec daemon = hald_daemon
 #elsed gentoo
-	iexec daemon = hald_daemon
+	iset exec daemon = hald_daemon
 #elsed
-	iexec daemon = hald_daemon
+	iset exec daemon = hald_daemon
 #endd
 
 	idone

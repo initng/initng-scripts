@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/dovecot/master.pid"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/dovecot@"
+	iset exec daemon = "@/usr/sbin/dovecot@"
 
 	idone
 }

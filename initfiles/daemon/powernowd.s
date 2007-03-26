@@ -15,9 +15,9 @@ setup()
 	iset use = "service/speedstep"
 
 #ifd debian
-	iexec daemon = "@/usr/sbin/powernowd@ ${OPTIONS}"
+	iset exec daemon = "@/usr/sbin/powernowd@ ${OPTIONS}"
 #elsed
-	iexec daemon = "@/usr/sbin/powernowd@ -q"
+	iset exec daemon = "@/usr/sbin/powernowd@ -q"
 #endd
 
 	idone

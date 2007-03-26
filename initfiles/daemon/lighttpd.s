@@ -10,9 +10,9 @@ setup()
 	iset use = "system/modules system/coldplug"
 
 #ifd gentoo
-	iexec daemon = "@/usr/sbin/lighttpd@ -D -f /etc/lighttpd.conf"
+	iset exec daemon = "@/usr/sbin/lighttpd@ -D -f /etc/lighttpd.conf"
 #elsed
-	iexec daemon = "@/usr/sbin/lighttpd@ -D -f /etc/lighttpd/lighttpd.conf"
+	iset exec daemon = "@/usr/sbin/lighttpd@ -D -f /etc/lighttpd/lighttpd.conf"
 #endd
 
 	idone

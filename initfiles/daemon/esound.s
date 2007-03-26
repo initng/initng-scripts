@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc service/alsasound"
 
-	iexec daemon = "@/usr/bin/esd@ -nobeeps -as 2 -tcp -public"
+	iset exec daemon = "@/usr/bin/esd@ -nobeeps -as 2 -tcp -public"
 
 	idone
 }

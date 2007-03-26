@@ -12,7 +12,7 @@ setup()
 	iset pid_of = hcid
 	iset respawn
 
-	iexec daemon = "@/usr/sbin/hcid@ -f /etc/bluetooth/hcid.conf"
+	iset exec daemon = "@/usr/sbin/hcid@ -f /etc/bluetooth/hcid.conf"
 
 	idone
 }

@@ -15,7 +15,7 @@ setup()
 	iset forks
 	iset pid_of = hidd
 
-	iexec daemon = "@/usr/bin/hidd@ ${HIDD_OPTIONS}"
+	iset exec daemon = "@/usr/bin/hidd@ ${HIDD_OPTIONS}"
 
 	idone
 }

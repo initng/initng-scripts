@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec start = "@/usr/sbin/printconf-backend@"
+	iset exec start = "@/usr/sbin/printconf-backend@"
 
 	idone
 }

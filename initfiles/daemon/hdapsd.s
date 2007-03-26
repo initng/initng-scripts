@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc virtual/net/lo system/modules"
 
-	iexec daemon = "@/usr/sbin/hdapsd@ -a -d hda -s 18"
+	iset exec daemon = "@/usr/sbin/hdapsd@ -a -d hda -s 18"
 
 	idone
 }

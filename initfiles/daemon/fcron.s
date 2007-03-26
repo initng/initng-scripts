@@ -11,7 +11,7 @@ setup()
 	iset respawn
 	iset forks
 
-	iexec daemon = "@/usr/sbin/fcron@"
+	iset exec daemon = "@/usr/sbin/fcron@"
 
 	idone
 }

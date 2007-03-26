@@ -12,7 +12,7 @@ setup()
 
 	iset need = "system/bootmisc virtual/net"
 
-	iexec daemon = "@/usr/sbin/xinetd@ -dontfork ${XINETD_OPTS}"
+	iset exec daemon = "@/usr/sbin/xinetd@ -dontfork ${XINETD_OPTS}"
 
 	idone
 }

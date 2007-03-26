@@ -21,9 +21,9 @@ setup()
 	iset provide = "virtual/dm"
 
 #ifd debian
-	iexec daemon = "@gdm@ -nodaemon"
+	iset exec daemon = "@gdm@ -nodaemon"
 #elsed
-	iexec daemon = "@/usr/sbin/gdm@ -nodaemon"
+	iset exec daemon = "@/usr/sbin/gdm@ -nodaemon"
 #endd
 
 	idone

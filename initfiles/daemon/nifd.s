@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/nifd.pid"
 	iset forks
 
-	iexec daemon = "@/usr/bin/nifd@ -n"
+	iset exec daemon = "@/usr/bin/nifd@ -n"
 
 	idone
 }

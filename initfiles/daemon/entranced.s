@@ -12,7 +12,7 @@ setup()
 	iset respawn
 	iset forks
 
-	iexec daemon = "@/usr/sbin/entranced@"
+	iset exec daemon = "@/usr/sbin/entranced@"
 
 	idone
 }

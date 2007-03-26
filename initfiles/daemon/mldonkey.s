@@ -18,8 +18,8 @@ setup()
 	iset respawn = yes
 	iset stdall = ${LOG}
 
-	iexec daemon = "@/usr/bin/mlnet@"
-	iexec kill = mldonkey_kill
+	iset exec daemon = "@/usr/bin/mlnet@"
+	iset exec kill = mldonkey_kill
 
 	idone
 }

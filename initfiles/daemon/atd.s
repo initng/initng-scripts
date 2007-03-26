@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/atd.pid"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/atd@"
+	iset exec daemon = "@/usr/sbin/atd@"
 
 	idone
 }

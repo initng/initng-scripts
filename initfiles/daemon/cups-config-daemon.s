@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc daemon/cupsd daemon/dbus"
 
-	iexec daemon = "@/usr/bin/cups-config-daemon@ --daemon"
+	iset exec daemon = "@/usr/bin/cups-config-daemon@ --daemon"
 
 	idone
 }

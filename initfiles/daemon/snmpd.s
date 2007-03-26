@@ -17,7 +17,7 @@ setup()
 	iset pid_file = "${PIDFILE}"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/snmpd@ ${OPTIONS} -c ${CONFFILE} -p ${PIDFILE}"
+	iset exec daemon = "@/usr/sbin/snmpd@ ${OPTIONS} -c ${CONFFILE} -p ${PIDFILE}"
 
 	idone
 }

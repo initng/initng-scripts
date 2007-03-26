@@ -11,7 +11,7 @@ setup()
 	iset pid_of = vsftpd
 	iset forks
 
-	iexec daemon = "/usr/sbin/vsftpd"
+	iset exec daemon = "/usr/sbin/vsftpd"
 
 	idone
 }

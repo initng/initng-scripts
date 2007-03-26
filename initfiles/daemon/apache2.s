@@ -2,7 +2,7 @@
 # DESCRIPTION: The Apache web server, version 2
 # WWW: http://httpd.apache.org
 
-APACHE2_OPTS="-k start"
+APACHE2_OPTS=""
 #ifd debian
 source /etc/default/apache2
 #elsed
@@ -19,7 +19,8 @@ setup()
 	iset pid_file = "/var/run/apache2.pid"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/apache2@ ${APACHE2_OPTS}"
+	iset exec daemon = "@/usr/sbin/apache2@ ${APACHE2_OPTS} -k start"
+	iset exec kill = "@/usr/sbin/apache2@ -k stop"
 
 	idone
 }

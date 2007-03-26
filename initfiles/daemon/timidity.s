@@ -16,9 +16,9 @@ setup()
 #endd
 
 #ifd gentoo
-	iexec daemon = "@/usr/bin/timidity@ -iA ${TIMIDITY_OPTS}"
+	iset exec daemon = "@/usr/bin/timidity@ -iA ${TIMIDITY_OPTS}"
 #elsed
-	iexec daemon = "@/usr/bin/timidity@ -iA -B2,8 -Os"
+	iset exec daemon = "@/usr/bin/timidity@ -iA -B2,8 -Os"
 #endd
 
 	idone

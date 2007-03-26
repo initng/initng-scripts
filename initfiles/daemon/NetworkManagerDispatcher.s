@@ -12,7 +12,7 @@ setup()
 	iset pid_file = "${PID_FILE}"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/NetworkManagerDispatcher@ --pid-file"
+	iset exec daemon = "@/usr/sbin/NetworkManagerDispatcher@ --pid-file"
 
 	idone
 }

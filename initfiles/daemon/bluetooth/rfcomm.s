@@ -8,8 +8,8 @@ setup()
 
 	iset need = "system/bootmisc daemon/bluetooth/hcid"
 
-	iexec start = "@/usr/bin/rfcomm@ -f /etc/bluetooth/rfcomm.conf bind all"
-	iexec stop = "@/usr/bin/rfcomm@ -f /etc/bluetooth/rfcomm.conf release all"
+	iset exec start = "@/usr/bin/rfcomm@ -f /etc/bluetooth/rfcomm.conf bind all"
+	iset exec stop = "@/usr/bin/rfcomm@ -f /etc/bluetooth/rfcomm.conf release all"
 
 	idone
 }

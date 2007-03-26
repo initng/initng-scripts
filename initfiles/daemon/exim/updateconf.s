@@ -15,7 +15,7 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec start = "@update-exim4.conf@ ${UPEX4OPTS}"
+	iset exec start = "@update-exim4.conf@ ${UPEX4OPTS}"
 
 	idone
 }

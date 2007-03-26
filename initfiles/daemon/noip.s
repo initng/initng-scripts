@@ -11,7 +11,7 @@ setup()
 	iset respawn
 	iset forks
 
-	iexec daemon = "@/usr/local/bin/noip2@"
+	iset exec daemon = "@/usr/local/bin/noip2@"
 
 	idone
 }

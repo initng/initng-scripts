@@ -14,7 +14,7 @@ setup()
 	iset respawn
 	iset forks
 
-	iexec daemon = udhcpc_any_daemon
+	iset exec daemon = udhcpc_any_daemon
 
 	idone
 }

@@ -11,7 +11,7 @@ setup()
 	iset daemon_stops_badly
 	iset forks
 
-	iexec daemon = "@/usr/sbin/proftpd@"
+	iset exec daemon = "@/usr/sbin/proftpd@"
 
 	idone
 }

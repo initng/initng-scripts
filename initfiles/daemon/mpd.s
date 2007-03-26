@@ -11,8 +11,8 @@ setup()
 	iset pid_file = "/var/run/mpd/mpd.pid"
 	iset respawn
 
-	iexec daemon = "@/usr/bin/mpd@ --no-daemon --no-create-db /etc/mpd.conf"
-	iexec kill = "@/usr/bin/mpd@ --kill"
+	iset exec daemon = "@/usr/bin/mpd@ --no-daemon --no-create-db /etc/mpd.conf"
+	iset exec kill = "@/usr/bin/mpd@ --kill"
 
 	idone
 }

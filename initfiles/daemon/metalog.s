@@ -16,7 +16,7 @@ setup()
 	iset forks
 	iset daemon_stops_badly
 
-	iexec daemon = "@/usr/sbin/metalog@ -B -p /var/run/metalog.pid"
+	iset exec daemon = "@/usr/sbin/metalog@ -B -p /var/run/metalog.pid"
 
 	idone
 }

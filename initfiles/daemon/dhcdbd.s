@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/dhcdbd.pid"
 	iset forks
 
-	iexec daemon = "@/sbin/dhcdbd@ --system"
+	iset exec daemon = "@/sbin/dhcdbd@ --system"
 
 	idone
 }

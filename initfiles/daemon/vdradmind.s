@@ -12,8 +12,8 @@ setup()
 	iset stdout = /dev/null
 	iset forks
 
-	iexec daemon = "@vdradmind.pl@"
-	iexec kill = "@vdradmind.pl@ --kill"
+	iset exec daemon = "@vdradmind.pl@"
+	iset exec kill = "@vdradmind.pl@ --kill"
 
 	idone
 }

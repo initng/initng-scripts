@@ -29,9 +29,9 @@ setup()
 	iset forks
 
 #ifd gentoo
-	iexec daemon = "/usr/bin/distccd -N ${DISTCCD_NICE} --pid-file ${DISTCCD_PIDFILE} ${DISTCCD_OPTS}"
+	iset exec daemon = "/usr/bin/distccd -N ${DISTCCD_NICE} --pid-file ${DISTCCD_PIDFILE} ${DISTCCD_OPTS}"
 #elsed
-	iexec daemon = "@/usr/bin/distccd@ -N ${NICE} --pid-file ${PIDFILE} --port ${PORT} --allow ${ALLOW} --listen ${LISTEN}"
+	iset exec daemon = "@/usr/bin/distccd@ -N ${NICE} --pid-file ${PIDFILE} --port ${PORT} --allow ${ALLOW} --listen ${LISTEN}"
 #endd
 
 	idone

@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/nagios.pid"
 	iset forks
 
-	iexec daemon = "/usr/bin/nagios -d /etc/nagios/nagios.cfg"
+	iset exec daemon = "/usr/bin/nagios -d /etc/nagios/nagios.cfg"
 
 	idone
 }

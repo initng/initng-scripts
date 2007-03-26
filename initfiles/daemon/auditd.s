@@ -8,8 +8,8 @@ setup()
 
 	iset need = "system/initial system/bootmisc"
 
-	iexec start = "@/etc/init.d/auditd@ start"
-	iexec stop = "@/etc/init.d/auditd@ stop"
+	iset exec start = "@/etc/init.d/auditd@ start"
+	iset exec stop = "@/etc/init.d/auditd@ stop"
 
 	idone
 }

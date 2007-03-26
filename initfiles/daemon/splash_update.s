@@ -7,7 +7,7 @@ setup()
 	iregister daemon
 
 
-	iexec daemon = "@/sbin/splash_update@"
+	iset exec daemon = "@/sbin/splash_update@"
 
 	idone
 }

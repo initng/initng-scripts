@@ -17,7 +17,7 @@ setup()
 	iset use = "daemon/postgres daemon/mysql"
 	iset suid = ${ASTERISK_USER}
 
-	iexec daemon = "@/usr/sbin/asterisk@ ${ASTERISK_OPTS}"
+	iset exec daemon = "@/usr/sbin/asterisk@ ${ASTERISK_OPTS}"
 
 	idone
 }

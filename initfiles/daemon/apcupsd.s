@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/apcupsd.pid"
 	iset forks
 
-	iexec daemon = apcupsd_daemon
+	iset exec daemon = apcupsd_daemon
 
 	idone
 }

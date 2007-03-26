@@ -12,9 +12,9 @@ setup()
 	iset provide = "virtual/dm"
 
 #ifd debian
-	iexec daemon = "@/usr/bin/kdm@ -nodaemon"
+	iset exec daemon = "@/usr/bin/kdm@ -nodaemon"
 #elsed
-	iexec daemon = "@/usr/sbin/kdm:/usr/bin/kdm@ -nodaemon"
+	iset exec daemon = "@/usr/sbin/kdm:/usr/bin/kdm@ -nodaemon"
 #endd
 
 	idone

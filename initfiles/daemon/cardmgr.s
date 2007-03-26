@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/cardmgr.pid"
 	iset forks
 
-	iexec daemon = "@/sbin/cardmgr@ -s /var/run/stab"
+	iset exec daemon = "@/sbin/cardmgr@ -s /var/run/stab"
 
 	idone
 }

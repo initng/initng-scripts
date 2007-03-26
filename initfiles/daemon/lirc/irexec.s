@@ -14,7 +14,7 @@ setup()
 	iset respawn
 	iset stdout = /dev/null
 
-	iexec daemon = "@irexec@"
+	iset exec daemon = "@irexec@"
 
 	idone
 }

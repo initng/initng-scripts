@@ -12,7 +12,7 @@ setup()
 	iset respawn
 	iset daemon_stops_badly
 
-	iexec daemon = "@/usr/sbin/privoxy@ --pidfile /var/run/privoxy.pid --user privoxy.privoxy /etc/privoxy/config"
+	iset exec daemon = "@/usr/sbin/privoxy@ --pidfile /var/run/privoxy.pid --user privoxy.privoxy /etc/privoxy/config"
 
 	idone
 }

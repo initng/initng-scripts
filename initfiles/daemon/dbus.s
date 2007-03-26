@@ -25,9 +25,9 @@ setup()
 #endd
 
 #ifd debian
-	iexec daemon = dbus_daemon
+	iset exec daemon = dbus_daemon
 #elsed
-	iexec daemon = "@/bin/dbus-daemon:/usr/bin/dbus-daemon:/usr/bin/dbus-daemon-1@ --system --fork"
+	iset exec daemon = "@/bin/dbus-daemon:/usr/bin/dbus-daemon:/usr/bin/dbus-daemon-1@ --system --fork"
 #endd
 
 	idone

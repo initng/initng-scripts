@@ -11,8 +11,8 @@ setup()
 	iset respawn
 	iset forks
 
-	iexec daemon = "@/usr/sbin/squid@"
-	iexec kill = "@/usr/sbin/squid@ -k shutdown"
+	iset exec daemon = "@/usr/sbin/squid@"
+	iset exec kill = "@/usr/sbin/squid@ -k shutdown"
 
 	idone
 }

@@ -15,7 +15,7 @@ setup()
 	iset pid_file = "/var/run/syslog-ng.pid"
 	iset forks
 
-	iexec daemon = "@/sbin/syslog-ng@ -p /var/run/syslog-ng.pid"
+	iset exec daemon = "@/sbin/syslog-ng@ -p /var/run/syslog-ng.pid"
 
 	idone
 }

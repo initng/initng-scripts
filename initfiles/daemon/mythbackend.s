@@ -16,9 +16,9 @@ setup()
 	iset forks
 	iset respawn
 
-	iexec daemon = "@/usr/bin/mythbackend@"
+	iset exec daemon = "@/usr/bin/mythbackend@"
 #ifd gentoo
-	iexec daemon = "--logfile /var/log/mythtv/mythbackend.log"
+	iset exec daemon = "--logfile /var/log/mythtv/mythbackend.log"
 #endd
 
 	idone

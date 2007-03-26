@@ -10,7 +10,7 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec start = pump_any_start
+	iset exec start = pump_any_start
 
 	idone
 }

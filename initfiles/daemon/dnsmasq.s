@@ -12,7 +12,7 @@ setup()
 	iset forks
 	iset respawn
 
-	iexec daemon = "@/usr/sbin/dnsmasq@"
+	iset exec daemon = "@/usr/sbin/dnsmasq@"
 
 	idone
 }

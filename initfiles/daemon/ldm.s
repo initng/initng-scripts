@@ -10,7 +10,7 @@ setup()
 	iset use = "daemon/xfs system/modules system/coldplug"
 	iset nice = -4
 
-	iexec daemon = "@/usr/bin/ldm@"
+	iset exec daemon = "@/usr/bin/ldm@"
 
 	idone
 }

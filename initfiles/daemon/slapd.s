@@ -17,11 +17,11 @@ setup()
 	iset forks
 
 #ifd gentoo
-	iexec daemon = "@/usr/lib/openldap/slapd@ -u ldap -g ldap ${OPTS}"
+	iset exec daemon = "@/usr/lib/openldap/slapd@ -u ldap -g ldap ${OPTS}"
 #elsed
-	iexec daemon = "@/usr/lib/openldap/slapd@"
+	iset exec daemon = "@/usr/lib/openldap/slapd@"
 #endd
-	iexec kill = "killall -2 slapd"
+	iset exec kill = "killall -2 slapd"
 
 	idone
 }

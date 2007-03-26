@@ -15,7 +15,7 @@ setup()
 
 	iset need = "system/initial system/mountroot virtual/net"
 
-	iexec daemon = oidentd_daemon
+	iset exec daemon = oidentd_daemon
 
 	idone
 }

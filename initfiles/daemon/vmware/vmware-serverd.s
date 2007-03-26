@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc daemon/vmware/vmnet system/modules/vmmon"
 
-	iexec daemon = "@/opt/vmware/server/sbin/vmware-serverd@"
+	iset exec daemon = "@/opt/vmware/server/sbin/vmware-serverd@"
 
 	idone
 }

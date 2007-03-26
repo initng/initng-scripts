@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc daemon/sendmail virtual/net"
 
-	iexec daemon = "@/usr/bin/fetchmail@ -f /etc/fetchmailrc"
+	iset exec daemon = "@/usr/bin/fetchmail@ -f /etc/fetchmailrc"
 
 	idone
 }

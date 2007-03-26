@@ -11,8 +11,8 @@ setup()
 	iset pid_file = "/var/run/wpa_supplicant-${NAME}.pid"
 	iset forks
 
-	iexec daemon = wpa_supplicant_any_daemon
-	iexec kill = wpa_supplicant_any_kill
+	iset exec daemon = wpa_supplicant_any_daemon
+	iset exec kill = wpa_supplicant_any_kill
 
 	idone
 }

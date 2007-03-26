@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc daemon/bluetooth/hcid"
 
-	iexec start = "@/usr/sbin/hciattach@ ${NAME}"
+	iset exec start = "@/usr/sbin/hciattach@ ${NAME}"
 
 	idone
 }

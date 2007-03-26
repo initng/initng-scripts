@@ -9,7 +9,7 @@ setup()
 	iset need = "system/bootmisc virtual/net"
 	iset stdall = /dev/null
 
-	iexec daemon = "@/usr/bin/spamd@ -c"
+	iset exec daemon = "@/usr/bin/spamd@ -c"
 
 	idone
 }

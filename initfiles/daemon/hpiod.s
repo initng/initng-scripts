@@ -14,7 +14,7 @@ setup()
 #endd
 	iset forks
 
-	iexec daemon = "@/usr/sbin/hpiod@"
+	iset exec daemon = "@/usr/sbin/hpiod@"
 
 	idone
 }

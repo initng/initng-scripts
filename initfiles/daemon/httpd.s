@@ -12,7 +12,7 @@ setup()
 	iset pid_file = "/var/run/httpd.pid"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/httpd@"
+	iset exec daemon = "@/usr/sbin/httpd@"
 
 	idone
 }

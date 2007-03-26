@@ -9,7 +9,7 @@ setup()
 	iset need = "system/bootmisc virtual/net/lo"
 	iset use = "daemon/printconf daemon/hpiod daemon/hpssd"
 
-	iexec daemon = "@/usr/sbin/cupsd@ -F"
+	iset exec daemon = "@/usr/sbin/cupsd@ -F"
 
 	idone
 }

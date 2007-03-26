@@ -13,9 +13,9 @@ setup()
 	iset need = "system/bootmisc virtual/net"
 
 #ifd gentoo
-	iexec daemon = "@/usr/bin/rsync@ ${RSYNC_OPTS} --daemon --no-detach"
+	iset exec daemon = "@/usr/bin/rsync@ ${RSYNC_OPTS} --daemon --no-detach"
 #elsed
-	iexec daemon = "@/usr/bin/rsync@ --daemon --no-detach"
+	iset exec daemon = "@/usr/bin/rsync@ --daemon --no-detach"
 #endd
 
 	idone

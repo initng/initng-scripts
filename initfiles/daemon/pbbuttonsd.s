@@ -8,7 +8,7 @@ setup()
 
 	iset need = "service/alsasound virtual/net/lo"
 
-	iexec daemon = "/usr/bin/pbbuttonsd"
+	iset exec daemon = "/usr/bin/pbbuttonsd"
 
 	idone
 }

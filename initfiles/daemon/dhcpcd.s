@@ -19,7 +19,7 @@ setup()
 	iset respawn
 	iset daemon_stops_badly
 
-	iexec daemon = dhcpcd_any_daemon
+	iset exec daemon = dhcpcd_any_daemon
 
 	idone
 }

@@ -11,8 +11,8 @@ setup()
 	iset respawn
 	iset pid_file = "/var/run/upsmon.pid"
 
-	iexec daemon = "@/usr/sbin/upsmon@"
-	iexec kill = "@/usr/sbin/upsmon@ -c stop"
+	iset exec daemon = "@/usr/sbin/upsmon@"
+	iset exec kill = "@/usr/sbin/upsmon@ -c stop"
 
 	idone
 }

@@ -15,7 +15,7 @@ setup()
 	iset pid_file = "/var/run/ntpd.pid"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/ntpd@ -p /var/run/ntpd.pid ${NTPD_OPTS}"
+	iset exec daemon = "@/usr/sbin/ntpd@ -p /var/run/ntpd.pid ${NTPD_OPTS}"
 
 	idone
 }

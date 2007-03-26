@@ -16,7 +16,7 @@ setup()
 	iset use = "daemon/vdr"
 	iset respawn
 
-	iexec daemon = "@/usr/bin/svdrpd@ ${VDR_HOST} ${VDR_PORT} ${SERV_HOST} ${SERV_PORT}"
+	iset exec daemon = "@/usr/bin/svdrpd@ ${VDR_HOST} ${VDR_PORT} ${SERV_HOST} ${SERV_PORT}"
 
 	idone
 }

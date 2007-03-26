@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc virtual/net daemon/dbus"
 
-	iexec daemon = "@/usr/sbin/yum-updatesd@ -f"
+	iset exec daemon = "@/usr/sbin/yum-updatesd@ -f"
 
 	idone
 }

@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec daemon = "@/usr/sbin/dhcpd@ -f"
+	iset exec daemon = "@/usr/sbin/dhcpd@ -f"
 
 	idone
 }

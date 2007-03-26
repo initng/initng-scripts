@@ -23,7 +23,7 @@ setup()
 	iset forks
 	iset pid_of = hddtemp
 
-	iexec daemon = hddtemp_daemon
+	iset exec daemon = hddtemp_daemon
 
 	idone
 }

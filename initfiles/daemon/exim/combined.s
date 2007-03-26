@@ -22,7 +22,7 @@ setup()
 	iset provide = "virtual/mta"
 	iset pid_file = "/var/run/exim4/exim.pid"
 
-	iexec daemon = "@/usr/sbin/exim4@ -bdf -q${QFLAGS}${QUEUEINTERVAL} ${COMMONOPTIONS} ${QUEUERUNNEROPTIONS} ${SMTPLISTENEROPTIONS}"
+	iset exec daemon = "@/usr/sbin/exim4@ -bdf -q${QFLAGS}${QUEUEINTERVAL} ${COMMONOPTIONS} ${QUEUERUNNEROPTIONS} ${SMTPLISTENEROPTIONS}"
 
 	idone
 }

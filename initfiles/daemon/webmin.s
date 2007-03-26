@@ -11,7 +11,7 @@ setup()
 	iset pid_file = "/var/run/webmin.pid"
 	iset forks
 
-	iexec daemon = "/usr/libexec/webmin/miniserv.pl /etc/webmin/miniserv.conf"
+	iset exec daemon = "/usr/libexec/webmin/miniserv.pl /etc/webmin/miniserv.conf"
 
 	idone
 }

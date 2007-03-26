@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/nscd/nscd.pid"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/nscd@"
+	iset exec daemon = "@/usr/sbin/nscd@"
 
 	idone
 }

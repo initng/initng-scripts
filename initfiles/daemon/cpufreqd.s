@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec daemon = "@/usr/sbin/cpufreqd@ --no-daemon"
+	iset exec daemon = "@/usr/sbin/cpufreqd@ --no-daemon"
 
 	idone
 }

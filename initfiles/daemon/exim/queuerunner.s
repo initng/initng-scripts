@@ -23,7 +23,7 @@ setup()
 	iset pid_file = "${QRPIDFILE}"
 	iset forks
 
-	iexec daemon = "@/usr/sbin/exim4@ -oP "${QRPIDFILE}" -q${QFLAGS}${QUEUEINTERVAL} ${COMMONOPTIONS} ${QUEUERUNNEROPTIONS}"
+	iset exec daemon = "@/usr/sbin/exim4@ -oP "${QRPIDFILE}" -q${QFLAGS}${QUEUEINTERVAL} ${COMMONOPTIONS} ${QUEUERUNNEROPTIONS}"
 
 	idone
 }

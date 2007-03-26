@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc daemon/bluetooth/hcid daemon/bluetooth/sdpd"
 
-	iexec daemon = "@/usr/bin/dund@ --listen --persist --nodetach"
+	iset exec daemon = "@/usr/bin/dund@ --listen --persist --nodetach"
 
 	idone
 }

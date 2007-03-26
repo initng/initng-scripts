@@ -15,7 +15,7 @@ setup()
 	iset suid = ${user}
 	iset pid_of = lircrcd
 
-	iexec daemon = lircrcd_daemon
+	iset exec daemon = lircrcd_daemon
 
 	idone
 }

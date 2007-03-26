@@ -16,9 +16,9 @@ setup()
 	iset daemon_stops_badly
 
 #ifd debian
-	iexec daemon = "@/usr/sbin/klogd@ /u -n ${KLOGD_OPTIONS}"
+	iset exec daemon = "@/usr/sbin/klogd@ /u -n ${KLOGD_OPTIONS}"
 #elsed
-	iexec daemon = "@/usr/sbin/klogd@ -n -c 1"
+	iset exec daemon = "@/usr/sbin/klogd@ -n -c 1"
 #endd
 
 	idone

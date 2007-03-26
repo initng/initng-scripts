@@ -16,9 +16,9 @@ setup()
 	iset forks
 
 #ifd fedora
-	iexec daemon = denyhosts_daemon
+	iset exec daemon = denyhosts_daemon
 #elsed
-	iexec daemon = "@denyhosts@ --daemon -c /etc/denyhosts.conf"
+	iset exec daemon = "@denyhosts@ --daemon -c /etc/denyhosts.conf"
 #endd
 
 	idone

@@ -10,7 +10,7 @@ setup()
 	iset use = "system/coldplug system/modules"
 	iset pid_of = netdaemon
 
-	iexec daemon = "@/usr/sbin/netdaemon@"
+	iset exec daemon = "@/usr/sbin/netdaemon@"
 
 	idone
 }

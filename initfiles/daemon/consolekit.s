@@ -9,7 +9,7 @@ setup()
 	iset need = "system/bootmisc"
 	iset pid_file = "/var/run/console-kit-daemon.pid"
 
-	iexec daemon = "@/usr/sbin/console-kit-daemon@"
+	iset exec daemon = "@/usr/sbin/console-kit-daemon@"
 
 	idone
 }

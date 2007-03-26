@@ -16,9 +16,9 @@ setup()
 	iset forks
 
 #ifd gentoo
-	iexec daemon = "@/usr/sbin/lircd@ ${LIRCD_OPTS} -P /var/run/lircd.pid"
+	iset exec daemon = "@/usr/sbin/lircd@ ${LIRCD_OPTS} -P /var/run/lircd.pid"
 #elsed
-	iexec daemon = "@/usr/sbin/lircd@ -d /dev/lirc/0 -P /var/run/lircd.pid"
+	iset exec daemon = "@/usr/sbin/lircd@ -d /dev/lirc/0 -P /var/run/lircd.pid"
 #endd
 
 	idone

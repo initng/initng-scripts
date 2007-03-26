@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/initial daemon/portmap"
 
-	iexec daemon = "@rpc.svcgssd@ -f"
+	iset exec daemon = "@rpc.svcgssd@ -f"
 
 	idone
 }

@@ -11,7 +11,7 @@ setup()
 	iset pid_file = "/var/run/fnfxd.pid"
 	iset forks
 
-	iexec daemon = "@fnfxd@"
+	iset exec daemon = "@fnfxd@"
 
 	idone
 }

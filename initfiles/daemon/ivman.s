@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/ivman.pid"
 	iset forks
 
-	iexec daemon = "@/usr/bin/ivman@"
+	iset exec daemon = "@/usr/bin/ivman@"
 
 	idone
 }

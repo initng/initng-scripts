@@ -14,7 +14,7 @@ setup()
 	iset forks
 	iset pid_of = bitlbeed
 
-	iexec daemon = "/usr/bin/bitlbeed /usr/sbin/bitlbee"
+	iset exec daemon = "/usr/bin/bitlbeed /usr/sbin/bitlbee"
 
 	idone
 }

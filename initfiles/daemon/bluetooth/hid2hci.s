@@ -8,8 +8,8 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec start = "@/usr/sbin/hid2hci@ -0"
-	iexec stop = "@/usr/sbin/hid2hci@ -1"
+	iset exec start = "@/usr/sbin/hid2hci@ -0"
+	iset exec stop = "@/usr/sbin/hid2hci@ -1"
 
 	idone
 }

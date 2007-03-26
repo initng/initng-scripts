@@ -26,9 +26,9 @@ setup()
 #endd
 
 #ifd debian
-	iexec daemon = gpm_daemon
+	iset exec daemon = gpm_daemon
 #elsed
-	iexec daemon = "@/usr/sbin/gpm@ -m ${MOUSEDEV} -t ${MOUSE} ${APPEND}"
+	iset exec daemon = "@/usr/sbin/gpm@ -m ${MOUSEDEV} -t ${MOUSE} ${APPEND}"
 #endd
 
 	idone

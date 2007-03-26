@@ -10,7 +10,7 @@ setup()
 	iset pid_file = "/var/run/chronyd.pid"
 	iset forks
 
-	iexec daemon = "/usr/sbin/chronyd -f /etc/chrony/chrony.conf"
+	iset exec daemon = "/usr/sbin/chronyd -f /etc/chrony/chrony.conf"
 
 	idone
 }

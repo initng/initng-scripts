@@ -8,7 +8,7 @@ setup()
 
 	iset need = "system/bootmisc"
 
-	iexec daemon = "@/usr/bin/svnserve@ --daemon --foreground --root"
+	iset exec daemon = "@/usr/bin/svnserve@ --daemon --foreground --root"
 
 	idone
 }

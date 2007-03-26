@@ -10,8 +10,8 @@ setup()
 	iset use = "system/mountfs"
 	iset pid_file = "/var/run/xend/xend.pid"
 
-	iexec daemon = xend_daemon
-	iexec kill = "@/usr/sbin/xend@ stop"
+	iset exec daemon = xend_daemon
+	iset exec kill = "@/usr/sbin/xend@ stop"
 
 	idone
 }
