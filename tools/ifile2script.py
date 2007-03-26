@@ -205,20 +205,6 @@ for i in file_list:
 			script_list.append(_service)
 			script_list.append("%" + i.split()[1].strip())
 			
-		elif i.startswith("need") or i.startswith("use") or i.startswith("also_start") or \
-				i.startswith("pid_file") or i.startswith("provide") or i.startswith("conflict") or \
-				i.startswith("also_stop"):
-			str_0 = i.split("=")[0].strip()
-			str_1 = i.split("=")[-1].strip(" ;")
-			
-			if iset_list_mode != elsed_mode and elsed_mode != 0:
-				for g in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
-					iset_list.append(ifd_list[g])
-					if ifd_list[g].startswith("#ifd"):
-						iset_list_mode_1 = iset_list_mode_1 + 1
-				iset_list_mode = elsed_mode
-			iset_list.append(str_0 + ' = "' + str_1 + '"')
-			
 		elif i.startswith("env"):
 			if i.startswith("env_file"):
 				_str = "source " + i.split("=", 1)[1].strip(" ;")
@@ -244,7 +230,19 @@ for i in file_list:
 				iexec_list_mode = elsed_mode
 			iexec_list.append(_service)
 			iexec_list.append("&" + _list[0].strip() + ' = "' + _list[1].strip() + '"')
-
+		
+		elif "=" in i:
+			str_0 = i.split("=")[0].strip()
+			str_1 = i.split("=")[-1].strip(" ;")
+			
+			if iset_list_mode != elsed_mode and elsed_mode != 0:
+				for g in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
+					iset_list.append(ifd_list[g])
+					if ifd_list[g].startswith("#ifd"):
+						iset_list_mode_1 = iset_list_mode_1 + 1
+				iset_list_mode = elsed_mode
+			iset_list.append(str_0 + ' = "' + str_1 + '"')
+			
 		elif i != "" and i != "}" and not i.startswith("#"):
 			if "#" in i:
 				_int = i.find("#")
@@ -353,12 +351,12 @@ for i in iregister_list:
 		else:
 			new_file.write("\tidone -s \"%s\"\n" %(i))
 
-new_file.write("}\n\n")
+new_file.write("}\n")
 
 _mode = "0"
 for i in script_list:
 	if i in service_and_daemon_list:
-		if _mode == "2":
+		if _mode == "2" or _mode == "0":
 			new_file.write("\n")
 		_service = i
 		_mode = "1"
