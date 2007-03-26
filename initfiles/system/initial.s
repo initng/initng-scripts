@@ -4,32 +4,28 @@
 
 setup()
 {
-	case "${NAME}"
-		mountvirtfs)
-			iregister service
-			iexec start = mountvirtfs_start
-			iset critical
-			;;
-		filldev)
-			iregister service
-			iset need = "system/initial/mountvirtfs"
-			iset use = "system/udev/mountdev"
-			iset  critical
-			iexec start = filldev_start
-			;;
-		loglevel)
-			iregister service
-			iexec start = "@/sbin/dmesg@ -n 1"
-			iexec stop = "@/sbin/dmesg@ -n 2"
-			;;
-		initial)
-			iregister virtual
-			iset critical
-			iset need = "system/initial/loglevel system/initial/mountvirtfs system/initial/filldev"
-			iset use = "system/selinux/dev system/udev"
-			;;
-	esac
-	idone
+	iregister -s system/initial/mountvirtfs service
+	iexec -s system/initial/mountvirtfs start = mountvirtfs_start
+	iset  -s system/initial/mountvirtfs critical
+	idone -s system/initial/mountvirtfs
+
+	iregister -s system/initial/filldev service
+	iset  -s system/initial/filldev need = "system/initial/mountvirtfs"
+	iset  -s system/initial/filldev use = "system/udev/mountdev"
+	iset  -s system/initial/filldev critical
+	iexec -s system/initial/filldev start = filldev_start
+	idone -s system/initial/filldev
+
+	iregister -s system/initial/loglevel service
+	iexec -s system/initial/loglevel start = "@/sbin/dmesg@ -n 1"
+	iexec -s system/initial/loglevel stop = "@/sbin/dmesg@ -n 2"
+	idone -s system/initial/loglevel
+
+	iregister -s system/initial virtual
+	iset  -s system/initial critical
+	iset  -s system/initial need = "system/initial/loglevel system/initial/mountvirtfs system/initial/filldev"
+	iset  -s system/initial use = "system/selinux/dev system/udev"
+	idone -s system/initial
 }
 
 mountvirtfs_start()
