@@ -20,15 +20,14 @@ setup()
 	iregister service
 
 	iset need = "system/initial system/mountroot system/mountfs/essential virtual/net"
-
 #ifd debian
-	iexec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
+	iset exec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
 #elsed gentoo
-	iexec start = "/usr/sbin/ntpdate ${NTPCLIENT_OPTS}"
+	iset exec start = "/usr/sbin/ntpdate ${NTPCLIENT_OPTS}"
 #elsed
-	iexec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
+	iset exec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
 #endd
+
 
 	idone
 }
-

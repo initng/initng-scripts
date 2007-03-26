@@ -7,9 +7,9 @@ setup()
 	iregister service
 
 	iset need = "system/initial system/mountfs/essential"
+	iset exec stop = "@/usr/sbin/accton@"
 
 	iexec start = acct_start
-	iexec stop = "@/usr/sbin/accton@"
 
 	idone
 }

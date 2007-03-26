@@ -15,10 +15,10 @@ setup()
 
 	iset -s "service/lm-sensors/modules" need = "system/bootmisc system/modules/i2c-core"
 	iset -s "service/lm-sensors/modules" use = "system/modules"
-	iset -s "service/lm-sensors/modules" stdall = /dev/null
+	iset -s "service/lm-sensors/modules" stdall = "/dev/null"
 	iset -s "service/lm-sensors" need = "system/bootmisc service/lm-sensors/modules"
 	iset -s "service/lm-sensors" use = "system/modules"
-	iset -s "service/lm-sensors" stdout = /dev/null
+	iset -s "service/lm-sensors" stdout = "/dev/null"
 
 	iexec -s "service/lm-sensors/modules" start = modules_start
 	iexec -s "service/lm-sensors/modules" stop = modules_stop

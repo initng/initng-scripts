@@ -13,11 +13,10 @@ setup()
 	iregister service
 
 	iset need = "system/bootmisc"
+	iset exec start = "${RCDIR}/${NAME} start"
+	iset exec stop = "${RCDIR}/${NAME} stop"
 	iset last
 
-	iexec start = "${RCDIR}/${NAME} start"
-	iexec stop = "${RCDIR}/${NAME} stop"
 
 	idone
 }
-

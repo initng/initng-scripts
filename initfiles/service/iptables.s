@@ -14,10 +14,9 @@ setup()
 
 	iset need = "system/initial system/mountfs/essential system/hostname virtual/net/lo"
 	iset provide = "virtual/firewall"
-	iset stdin = ${STATEFILE}
+	iset stdin = "${STATEFILE}"
+	iset exec start = "@/sbin/iptables-restore@ -c"
 
-	iexec start = "@/sbin/iptables-restore@ -c"
 
 	idone
 }
-

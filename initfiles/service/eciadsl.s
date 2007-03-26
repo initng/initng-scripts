@@ -8,10 +8,9 @@ setup()
 
 	iset need = "system/bootmisc system/usb"
 	iset provide = "virtual/net"
+	iset exec start = "@eciadsl-start@"
+	iset exec stop = "@eciadsl-stop@"
 
-	iexec start = "@eciadsl-start@"
-	iexec stop = "@eciadsl-stop@"
 
 	idone
 }
-

@@ -7,10 +7,9 @@ setup()
 	iregister service
 
 	iset need = "system/mountfs"
+	iset exec start = "@exportfs@ -ar"
+	iset exec stop = "@exportfs@ -au"
 
-	iexec start = "@exportfs@ -ar"
-	iexec stop = "@exportfs@ -au"
 
 	idone
 }
-

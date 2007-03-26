@@ -20,6 +20,7 @@ setup()
 	iset -s "service/readahead/watcher" pid_file = "/var/run/readahead-watch.pid"
 	iset -s "service/readahead/desktop" need = "system/mountfs/essential"
 	iset -s "service/readahead" need = "system/mountfs/essential"
+#script stop = "{"
 
 	iexec -s "service/readahead/stopper" start = stopper_start
 	iexec -s "service/readahead/watcher-desktop" daemon = watcher-desktop_daemon

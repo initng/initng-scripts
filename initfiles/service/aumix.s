@@ -8,10 +8,10 @@ setup()
 
 	iset use = "service/alsasound"
 	iset need = "system/initial system/bootmisc"
-	iset stdall = /dev/null
+	iset stdall = "/dev/null"
+	iset exec stop = "@/usr/bin/aumix@ -f /etc/aumixrc -S"
 
 	iexec start = aumix_start
-	iexec stop = "@/usr/bin/aumix@ -f /etc/aumixrc -S"
 
 	idone
 }

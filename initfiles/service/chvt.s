@@ -8,9 +8,8 @@ setup()
 
 	iset need = "virtual/getty/${NAME} system/bootmisc"
 	iset last
+	iset exec start = "@chvt@ ${NAME}"
 
-	iexec start = "@chvt@ ${NAME}"
 
 	idone
 }
-

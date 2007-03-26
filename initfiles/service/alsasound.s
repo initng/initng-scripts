@@ -23,16 +23,16 @@ setup()
 	iset -s "service/alsasound/ioctl32" need = "system/bootmisc"
 	iset -s "service/alsasound/ioctl32" use = "system/coldplug system/modules/depmod system/modules"
 	iset -s "service/alsasound/mixerstate" need = "system/bootmisc service/alsasound"
+	iset -s "service/alsasound/mixerstate" exec stop = "@alsactl@ -f ${asoundcfg} store"
 	iset -s "service/alsasound" need = "system/bootmisc"
 	iset -s "service/alsasound" use = "system/coldplug service/alsasound/cards service/alsasound/ioctl32 service/alsasound/seq service/alsasound/oss system/modules/depmod system/modules"
-	iset -s "service/alsasound" also_stop = service/alsasound/cards service/alsasound/ioctl32 service/alsasound/seq service/alsasound/oss
+	iset -s "service/alsasound" also_stop = "service/alsasound/cards service/alsasound/ioctl32 service/alsasound/seq service/alsasound/oss"
 
 	iexec -s "service/alsasound/cards" start = cards_start
 	iexec -s "service/alsasound/oss" start = oss_start
 	iexec -s "service/alsasound/seq" start = seq_start
 	iexec -s "service/alsasound/ioctl32" start = ioctl32_start
 	iexec -s "service/alsasound/mixerstate" start = mixerstate_start
-	iexec -s "service/alsasound/mixerstate" stop = "@alsactl@ -f ${asoundcfg} store"
 	iexec -s "service/alsasound" start = alsasound_start
 
 	idone -s "service/alsasound/cards"
