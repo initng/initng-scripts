@@ -14,8 +14,8 @@ source /etc/conf.d/hostname
 setup()
 {
 	iregister service
-	iset need = "system/initial"
-	iexec start
+	iset      need = "system/initial"
+	iexec     start
 	idone
 }
 

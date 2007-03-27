@@ -16,11 +16,11 @@ source /etc/conf.d/consolefont
 setup()
 {
 	iregister service
-	iset need = "system/bootmisc system/keymaps"
+	iset      need = "system/bootmisc system/keymaps"
 #ifd fedora pingwinek
-	iset exec start = "/sbin/setsysfont"
+	iset      exec start = "/sbin/setsysfont"
 #elsed
-	iexec start
+	iexec     start
 #endd
 	idone
 }

@@ -5,9 +5,9 @@
 setup()
 {
 	iregister service
-	iset need = "system/bootmisc"
-	iexec start
-	iset exec stop = "@sysctl@ -n -w fs.binfmt_misc.status"
+	iset      need = "system/bootmisc"
+	iexec     start
+	iset      exec stop = "@sysctl@ -n -w fs.binfmt_misc.status"
 	idone
 }
 

@@ -1,82 +1,75 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 setup()
 {
 	iregister -s "system/selinux/dev" service
+	iset      -s "system/selinux/dev" need = "system/initial/mountvirtfs"
+	iexec     -s "system/selinux/dev" start = dev_start
+	idone     -s "system/selinux/dev"
+
 	iregister -s "system/selinux/relabel" service
-
-	iset -s "system/selinux/dev" need = "system/initial/mountvirtfs"
-	iset -s "system/selinux/relabel" need = "system/mountroot"
-
-	iexec -s "system/selinux/dev" start = dev_start
-	iexec -s "system/selinux/relabel" start = relabel_start
-
-	idone -s "system/selinux/dev"
-	idone -s "system/selinux/relabel"
+	iset      -s "system/selinux/relabel" need = "system/mountroot"
+	iexec     -s "system/selinux/relabel" start = relabel_start
+	idone     -s "system/selinux/relabel"
 }
 
 dev_start()
 {
-		if [ -x @/sbin/restorecon@ ] && @fgrep@ -q " /dev " /proc/mounts
-		then
-			@/sbin/restorecon@ -R /dev 2>/dev/null
-		fi
+	[ -x @/sbin/restorecon@ ] && @fgrep@ -q " /dev " /proc/mounts &&
+		@/sbin/restorecon@ -R /dev 2>/dev/null
 }
 
 relabel_start()
 {
-		check_selinux() {
-			while read dev mp fs stuff
-			do
-				[ "$fs" = "selinuxfs" ] && echo "$mp"
-			done
-		}
-		
-		# Check SELinux status
-		#selinuxfs=`@awk@ '$3=="selinuxfs" {print $2}' /proc/mounts`
-		#selinuxfs="`check_selinux`"
-		#hardcode path for now
-		#check_selinux seems to cause boot hangs
-		selinuxfs="/selinux"
-		SELINUX=
-		if [ -n "${selinuxfs}" -a "`@cat@ /proc/self/attr/current`" != "kernel" ]
-		then
-			if [ -r ${selinuxfs}/enforce ]
-			then
-				SELINUX=`@cat@ ${selinuxfs}/enforce`
-			else
-				# assume enforcing if you can't read it
-				SELINUX=1
-			fi
-		fi
+	check_selinux() {
+		while read dev mp fs stuff
+		do
+			[ "$fs" = "selinuxfs" ] && echo "$mp"
+		done
+	}
 
-		relabel_selinux() {
-			echo
-			echo '*** Warning -- SELinux relabel is required. ***'
-			echo '*** Disabling security enforcement.         ***'
-			echo '*** Relabeling could take a very long time, ***'
-			echo '*** depending on file system size.          ***'
-			echo
-			echo "0" > ${selinuxfs}/enforce
-			@/sbin/fixfiles@ restore >/dev/null 2>&1
-			@/bin/rm@ -f /.autorelabel
-			echo '*** Enabling security enforcement.          ***'
-			echo ${SELINUX} >${selinuxfs}/enforce
-		}
+	# Check SELinux status
+	#selinuxfs=`@awk@ '$3=="selinuxfs" {print $2}' /proc/mounts`
+	#selinuxfs="`check_selinux`"
+	#hardcode path for now
+	#check_selinux seems to cause boot hangs
+	selinuxfs="/selinux"
+	SELINUX=
 
-		# Check to see if a full relabel is needed
-		if [ -n "${SELINUX}" ]
+	if [ -n "${selinuxfs}" -a "`@cat@ /proc/self/attr/current`" != "kernel" ]
+	then
+		if [ -r ${selinuxfs}/enforce ]
 		then
-			if [ -f /.autorelabel ] || echo "${cmdline}" | @grep@ -q autorelabel
-			then
-				relabel_selinux
-			fi
+			SELINUX=`@cat@ ${selinuxfs}/enforce`
 		else
-			if [ -d /etc/selinux ]
-			then
-				[ -f /.autorelabel ] || @touch@ /.autorelabel
-			fi
+			# assume enforcing if you can't read it
+			SELINUX=1
 		fi
+	fi
+
+	relabel_selinux() {
+		echo
+		echo '*** Warning -- SELinux relabel is required. ***'
+		echo '*** Disabling security enforcement.         ***'
+		echo '*** Relabeling could take a very long time, ***'
+		echo '*** depending on file system size.          ***'
+		echo
+		echo "0" > ${selinuxfs}/enforce
+		@/sbin/fixfiles@ restore >/dev/null 2>&1
+		@/bin/rm@ -f /.autorelabel
+		echo '*** Enabling security enforcement.          ***'
+		echo ${SELINUX} >${selinuxfs}/enforce
+	}
+
+	# Check to see if a full relabel is needed
+	if [ -n "${SELINUX}" ]
+	then
+		[ -f /.autorelabel ] || echo "${cmdline}" | @grep@ -q autorelabel &&
+			relabel_selinux
+	else
+		[ -d /etc/selinux ] && [ -f /.autorelabel ] ||
+			@touch@ /.autorelabel
+	fi
 }

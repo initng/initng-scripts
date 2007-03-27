@@ -12,10 +12,10 @@ source /etc/conf.d/clock
 setup()
 {
 	iregister service
-	iset need = "system/initial"
-	iset use = "system/modules"
-	iexec start
-	iexec stop
+	iset      need = "system/initial"
+	iset      use = "system/modules"
+	iexec     start
+	iexec     stop
 	idone
 }
 

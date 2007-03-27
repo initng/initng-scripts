@@ -11,8 +11,8 @@ source /etc/default/hdparm
 setup()
 {
 	iregister service
-	iset need = "system/initial"
-	iexec start
+	iset      need = "system/initial"
+	iexec     start
 	idone
 }
 

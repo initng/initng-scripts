@@ -22,9 +22,9 @@ source /etc/keymaps.conf
 setup()
 {
 	iregister service
-	iset need = "system/bootmisc"
-	iset use = "system/sysctl"
-	iexec start
+	iset      need = "system/bootmisc"
+	iset      use = "system/sysctl"
+	iexec     start
 	idone
 }
 
