@@ -26,16 +26,11 @@ MARK_AS_ADVANCED(DATA_INSTALL_DIR)
 
 SUBDIRS(doc initfiles scripts tools)
 
-OPTION(INSTALL_VIM "Install vim syntax files" ON)
 OPTION(INSTALL_FIXES "Install modified system scripts adapted for initng" OFF)
 OPTION(INSTALL_SCRIPTS_NET "Install network helper scripts" ON)
 OPTION(INSTALL_SCRIPTS_SPLASH "Install splash helper scripts" OFF)
 OPTION(INSTALL_DEBUG "Install debug ifiles" OFF)
 OPTION(INSTALL_RUNLEVELS "Generate and install system.virtual and default.runlevel" OFF)
-
-IF(INSTALL_VIM)
-	ADD_SUBDIRECTORY(vim)
-ENDIF(INSTALL_VIM)
 
 IF(INSTALL_FIXES)
 	ADD_SUBDIRECTORY(fixes)
