@@ -7,7 +7,6 @@ setup()
 	iregister daemon
 
 	iset suid = nobody
-	iset sgid = nobody
 	iset conflict = "daemon/bitlbee-bitlbeed"
 	iset need = "system/bootmisc virtual/net"
 	iset respawn
@@ -18,4 +17,3 @@ setup()
 
 	idone
 }
-

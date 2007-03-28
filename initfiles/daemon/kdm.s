@@ -11,12 +11,7 @@ setup()
 	iset use = "daemon/xfs system/modules system/coldplug service/faketty"
 	iset provide = "virtual/dm"
 
-#ifd debian
-	iset exec daemon = "@/usr/bin/kdm@ -nodaemon"
-#elsed
-	iset exec daemon = "@/usr/sbin/kdm:/usr/bin/kdm@ -nodaemon"
-#endd
+	iset exec daemon = "@kdm@ -nodaemon"
 
 	idone
 }
-

@@ -3,7 +3,7 @@
 # WWW: 
 
 #ifd gentoo
-source /etc/conf.d/rsyncd
+	source /etc/conf.d/rsyncd
 #endd
 
 setup()
@@ -20,4 +20,3 @@ setup()
 
 	idone
 }
-

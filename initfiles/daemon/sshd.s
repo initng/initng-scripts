@@ -28,20 +28,19 @@ setup()
 
 generate_keys_start()
 {
-		[ ! -s ${RSA1_KEY} ] && \
-			${KEYGEN} -q -t rsa1 -f ${RSA1_KEY} -C '' -N '' 2>&1 >/dev/null
-		if [ ! -s ${RSA_KEY} ]
-		then
-			${KEYGEN} -q -t rsa -f ${RSA_KEY} -C '' -N '' 2>&1 >/dev/null
-			chmod 600 ${RSA_KEY}
-			chmod 644 ${RSA_KEY}.pub
-		fi
-		if [ ! -s ${DSA_KEY} ]
-		then
-			${KEYGEN} -q -t dsa -f ${DSA_KEY} -C '' -N '' 2>&1 >/dev/null
-			chmod 600 ${DSA_KEY}
-			chmod 644 ${DSA_KEY}.pub
-		fi
-	}
+	[ ! -s ${RSA1_KEY} ] && \
+		${KEYGEN} -q -t rsa1 -f ${RSA1_KEY} -C '' -N '' 2>&1 >/dev/null
+	if [ ! -s ${RSA_KEY} ]
+	then
+		${KEYGEN} -q -t rsa -f ${RSA_KEY} -C '' -N '' 2>&1 >/dev/null
+		chmod 600 ${RSA_KEY}
+		chmod 644 ${RSA_KEY}.pub
+	fi
+	if [ ! -s ${DSA_KEY} ]
+	then
+		${KEYGEN} -q -t dsa -f ${DSA_KEY} -C '' -N '' 2>&1 >/dev/null
+		chmod 600 ${DSA_KEY}
+		chmod 644 ${DSA_KEY}.pub
+	fi
 }
 
