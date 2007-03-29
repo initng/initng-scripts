@@ -17,8 +17,6 @@ setup()
 
 apcupsd_daemon()
 {
-       		rm -f /etc/apcupsd/powerfail
-		rm -f /etc/nologin
-		exec /usr/sbin/apcupsd -f /etc/apcupsd/apcupsd.conf
-	}
+	rm -f /etc/apcupsd/powerfail /etc/nologin
+	/usr/sbin/apcupsd -f /etc/apcupsd/apcupsd.conf
 }

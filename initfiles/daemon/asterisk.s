@@ -2,11 +2,11 @@
 # DESCRIPTION: Highly configurable modular software PABX (phone system)
 # WWW: http://www.asterisk.org
 
-ASTERISK_USER =" asterisk:asterisk"
+ASTERISK_USER="asterisk"
 #ifd debian
-source /etc/default/asterisk
+	source /etc/default/asterisk
 #elsed
-source /etc/conf.d/asterisk
+	source /etc/conf.d/asterisk
 #endd
 
 setup()
@@ -21,4 +21,3 @@ setup()
 
 	idone
 }
-

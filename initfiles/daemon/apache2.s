@@ -4,9 +4,9 @@
 
 APACHE2_OPTS=""
 #ifd debian
-source /etc/default/apache2
+	source /etc/default/apache2
 #elsed
-source /etc/conf.d/apache2
+	source /etc/conf.d/apache2
 #endd
 
 setup()
@@ -24,4 +24,3 @@ setup()
 
 	idone
 }
-
