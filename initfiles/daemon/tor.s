@@ -7,8 +7,12 @@ setup()
 	iregister daemon
 
 	iset need = "system/bootmisc virtual/net"
+
+#ifd debian
 	iset suid = debian-tor
 	iset sgid = debian-tor
+#endd
+
 	iset pid_of = tor
 	iset respawn
 
@@ -16,4 +20,3 @@ setup()
 
 	idone
 }
-

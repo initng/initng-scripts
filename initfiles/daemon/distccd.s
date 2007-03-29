@@ -3,16 +3,17 @@
 # WWW: http://distcc.samba.org/
 
 #ifd gentoo
-DISTCCD_PIDFILE="/var/run/distccd/distccd.pid"
-DISTCCD_NICE="10"
-DISTCCD_OPTS="--port 3632 --log-level critical --allow 192.168.1.0/24"
+	DISTCCD_PIDFILE="/var/run/distccd/distccd.pid"
+	DISTCCD_NICE="10"
+	DISTCCD_OPTS="--port 3632 --log-level critical --allow 192.168.1.0/24"
 #elsed
-PIDFILE="/var/run/distccd/distccd.pid"
-PORT="3632"
-ALLOW="192.168.0.0/24"
-LISTEN="0.0.0.0"
-NICE="10"
+	PIDFILE="/var/run/distccd/distccd.pid"
+	PORT="3632"
+	ALLOW="192.168.0.0/24"
+	LISTEN="0.0.0.0"
+	NICE="10"
 #endd
+
 source /etc/conf.d/distccd
 
 setup()
@@ -36,4 +37,3 @@ setup()
 
 	idone
 }
-

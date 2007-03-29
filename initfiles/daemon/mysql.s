@@ -3,9 +3,9 @@
 # WWW: http://www.mysql.com/
 
 #ifd pingwinek enlisy
-DATA="/srv/mysql"
+	DATA="/srv/mysql"
 #elsed
-DATA="/var/lib/mysql"
+	DATA="/var/lib/mysql"
 #endd
 PIDFILE="/var/run/mysqld/mysqld.pid"
 
@@ -34,31 +34,31 @@ setup()
 initdb_start()
 {
 #ifd enlisy
-		if [ ! -d ${DATA} ]; then
-			@mkdir@ -p ${DATA}
-			/usr/bin/mysql_install_db --datadir=${DATA} --user=mysql >/dev/null 2>&1
-			chown -R mysql.mysql ${DATA}
-		fi
+	if [ ! -d ${DATA} ]; then
+		@mkdir@ -p ${DATA}
+		/usr/bin/mysql_install_db --datadir=${DATA} --user=mysql >/dev/null 2>&1
+		chown -R mysql.mysql ${DATA}
+	fi
 #elsed
-		if [ ! -d ${DATA}/db/mysql ]
+	if [ ! -d ${DATA}/db/mysql ]
+	then
+		if [ ! -d ${DATA} ]
 		then
-			if [ ! -d ${DATA} ]
-			then
-				@mkdir@ -p ${DATA}
-				chown mysql.mysql ${DATA}
-				chmod go-rwx ${DATA}
-			fi
-			su mysql -c "/usr/bin/mysql_install_db" >/dev/null 2>&1
+			@mkdir@ -p ${DATA}
+			chown mysql.mysql ${DATA}
+			chmod go-rwx ${DATA}
 		fi
-		exec [ -f ${DATA}/db/mysql/db.frm ]
+		su mysql -c "/usr/bin/mysql_install_db" >/dev/null 2>&1
+	fi
+	exec [ -f ${DATA}/db/mysql/db.frm ]
 #endd
 }
 
 mysql_kill()
 {
-		# Neccesary for mysqld to stop (we have to send the
-                # SIGKILL to mysqld itself, but initng has the PID
-		# of mysqld_safe - it has to for various reasons)
-		kill $(cat ${PIDFILE})
+	# Neccesary for mysqld to stop (we have to send the
+	# SIGKILL to mysqld itself, but initng has the PID
+	# of mysqld_safe - it has to for various reasons)
+	kill $(cat ${PIDFILE})
 	}
 }
