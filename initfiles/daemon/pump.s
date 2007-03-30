@@ -6,35 +6,32 @@ source /etc/conf.d/net
 
 setup()
 {
+	# SERVICE: daemon/pump/*
 	iregister service
-
 	iset need = "system/bootmisc"
-
-	iset exec start = pump_any_start
-
+	iexec start
+	iset exec stop = "@/sbin/pump@ --release -i ${NAME}"
 	idone
 }
 
-pump_any_start()
+start()
 {
-		eval opts=\${pump_${NAME}}
-		eval d=\${dhcp_${NAME}}
-		[ "${d}" = "" ] && d="${dhcp}"
+	eval opts=\${pump_${NAME}}
+	eval d=\${dhcp_${NAME}}
+	[ "${d}" = "" ] && d="${dhcp}"
 
-		for o in ${d}
-		do
-			case "${o}" in
-				"nodns") opts="${opts} --no-dns"
-			esac
-		done
+	for o in ${d}
+	do
+		case "${o}" in
+			"nodns") opts="${opts} --no-dns"
+		esac
+	done
 
-		h=`hostname`
-		if [ -n "${h}" -a ! "${h}" = "(none)" -a ! "${h}" = "localhost" ]
-		then
-			echo "${opts}" | @grep@ -w -- '-h' || opts="${opts} -h ${h}"
-		fi
-	
-		exec @/sbin/pump@ ${opts} -i ${NAME}
-	}
-	exec stop = @/sbin/pump@ --release -i ${NAME};
+	h=`hostname`
+	if [ -n "${h}" -a ! "${h}" = "(none)" -a ! "${h}" = "localhost" ]
+	then
+		echo "${opts}" | @grep@ -w -- '-h' || opts="${opts} -h ${h}"
+	fi
+
+	exec @/sbin/pump@ ${opts} -i ${NAME}
 }

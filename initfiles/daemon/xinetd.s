@@ -4,16 +4,20 @@
 
 #ifd gentoo
 source /etc/conf.d/xinetd
+#elsed
+XINETD_OPTS=
 #endd
 
 setup()
 {
+	export SERVICE="daemon/xinetd"
 	iregister daemon
-
 	iset need = "system/bootmisc virtual/net"
-
-	iset exec daemon = "@/usr/sbin/xinetd@ -dontfork ${XINETD_OPTS}"
-
+	iexec daemon
 	idone
 }
 
+daemon()
+{
+	exec @/usr/sbin/xinetd@ -dontfork ${XINETD_OPTS}
+}

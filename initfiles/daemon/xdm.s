@@ -4,19 +4,16 @@
 
 setup()
 {
+	export SERVICE="daemon/xdm"
 	iregister daemon
-
 	iset need = "system/bootmisc"
 	iset conflict = "daemon/gdm daemon/kdm daemon/wdm"
 	iset use = "system/modules system/coldplug service/faketty"
 	iset provide = "virtual/dm"
-
 #ifd debian
 	iset exec daemon = "@/usr/bin/X11/xdm@ -nodaemon"
 #elsed
 	iset exec daemon = "@/usr/sbin/xdm:/usr/bin/xdm@ -nodaemon"
 #endd
-
 	idone
 }
-

@@ -8,13 +8,12 @@ source /etc/conf.d/pure-ftpd
 
 setup()
 {
+	export SERVICE="daemon/pure-ftpd"
 	iregister daemon
-
 	iset need = "system/bootmisc"
 	iset use = "daemon/mysql"
 	iset pid_file = "/var/run/pure-ftpd.pid"
 	iset forks
-
 #ifd gentoo
 	iset exec daemon = "@/usr/sbin/pure-ftpd@ $SERVER $MAX_CONN $MAX_CONN_IP $DISK_FULL $USE_NAT $AUTH $LOG $TIMEOUT $MISC_OTHER"
 #elsed enlisy
@@ -22,7 +21,5 @@ setup()
 #elsed
 	iset exec daemon = "@/usr/sbin/pure-config.pl@ /etc/pure-ftpd/pure-ftpd.conf"
 #endd
-
 	idone
 }
-

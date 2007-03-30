@@ -4,23 +4,23 @@
 
 #ifd gentoo
 source /etc/conf.d/timidity
+#elsed
+TIMIDITY_OPTS="-B2,8 -Os"
 #endd
 
 setup()
 {
+	export SERVICE="daemon/timidity"
 	iregister daemon
-
 	iset need = "service/alsasound system/bootmisc"
 #ifd gentoo
 	iset use = "daemon/esound"
 #endd
-
-#ifd gentoo
-	iset exec daemon = "@/usr/bin/timidity@ -iA ${TIMIDITY_OPTS}"
-#elsed
-	iset exec daemon = "@/usr/bin/timidity@ -iA -B2,8 -Os"
-#endd
-
+	iexec daemon
 	idone
 }
 
+daemon()
+{
+	exec @/usr/bin/timidity@ -iA ${TIMIDITY_OPTS}
+}

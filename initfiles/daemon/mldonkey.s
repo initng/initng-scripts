@@ -10,23 +10,21 @@ source /etc/conf.d/mldonkey
 
 setup()
 {
+	export SERVICE="daemon/mldonkey"
 	iregister daemon
-
 	iset need = "system/bootmisc virtual/net"
-	iset suid = ${USER}
-	iset nice = ${NICE}
+	iset suid = "${USER}"
+	iset nice = "${NICE}"
 	iset respawn = yes
-	iset stdall = ${LOG}
-
+	iset stdall = "${LOG}"
 	iset exec daemon = "@/usr/bin/mlnet@"
-	iset exec kill = mldonkey_kill
-
+	iexec kill
 	idone
 }
 
-mldonkey_kill()
+kill()
 {
-		echo kill | @/usr/bin/netcat:/usr/bin/telnet@ 127.0.0.1 4000 >/dev/null
-		@pkill@ mlnet
-		exec [ ${?} -le 1 ]
+	echo kill | @/usr/bin/netcat:/usr/bin/telnet@ 127.0.0.1 4000 >/dev/null
+	@pkill@ mlnet
+	exec [ ${?} -le 1 ]
 }

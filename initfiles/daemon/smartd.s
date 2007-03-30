@@ -12,8 +12,8 @@ source /etc/conf.d/smartd
 
 setup()
 {
+	export SERVICE="daemon/smartd"
 	iregister daemon
-
 	iset need = "system/bootmisc"
 	iset forks
 	iset pid_of = smartd
@@ -21,22 +21,18 @@ setup()
 #elsed
 	iset pid_file = "/var/run/smartd.pid"
 #endd
-
-#ifd fedora mandriva
-	iset exec daemon = smartd_daemon
-#elsed debian
-	iset exec daemon = "/usr/sbin/smartd -p /var/run/smartd.pid ${smartd_opts}"
-#elsed
-	iset exec daemon = "/usr/sbin/smartd -p /var/run/smartd.pid ${SMARTD_OPTS}"
-#endd
-
+	iexec daemon
 	idone
 }
 
-#ifd fedora mandriva
-smartd_daemon()
+daemon()
 {
-		[ -f /etc/smartd.conf ] || smartd-conf.py > /etc/smartd.conf
-		/usr/sbin/smartd -p /var/run/smartd.pid ${smartd_opts}
-}
+#ifd fedora mandriva
+	[ -f /etc/smartd.conf ] || smartd-conf.py > /etc/smartd.conf
 #endd
+#ifd debian fedora mandriva
+	exec @/usr/sbin/smartd@ -p /var/run/smartd.pid ${smartd_opts}
+#elsed
+	exec @/usr/sbin/smartd@ -p /var/run/smartd.pid ${SMARTD_OPTS}
+#endd
+}
