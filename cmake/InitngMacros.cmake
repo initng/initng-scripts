@@ -27,3 +27,20 @@ MACRO(PROCESS_SFILES _service_FILES)
 
 ENDMACRO(PROCESS_SFILES)
 
+MACRO(GENERATE_RUNLEVEL)
+	SET(_runlevel_FILES)
+	FOREACH(_current_FILE ${ARGN})
+		SET(_runlevel_FILE ${CMAKE_CURRENT_BINARY_DIR}/${_current_FILE})
+		ADD_CUSTOM_COMMAND(OUTPUT ${_runlevel_FILE}
+			COMMAND ${CMAKE_BINARY_DIR}/genrunlevel
+			ARGS -confdir ${CMAKE_CURRENT_BINARY_DIR} ${_current_FILE} > /dev/null 2>&1
+			DEPENDS ${CMAKE_SOURCE_DIR}/genrunlevel.in)
+
+		SET(_runlevel_FILES ${_runlevel_FILES} ${_runlevel_FILE})
+
+	ENDFOREACH(_current_FILE)
+
+	ADD_CUSTOM_TARGET(runlevel ALL
+		DEPENDS ${_runlevel_FILES})
+
+ENDMACRO(GENERATE_RUNLEVEL)
