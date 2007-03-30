@@ -4,13 +4,14 @@
 
 setup()
 {
+	export SERVICE="system/usb"
 	iregister service
 #ifd fedora
-	iset      need = "system/bootmisc"
+	iset need = "system/bootmisc"
 #elsed
-	iset      need = "system/bootmisc system/modules/usbcore"
+	iset need = "system/bootmisc system/modules/usbcore"
 #endd
-	iexec     start
+	iexec start
 	idone
 }
 

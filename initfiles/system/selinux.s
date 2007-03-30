@@ -4,15 +4,17 @@
 
 setup()
 {
-	iregister -s "system/selinux/dev" service
-	iset      -s "system/selinux/dev" need = "system/initial/mountvirtfs"
-	iexec     -s "system/selinux/dev" start = dev_start
-	idone     -s "system/selinux/dev"
+	export SERVICE="system/selinux/dev"
+	iregister service
+	iset need = "system/initial/mountvirtfs"
+	iexec start = dev_start
+	idone
 
-	iregister -s "system/selinux/relabel" service
-	iset      -s "system/selinux/relabel" need = "system/mountroot"
-	iexec     -s "system/selinux/relabel" start = relabel_start
-	idone     -s "system/selinux/relabel"
+	export SERVICE="system/selinux/relabel"
+	iregister service
+	iset need = "system/mountroot"
+	iexec start = relabel_start
+	idone
 }
 
 dev_start()

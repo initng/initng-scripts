@@ -6,9 +6,10 @@ source /etc/conf.d/pcmcia
 
 setup()
 {
+	export SERVICE="system/pcmcia"
 	iregister service
-	iset      need = "system/bootmisc"
-	iexec     start
+	iset need = "system/bootmisc"
+	iexec start
 	idone
 }
 

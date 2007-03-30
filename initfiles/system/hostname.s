@@ -13,9 +13,10 @@ source /etc/conf.d/hostname
 
 setup()
 {
+	export SERVICE="system/hostname"
 	iregister service
-	iset      need = "system/initial"
-	iexec     start
+	iset need = "system/initial"
+	iexec start
 	idone
 }
 

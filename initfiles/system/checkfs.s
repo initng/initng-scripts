@@ -9,11 +9,12 @@ FSCK_LOGFILE="/var/log/fsck/checkfs"
 
 setup()
 {
+	export SERVICE="system/checkfs"
 	iregister service
-	iset      need = "system/initial system/mountroot"
-	iset      use = "system/sraid system/hdparm"
-	iset      never_kill
-	iexec     start
+	iset need = "system/initial system/mountroot"
+	iset use = "system/sraid system/hdparm"
+	iset never_kill
+	iexec start
 	idone
 }
 
@@ -36,72 +37,72 @@ start()
 	if [ -x "@on_ac_power@" ]
 	then
 		@on_ac_power@ >/dev/null 2>&1
-			[ ${?} -eq 1 ] && BAT=yes
-		fi
+		[ ${?} -eq 1 ] && BAT=yes
+	fi
 
-		#
-		# Check the rest of the file systems.
-		#
-		if ! [ -f /fastboot -a -n "${BAT}" -a "${FSCKTYPES}" = "none" ]
+	#
+	# Check the rest of the file systems.
+	#
+	if ! [ -f /fastboot -a -n "${BAT}" -a "${FSCKTYPES}" = "none" ]
+	then
+		force=""
+		[ -f /forcefsck ] && force="-f"
+		fix="-a"
+		[ "${FSCKFIX}" = yes ] && fix="-y"
+		spinner="-C"
+		[ "${TERM}" = dumb -o "${TERM}" = network -o "${TERM}" = unknown -o -z "${TERM}" ] && spinner=""
+		[ "$(uname -m)" = s390 ] && spinner=""  # This should go away
+		FSCKTYPES_OPT=""
+		[ "${FSCKTYPES}" ] && FSCKTYPES_OPT="-t ${FSCKTYPES}"
+
+		if [ "${VERBOSE}" = no ]
 		then
-			force=""
-			[ -f /forcefsck ] && force="-f"
-			fix="-a"
-			[ "${FSCKFIX}" = yes ] && fix="-y"
-			spinner="-C"
-			[ "${TERM}" = dumb -o "${TERM}" = network -o "${TERM}" = unknown -o -z "${TERM}" ] && spinner=""
-			[ "$(uname -m)" = s390 ] && spinner=""  # This should go away
-			FSCKTYPES_OPT=""
-			[ "${FSCKTYPES}" ] && FSCKTYPES_OPT="-t ${FSCKTYPES}"
+			echo "Checking file systems"
+			@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -T -R -A ${fix} ${force} ${FSCKTYPES_OPT}
+			FSCKCODE=${?}
 
-			if [ "${VERBOSE}" = no ]
+			if [ ${FSCKCODE} -gt 1 ]
 			then
-				echo "Checking file systems"
-				@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -T -R -A ${fix} ${force} ${FSCKTYPES_OPT}
-				FSCKCODE=${?}
-
-				if [ ${FSCKCODE} -gt 1 ]
-				then
-					echo 1 "code ${FSCKCODE}"
-					handle_failed_fsck
-				fi
-			else
-				if [ "${FSCKTYPES}" ]
-				then
-					echo "Will now check all file systems of types ${FSCKTYPES}"
-				else
-					echo "Will now check all file systems"
-				fi
-
-				@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -V -R -A ${fix} ${force} ${FSCKTYPES_OPT}
-				FSCKCODE=${?}
-
-				if [ ${FSCKCODE} -gt 1 ]
-				then
-					handle_failed_fsck
-				else
-					echo "Done checking file systems."
-					echo "A log is being saved in ${FSCK_LOGFILE} if that location is writable."
-				fi
+				echo 1 "code ${FSCKCODE}"
+				handle_failed_fsck
 			fi
-		fi
-
-		@rm@ -f /fastboot /forcefsck
-#elsed
-		if [ -f /fastboot ]
-		then
-			@rm@ -f /fastboot
 		else
-			if [ -f /forcefsck ]
+			if [ "${FSCKTYPES}" ]
 			then
-				echo "A full fsck has been forced"
-				@logsave@ /dev/null @fsck@ -C -R -A -a -f || echo "fsck error: ${?}" >&2
-				@rm@ -f /forcefsck
+				echo "Will now check all file systems of types ${FSCKTYPES}"
 			else
-				@logsave@ /dev/null @fsck@ -C -T -R -A -a || echo "fsck error: ${?}" >&2
+				echo "Will now check all file systems"
+			fi
+
+			@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -V -R -A ${fix} ${force} ${FSCKTYPES_OPT}
+			FSCKCODE=${?}
+
+			if [ ${FSCKCODE} -gt 1 ]
+			then
+				handle_failed_fsck
+			else
+				echo "Done checking file systems."
+				echo "A log is being saved in ${FSCK_LOGFILE} if that location is writable."
 			fi
 		fi
+	fi
+
+	@rm@ -f /fastboot /forcefsck
+#elsed
+	if [ -f /fastboot ]
+	then
+		@rm@ -f /fastboot
+	else
+		if [ -f /forcefsck ]
+		then
+			echo "A full fsck has been forced"
+			@logsave@ /dev/null @fsck@ -C -R -A -a -f || echo "fsck error: ${?}" >&2
+			@rm@ -f /forcefsck
+		else
+			@logsave@ /dev/null @fsck@ -C -T -R -A -a || echo "fsck error: ${?}" >&2
+		fi
+	fi
 #endd
 
-		exit 0
+	exit 0
 }

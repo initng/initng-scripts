@@ -21,10 +21,11 @@ source /etc/keymaps.conf
 
 setup()
 {
+	export SERVICE="system/keymaps"
 	iregister service
-	iset      need = "system/bootmisc"
-	iset      use = "system/sysctl"
-	iexec     start
+	iset need = "system/bootmisc"
+	iset use = "system/sysctl"
+	iexec start
 	idone
 }
 

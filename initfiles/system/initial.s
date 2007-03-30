@@ -4,28 +4,32 @@
 
 setup()
 {
-	iregister -s "system/initial/mountvirtfs" service
-	iexec     -s "system/initial/mountvirtfs" start = mountvirtfs_start
-	iset      -s "system/initial/mountvirtfs" critical
-	idone     -s "system/initial/mountvirtfs"
+	export SERVICE="system/initial/mountvirtfs"
+	iregister service
+	iexec start = mountvirtfs_start
+	iset critical
+	idone
 
-	iregister -s "system/initial/filldev" service
-	iset      -s "system/initial/filldev" need = "system/initial/mountvirtfs"
-	iset      -s "system/initial/filldev" use = "system/udev/mountdev"
-	iset      -s "system/initial/filldev" critical
-	iexec     -s "system/initial/filldev" start = filldev_start
-	idone     -s "system/initial/filldev"
+	export SERVICE="system/initial/filldev"
+	iregister service
+	iset need = "system/initial/mountvirtfs"
+	iset use = "system/udev/mountdev"
+	iset critical
+	iexec start = filldev_start
+	idone
 
-	iregister -s "system/initial/loglevel" service
-	iset      -s "system/initial/loglevel" exec start = "@/sbin/dmesg@ -n 1"
-	iset      -s "system/initial/loglevel" exec stop = "@/sbin/dmesg@ -n 2"
-	idone     -s "system/initial/loglevel"
+	export SERVICE="system/initial/loglevel"
+	iregister service
+	iset exec start = "@/sbin/dmesg@ -n 1"
+	iset exec stop = "@/sbin/dmesg@ -n 2"
+	idone
 
-	iregister -s "system/initial" virtual
-	iset      -s "system/initial" critical
-	iset      -s "system/initial" need = "system/initial/loglevel system/initial/mountvirtfs system/initial/filldev"
-	iset      -s "system/initial" use = "system/selinux/dev system/udev"
-	idone     -s "system/initial"
+	export SERVICE="system/initial"
+	iregister virtual
+	iset critical
+	iset need = "system/initial/loglevel system/initial/mountvirtfs system/initial/filldev"
+	iset use = "system/selinux/dev system/udev"
+	idone
 }
 
 mountvirtfs_start()

@@ -7,41 +7,47 @@ dm_file="${dm_dir}/control"
 
 setup()
 {
-	iregister -s "system/mountroot/dmsetup" service
-	iset      -s "system/mountroot/dmsetup" need = "system/initial system/modules/dm-mod"
-	iset      -s "system/mountroot/dmsetup" exec start = "@/sbin/dmsetup@ mknodes"
-	idone     -s "system/mountroot/dmsetup"
+	export SERVICE="system/mountroot/dmsetup"
+	iregister service
+	iset need = "system/initial system/modules/dm-mod"
+	iset exec start = "@/sbin/dmsetup@ mknodes"
+	idone
 
-	iregister -s "system/mountroot/lvm" service
-	iset      -s "system/mountroot/lvm" need = "system/initial system/modules/lvm system/modules/lvm-mod system/mountroot/dmsetup"
-	iexec     -s "system/mountroot/lvm" start = lvm_start
-	idone     -s "system/mountroot/lvm"
+	export SERVICE="system/mountroot/lvm"
+	iregister service
+	iset need = "system/initial system/modules/lvm system/modules/lvm-mod system/mountroot/dmsetup"
+	iexec start = lvm_start
+	idone
 
-	iregister -s "system/mountroot/evms" service
-	iset      -s "system/mountroot/evms" need = "system/initial"
-	iset      -s "system/mountroot/evms" exec start = "@/sbin/evms_activate@"
-	idone     -s "system/mountroot/evms"
+	export SERVICE="system/mountroot/evms"
+	iregister service
+	iset need = "system/initial"
+	iset exec start = "@/sbin/evms_activate@"
+	idone
 
-	iregister -s "system/mountroot/check" service
-	iset      -s "system/mountroot/check" need = "system/initial"
-	iset      -s "system/mountroot/check" use = "system/hdparm system/mountroot/evms system/mountroot/lvm system/mountroot/dmsetup"
-	iset      -s "system/mountroot/check" critical
-	iset      -s "system/mountroot/check" never_kill
-	iexec     -s "system/mountroot/check" start = check_start
-	idone     -s "system/mountroot/check"
+ 	export SERVICE="system/mountroot/check"
+	iregister service
+	iset need = "system/initial"
+	iset use = "system/hdparm system/mountroot/evms system/mountroot/lvm system/mountroot/dmsetup"
+	iset critical
+	iset never_kill
+	iexec start = check_start
+	idone
 
-	iregister -s "system/mountroot/rootrw" service
-	iset      -s "system/mountroot/rootrw" need = "system/initial system/mountroot/check"
-	iset      -s "system/mountroot/rootrw" use = "system/mountroot/evms system/mountroot/lvm system/mountroot/dmsetup"
-	iset      -s "system/mountroot/rootrw" critical
-	iexec     -s "system/mountroot/rootrw" start = rootrw_start
-	iexec     -s "system/mountroot/rootrw" stop = rootrw_stop
-	idone     -s "system/mountroot/rootrw"
+	export SERVICE="system/mountroot/rootrw"
+	iregister service
+	iset need = "system/initial system/mountroot/check"
+	iset use = "system/mountroot/evms system/mountroot/lvm system/mountroot/dmsetup"
+	iset critical
+	iexec start = rootrw_start
+	iexec stop = rootrw_stop
+	idone
 
-	iregister -s "system/mountroot" service
-	iset      -s "system/mountroot" need = "system/initial system/mountroot/rootrw"
-	iexec     -s "system/mountroot" start = mountroot_start
-	idone     -s "system/mountroot"
+	export SERVICE="system/mountroot"
+	iregister service
+	iset need = "system/initial system/mountroot/rootrw"
+	iexec start = mountroot_start
+	idone
 }
 
 lvm_start()

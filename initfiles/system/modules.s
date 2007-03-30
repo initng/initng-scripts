@@ -6,26 +6,29 @@ setup()
 {
 	if [ "${NAME}" = modules -o "${NAME}" = depmod ]
 	then
-		iregister -s "system/initial/depmod" service
-		iset      -s "system/initial/depmod" need = "system/initial system/mountroot"
-		iexec     -s "system/initial/depmod" start = depmod_start
-		idone     -s "system/initial/depmod"
+		export SERVICE="system/initial/depmod"
+		iregister service
+		iset need = "system/initial system/mountroot"
+		iexec start = depmod_start
+		idone
 
-		iregister -s "system/modules" service
-		iset      -s "system/modules" need = "system/initial system/mountroot system/modules/loop"
-		iset      -s "system/modules" use = "system/modules/depmod"
-		iexec     -s "system/modules" start
-		idone     -s "system/modules"
+		export SERVICE="system/modules"
+		iregister service
+		iset need = "system/initial system/mountroot system/modules/loop"
+		iset use = "system/modules/depmod"
+		iexec start
+		idone
 
 		exit 0
 	fi
 
+	# SERVICE: system/modules/*
 	iregister service
-	iset      need = "system/initial"
+	iset need = "system/initial"
 	[ "${NAME}" != dm-mod ] && iset use = "system/modules/depmod"
-	iset      stdall = /dev/null
-	iexec     start = module_load
-	iexec     stop = module_unload
+	iset stdall = /dev/null
+	iexec start = module_load
+	iexec stop = module_unload
 	idone
 }
 

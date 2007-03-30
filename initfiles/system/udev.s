@@ -4,46 +4,52 @@
 
 setup()
 {
-	iregister -s "system/udev" virtual
-	iset      -s "system/udev" critical
-	iset      -s "system/udev" need = "system/udev/filldev system/udev/udevd"
-	iset      -s "system/udev" also_start = "system/udev/move_rules system/udev/retry_failed"
-	idone     -s "system/udev"
+	export SERVICE="system/udev"
+	iregister virtual
+	iset critical
+	iset need = "system/udev/filldev system/udev/udevd"
+	iset also_start = "system/udev/move_rules system/udev/retry_failed"
+	idone
 
-	iregister -s "system/udev/udevd" daemon
-	iset      -s "system/udev/udevd" critical
-	iset      -s "system/udev/udevd" need = "system/udev/mountdev system/initial/mountvirtfs"
-	iset      -s "system/udev/udevd" respawn
-	iexec     -s "system/udev/udevd" daemon = "@/sbin/udevd@"
-	idone     -s "system/udev/udevd"
+	export SERVICE="system/udev/udevd"
+	iregister daemon
+	iset critical
+	iset need = "system/udev/mountdev system/initial/mountvirtfs"
+	iset respawn
+	iset exec daemon = "@/sbin/udevd@"
+	idone
 
-	iregister -s "system/udev/move_rules" service
-	iset      -s "system/udev/move_rules" need = "system/udev/udevd system/mountroot/rootrw"
-	iexec     -s "system/udev/move_rules" start = move_rules_start
-	idone     -s "system/udev/move_rules"
+	export SERVICE="system/udev/move_rules"
+	iregister service
+	iset need = "system/udev/udevd system/mountroot/rootrw"
+	iexec start = move_rules
+	idone
 
-	iregister -s "system/udev/retry_failed" service
-	iset      -s "system/udev/retry_failed" need = "system/udev/udevd system/mountfs/essential system/udev/move_rules"
-	iexec     -s "system/udev/retry_failed" start = retry_failed_start
-	idone     -s "system/udev/retry_failed"
+	export SERVICE="system/udev/retry_failed"
+	iregister service
+	iset need = "system/udev/udevd system/mountfs/essential system/udev/move_rules"
+	iexec start = retry_failed
+	idone
 
-	iregister -s "system/udev/mountdev" service
-	iset      -s "system/udev/mountdev" critical
-	iset      -s "system/udev/mountdev" need = "system/initial/mountvirtfs"
-	iexec     -s "system/udev/mountdev" start = mountdev_start
-	idone     -s "system/udev/mountdev"
+	export SERVICE="system/udev/mountdev"
+	iregister service
+	iset critical
+	iset need = "system/initial/mountvirtfs"
+	iexec start = mountdev_start
+	idone
 
-	iregister -s "system/udev/filldev" service
-	iset      -s "system/udev/filldev" critical
-	iset      -s "system/udev/filldev" need = "system/udev/udevd"
-	iexec     -s "system/udev/filldev" start = filldev_start
+	export SERVICE="system/udev/filldev"
+	iregister service
+	iset critical
+	iset need = "system/udev/udevd"
+	iexec start = filldev_start
 #ifd gentoo enlisy
-	iexec     -s "system/udev/filldev" stop = filldev_stop
+	iexec stop = filldev_stop
 #endd
-	idone     -s "system/udev/filldev"
+	idone
 }
 
-move_rules_start()
+move_rules()
 {
 	for file in /dev/.udev/tmp-rules--*
 	do
@@ -57,7 +63,7 @@ move_rules_start()
 	wait
 }
 
-retry_failed_start()
+retry_failed()
 {
 	[ -x "@/sbin/udevtrigger@" ] || exit 0
 

@@ -10,9 +10,10 @@ source /etc/default/hdparm
 
 setup()
 {
+	export SERVICE="system/hdparm"
 	iregister service
-	iset      need = "system/initial"
-	iexec     start
+	iset need = "system/initial"
+	iexec start
 	idone
 }
 

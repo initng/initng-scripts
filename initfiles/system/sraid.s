@@ -4,10 +4,11 @@
 
 setup()
 {
+	export SERVICE="system/sraid"
 	iregister service
-	iset      need = "system/initial system/mountroot"
-	iset      critical
-	iexec     start
+	iset need = "system/initial system/mountroot"
+	iset critical
+	iexec start
 	idone
 }
 

@@ -4,9 +4,10 @@
 
 setup()
 {
+	export SERVICE="system/serial"
 	iregister service
-	iset      need = "system/initial system/mountroot system/modules/serial"
-	iexec     start
+	iset need = "system/initial system/mountroot system/modules/serial"
+	iexec start
 	idone
 }
 
