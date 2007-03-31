@@ -17,16 +17,13 @@ source /etc/conf.d/ntp
 
 setup()
 {
+	export SERVICE="service/ntpdate"
 	iregister service
-
 	iset need = "system/initial system/mountroot system/mountfs/essential virtual/net"
-#ifd debian
-	iset exec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
-#elsed gentoo
-	iset exec start = "/usr/sbin/ntpdate ${NTPCLIENT_OPTS}"
+#ifd gentoo
+	iset exec start = "@/usr/sbin/ntpdate@ ${NTPCLIENT_OPTS}"
 #elsed
 	iset exec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
 #endd
-
 	idone
 }

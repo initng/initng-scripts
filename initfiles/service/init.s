@@ -1,6 +1,6 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 #ifd fedora
 RCDIR="/etc/rc.d/init.d"
@@ -10,12 +10,11 @@ RCDIR="/etc/init.d"
 
 setup()
 {
+	# SERVICE: service/init/*
 	iregister service
-
 	iset need = "system/bootmisc"
 	iset exec start = "${RCDIR}/${NAME} start"
 	iset exec stop = "${RCDIR}/${NAME} stop"
 	iset last
-
 	idone
 }

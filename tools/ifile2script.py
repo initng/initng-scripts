@@ -204,14 +204,14 @@ for i in file_list:
 				script_list_mode = elsed_mode
 			script_list.append(_service)
 			script_list.append("%" + i.split()[1].strip())
-			
+
 		elif i.startswith("env"):
 			if i.startswith("env_file"):
 				_str = "source " + i.split("=", 1)[1].strip(" ;")
 			else:
 				_str = i.split(" ", 1)[1].strip(" ;")
 				_str = _str.split("=")[0].strip() + '="'+ _str.split("=")[1].strip() + '"'
-		
+
 			if env_list_mode != elsed_mode and elsed_mode != 0:
 				for g in range(-1 - env_list_mode, -1 - len(ifd_list), -1):
 					env_list.append(ifd_list[g])
@@ -223,7 +223,7 @@ for i in file_list:
 		elif "=" in i:
 			str_0 = i.split("=")[0].strip()
 			str_1 = i.split("=")[-1].strip(" ;")
-			
+
 			if iset_list_mode != elsed_mode and elsed_mode != 0:
 				for g in range(-1 - iset_list_mode, -1 - len(ifd_list), -1):
 					iset_list.append(ifd_list[g])
@@ -231,7 +231,7 @@ for i in file_list:
 						iset_list_mode_1 = iset_list_mode_1 + 1
 				iset_list_mode = elsed_mode
 			iset_list.append(str_0 + ' = "' + str_1 + '"')
-			
+
 		elif i != "" and i != "}" and not i.startswith("#"):
 			if "#" in i:
 				_int = i.find("#")
@@ -299,7 +299,7 @@ for i in iset_list:
 	elif i.startswith("#"):
 		new_file.write(i + "\n")
 	elif not i.startswith("%"):
-		new_file.write("\tiset      ")
+		new_file.write("\tiset ")
 		if len_service_and_daemon_list != 1:
 			new_file.write("-s \"%s\" " %(_service))
 		new_file.write("%s\n" %(i))
@@ -315,12 +315,12 @@ for i in iexec_list:
 		_func_prefix = _service
 		if _func_prefix.endswith("*"):
 			_func_prefix = _func_prefix.replace("/*","_any")
-		new_file.write("\tiexec     ")
+		new_file.write("\tiexec ")
 		if len_service_and_daemon_list != 1:
 			new_file.write("-s \"%s\" %s = %s_" %(_service, _func, os.path.basename(_func_prefix)))
 		new_file.write("%s\n" %(_func))
 	elif i.startswith("&"):
-		new_file.write("\tiexec     ")
+		new_file.write("\tiexec ")
 		if len_service_and_daemon_list != 1:
 			new_file.write("-s \"%s\" " %(_service))
 		new_file.write("%s\n" %(i.lstrip("&")))
@@ -337,7 +337,7 @@ for i in iregister_list:
 	if i.startswith("#"):
 		new_file.write("%s\n" %(i))
 	elif i in service_and_daemon_list:
-		new_file.write("\tidone     ")
+		new_file.write("\tidone ")
 		if len_service_and_daemon_list != 1:
 			new_file.write("-s \"%s\"" %(i))
 		new_file.write("\n")
