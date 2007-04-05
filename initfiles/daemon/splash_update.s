@@ -1,14 +1,10 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 setup()
 {
-	iregister daemon
-
-
+	ireg daemon daemon/splash_update
 	iset exec daemon = "@/sbin/splash_update@"
-
 	idone
 }
-

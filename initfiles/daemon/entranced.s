@@ -4,16 +4,12 @@
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc"
-	iset provide = "virtual/dm"
+	ireg daemon daemon/entranced
+	iset need = system/bootmisc
+	iset provide = virtual/dm
 	iset pid_file = "/var/run/entranced.pid"
 	iset respawn
 	iset forks
-
 	iset exec daemon = "@/usr/sbin/entranced@"
-
 	idone
 }
-

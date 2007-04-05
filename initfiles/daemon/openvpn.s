@@ -1,61 +1,62 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 setup()
 {
-	iregister -s "daemon/openvpn/*" daemon
-	iregister -s "daemon/openvpn/prepare" service
-	iregister -s "daemon/openvpn" service
+	if [ "${NAME}" = "openvpn" -o "${NAME}" = "prepare" ]; then
+		ireg service daemon/openvpn/prepare
+		iset need = system/bootmisc system/modules/tun
+		iexec start = prepare_start
+		idone
 
-	iset -s "daemon/openvpn/*" need = "system/bootmisc virtual/net"
-	iset -s "daemon/openvpn/prepare" need = "system/bootmisc system/modules/tun"
-	iset -s "daemon/openvpn" need = "system/bootmisc system/modules/tun"
+		ireg service daemon/openvpn
+		iset need = system/bootmisc system/modules/tun
+		iexec start
+		iexec stop
+		idone
+		exit 0
+	fi
 
-	iexec -s "daemon/openvpn/*" daemon = "@/usr/sbin/openvpn@ --config /etc/openvpn/${NAME}/local.conf --writepid /var/run/openvpn-${NAME}.pid --cd /etc/openvpn/${NAME}"
-	iexec -s "daemon/openvpn/prepare" start = prepare_start
-	iexec -s "daemon/openvpn" start = openvpn_start
-	iexec -s "daemon/openvpn" stop = openvpn_stop
-
-	idone -s "daemon/openvpn/*"
-	idone -s "daemon/openvpn/prepare"
-	idone -s "daemon/openvpn"
+	ireg daemon #daemon/openvpn/*
+	iset need = system/bootmisc virtual/net
+	iset exec daemon = "@/usr/sbin/openvpn@ --config /etc/openvpn/${NAME}/local.conf --writepid /var/run/openvpn-${NAME}.pid --cd /etc/openvpn/${NAME}"
+	idone
 }
 
 prepare_start()
 {
-		if [ -h /dev/net/tun -a -c /dev/misc/net/tun ]
-		then
-			echo "Detected broken /dev/net/tun symlink, fixing..."
-			@rm@ /dev/net/tun
-			@ln@ -s /dev/misc/net/tun /dev/net/tun
-		fi
+	[ -h /dev/net/tun -a -c /dev/misc/net/tun ] || exit 0
+
+	echo "Detected broken /dev/net/tun symlink, fixing..."
+	@rm@ /dev/net/tun
+	@ln@ -s /dev/misc/net/tun /dev/net/tun
 }
 
-openvpn_start()
+start()
 {
-		if [ ! -d /etc/openvpn ]
-		then
-			echo "Cant find openvpn conf dir! ..."
-			exit 1
-		fi
-	
-		cd /etc/openvpn
-		for VPN in *
-		do
-			[ -e ${VPN}/local.conf ] && @/sbin/ngc@ --quiet -u daemon/openvpn/${VPN} &
-		done
-		wait
-		exit 0
+	if [ ! -d /etc/openvpn ]
+	then
+		echo "Cant find openvpn conf dir! ..."
+		exit 1
+	fi
+
+	cd /etc/openvpn
+	for VPN in *
+	do
+		[ -e ${VPN}/local.conf ] && @/sbin/ngc@ --instant --quiet -u daemon/openvpn/${VPN} &
+	done
+	wait
+	exit 0
 }
 
-openvpn_stop()
+stop()
 {
-		cd /etc/openvpn
-		for VPN in *
-		do
-			[ -e ${VPN}/local.conf ] && @/sbin/ngc@ --quiet -d daemon/openvpn/${VPN} &
-		done
-		wait
-		exit 0
+	cd /etc/openvpn
+	for VPN in *
+	do
+		[ -e ${VPN}/local.conf ] && @/sbin/ngc@ --instant --quiet -d daemon/openvpn/${VPN} &
+	done
+	wait
+	exit 0
 }

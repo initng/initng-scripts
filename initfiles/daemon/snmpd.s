@@ -11,14 +11,10 @@ source /etc/snmp/snmpd.options
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc virtual/net"
+	ireg daemon daemon/snmpd
+	iset need = system/bootmisc virtual/net
 	iset pid_file = "${PIDFILE}"
 	iset forks
-
 	iset exec daemon = "@/usr/sbin/snmpd@ ${OPTIONS} -c ${CONFFILE} -p ${PIDFILE}"
-
 	idone
 }
-

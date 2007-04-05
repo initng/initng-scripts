@@ -8,26 +8,24 @@ source /etc/default/gdm
 
 setup()
 {
-	iregister -s "daemon/instant-gdm/dev" service
-	iregister -s "daemon/instant-gdm" daemon
+	ireg service daemon/instant-gdm/dev
+	iset need = system/bootmisc
+	iexec start = dev_start
+	idone
 
-	iset -s "daemon/instant-gdm/dev" need = "system/bootmisc"
-	iset -s "daemon/instant-gdm" need = "system/bootmisc"
-	iset -s "daemon/instant-gdm" use = "daemon/instant-gdm/dev service/xorgconf system/modules/mousedev system/modules/fglrx system/modules/nvidia"
-	iset -s "daemon/instant-gdm" nice = -4
-
-	iexec -s "daemon/instant-gdm/dev" start = dev_start
-	iexec -s "daemon/instant-gdm" daemon = "@/usr/sbin/gdm@ -nodaemon"
-
-	idone -s "daemon/instant-gdm/dev"
-	idone -s "daemon/instant-gdm"
+	ireg daemon daemon/instant-gdm
+	iset need = system/bootmisc
+	iset use = daemon/instant-gdm/dev service/xorgconf \
+	           system/modules/mousedev system/modules/fglrx \
+	           system/modules/nvidia
+	iset nice = -4
+	iset exec daemon = "@/usr/sbin/gdm@ -nodaemon"
+	idone
 }
 
 dev_start()
 {
-		if [ -e /sys/class/input/mice/dev ]
-		then
-			@mkdir@ -p /dev/input
-			@mknod@ /dev/input/mice c 13 63 >/dev/null 2>&1
-		fi
+	[ -e /sys/class/input/mice/dev ] || exit 0
+	@mkdir@ -p /dev/input
+	@mknod@ /dev/input/mice c 13 63 >/dev/null 2>&1
 }

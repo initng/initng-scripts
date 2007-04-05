@@ -4,12 +4,8 @@
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc"
-
+	ireg daemon daemon/svnserve
+	iset need = system/bootmisc
 	iset exec daemon = "@/usr/bin/svnserve@ --daemon --foreground --root"
-
 	idone
 }
-

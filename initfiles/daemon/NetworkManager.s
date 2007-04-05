@@ -1,31 +1,32 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
-PID_FILE =" /var/run/NetworkManager/NetworkManager.pid"
+PID_FILE="/var/run/NetworkManager/NetworkManager.pid"
 
 setup()
 {
-	iregister -s "daemon/NetworkManager/prepare" service
-	iregister -s "daemon/NetworkManager" daemon
+	ireg service daemon/NetworkManager/prepare
+	iset need = system/bootmisc
+	iexec start = prepare_start
+	idone
 
-	iset -s "daemon/NetworkManager/prepare" need = "system/bootmisc"
-	iset -s "daemon/NetworkManager" need = "system/bootmisc daemon/dbus daemon/NetworkManager/prepare system/modules/capability daemon/hald daemon/dhcdbd"
-	iset -s "daemon/NetworkManager" provide = "virtual/net"
-	iset -s "daemon/NetworkManager" pid_file = "${PID_FILE}"
-	iset -s "daemon/NetworkManager" forks
-
-	iexec -s "daemon/NetworkManager/prepare" start = prepare_start
-	iexec -s "daemon/NetworkManager" daemon = "@/usr/sbin/NetworkManager@ --pid-file"
-
-	idone -s "daemon/NetworkManager/prepare"
-	idone -s "daemon/NetworkManager"
+	ireg daemon daemon/NetworkManager
+	iset need = system/bootmisc daemon/dbus daemon/NetworkManager/prepare \
+	            system/modules/capability daemon/hald daemon/dhcdbd
+	iset provide = virtual/net
+	iset pid_file = "${PID_FILE}"
+	iset forks
+	iset exec daemon = "@/usr/sbin/NetworkManager@ --pid-file=${PID_FILE}"
+	idone
 }
 
 prepare_start()
 {
-		[ -d /var/lib/NetworkManager ] || @/bin/mkdir@ -p /var/lib/NetworkManager
-		chmod 755 /var/lib/NetworkManager
-		[ -d /var/run/NetworkManager ] || @/bin/mkdir@ -p /var/run/NetworkManager
-		chmod 755 /var/run/NetworkManager
+	[ -d /var/lib/NetworkManager ] ||
+		@/bin/mkdir@ -p /var/lib/NetworkManager
+	[ -d /var/run/NetworkManager ] ||
+		@/bin/mkdir@ -p /var/run/NetworkManager
+	chmod 755 /var/lib/NetworkManager
+	chmod 755 /var/run/NetworkManager
 }

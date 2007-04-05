@@ -1,15 +1,11 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/initial daemon/portmap virtual/net"
-
+	ireg daemon daemon/statd
+	iset need = system/initial daemon/portmap virtual/net
 	iset exec daemon = "@rpc.statd@ -F"
-
 	idone
 }
-

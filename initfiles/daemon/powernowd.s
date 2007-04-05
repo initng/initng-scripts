@@ -3,23 +3,19 @@
 # WWW: http://www.deater.net/john/powernowd.html
 
 #ifd debian
-OPTIONS =" -q -m 2"
+OPTIONS="-q -m 2"
 source /etc/default/powernowd
 #endd
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc"
-	iset use = "service/speedstep"
-
+	ireg daemon daemon/powernowd
+	iset need = system/bootmisc
+	iset use = service/speedstep
 #ifd debian
 	iset exec daemon = "@/usr/sbin/powernowd@ ${OPTIONS}"
 #elsed
 	iset exec daemon = "@/usr/sbin/powernowd@ -q"
 #endd
-
 	idone
 }
-

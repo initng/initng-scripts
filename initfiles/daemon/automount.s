@@ -16,30 +16,25 @@ CONFFILE="/etc/autofs/auto.${NAME}"
 setup()
 {
 #ifd fedora
-	iregister -s "daemon/automount" daemon
+	ireg daemon daemon/automount
 #elsed
-	iregister -s "daemon/automount/*" daemon
+	# SERVICE: daemon/automount/*
+	ireg daemon
 #endd
 
 #ifd fedora
-	iset -s "daemon/automount" need = "system/modules/autofs4"
+	iset need = system/modules/autofs4
 #elsed
-	iset -s "daemon/automount/*" use = "system/modules/autofs4"
+	iset use = system/modules/autofs4
 #endd
-	iset -s "daemon/automount/*" need = "system/bootmisc"
-	iset -s "daemon/automount/*" pid_file = "${PIDFILE}"
-	iset -s "daemon/automount/*" forks
+	iset need = system/bootmisc
+	iset pid_file = "${PIDFILE}"
+	iset forks
 
 #ifd fedora
-	iexec -s "daemon/automount/*" daemon = "@automount@ --pid-file ${PIDFILE} ${OPTIONS}"
+	iset exec daemon = "@automount@ --pid-file ${PIDFILE} ${OPTIONS}"
 #elsed
-	iexec -s "daemon/automount/*" daemon = "@automount@ --timeout ${TIMEOUT} --pid-file ${PIDFILE} ${MOUNTPOINT} file ${CONFFILE}"
+	iset exec daemon = "@automount@ --timeout ${TIMEOUT} --pid-file ${PIDFILE} ${MOUNTPOINT} file ${CONFFILE}"
 #endd
-
-#ifd fedora
-	idone -s "daemon/automount"
-#elsed
-	idone -s "daemon/automount/*"
-#endd
+	idone
 }
-
