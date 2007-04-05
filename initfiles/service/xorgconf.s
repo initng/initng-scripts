@@ -1,28 +1,25 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 setup()
 {
-	iregister service
-
-	iset need = "system/bootmisc"
-
-	iexec start = xorgconf_start
-
+	ireg service service/xorgconf
+	iset need = system/bootmisc
+	iexec start
 	idone
 }
 
-xorgconf_start()
+start()
 {
 #ifd pingwinek
-	        if [ ! -f /etc/X11/xorg.conf ]
-		then
-			driver=`@makexorgconf@ 2>/dev/null`
-			echo "The X graphics driver is '${driver}'"
-		fi
+        if [ ! -f /etc/X11/xorg.conf ]
+	then
+		driver=`@makexorgconf@ 2>/dev/null`
+		echo "The X graphics driver is '${driver}'"
+	fi
 #elsed
-		[ -f /etc/X11/xorg.conf ] || @Xorg@ -configure
-		@cp@ /root/xorg.conf.new /etc/X11/xorg.conf
+	[ -f /etc/X11/xorg.conf ] || @Xorg@ -configure
+	@cp@ /root/xorg.conf.new /etc/X11/xorg.conf
 #endd
 }
