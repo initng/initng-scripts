@@ -10,9 +10,8 @@ XINETD_OPTS=
 
 setup()
 {
-	export SERVICE="daemon/xinetd"
-	iregister daemon
-	iset need = "system/bootmisc virtual/net"
+	ireg daemon daemon/xinetd
+	iset need = system/bootmisc virtual/net
 	iexec daemon
 	idone
 }

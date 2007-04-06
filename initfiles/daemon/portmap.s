@@ -10,9 +10,8 @@ source /etc/conf.d/portmap
 
 setup()
 {
-	export SERVICE="daemon/portmap"
-	iregister daemon
-	iset need = "system/bootmisc virtual/net"
+	ireg daemon daemon/portmap
+	iset need = system/bootmisc virtual/net
 	iset forks
 	iset pid_of = portmap
 	iexec daemon

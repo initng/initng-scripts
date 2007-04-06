@@ -3,52 +3,36 @@
 # WWW:
 
 #ifd gentoo
-RPCNFSDCOUNT =" 8"
+RPCNFSDCOUNT="8"
 source /etc/conf.d/nfs
-#elsed
-#ifd fedora mandriva
+#elsed fedora mandriva
 source /etc/sysconfig/nfs
-#endd
 #endd
 
 setup()
 {
+	ireg daemon daemon/nfsd
+	iset need = system/initial daemon/portmap
 #ifd gentoo
-	iregister -s "daemon/nfsd" service
+	iset need = virtual/net
+	iexec daemon
+	iexec kill
 #elsed
-	iregister -s "daemon/nfsd" service
+	iset pid_of = rpc.nfsd
+	iset exec daemon = "@rpc.nfsd@ ${RPCNFSDARGS} ${RPCNFSDCOUNT}"
 #endd
-
-#ifd gentoo
-	iset -s "daemon/nfsd" need = "system/initial daemon/portmap virtual/net"
-#elsed
-	iset -s "daemon/nfsd" need = "system/initial daemon/portmap"
-	iset -s "daemon/nfsd" pid_of = rpc.nfsd
-#endd
-
-#ifd gentoo
-	iexec -s "daemon/nfsd" start = nfsd_start
-	iexec -s "daemon/nfsd" stop = nfsd_stop
-#elsed
-	iexec -s "daemon/nfsd" daemon = "@rpc.nfsd@ ${RPCNFSDARGS} ${RPCNFSDCOUNT}"
-#endd
-
-#ifd gentoo
-	idone -s "daemon/nfsd"
-#elsed
-	idone -s "daemon/nfsd"
-#endd
+	idone
 }
 
 #ifd gentoo
-nfsd_start()
+daemon()
 {
-	    /sbin/rpc.lockd
-	    /usr/sbin/rpc.nfsd ${RPCNFSDCOUNT}
+	@/sbin/rpc.lockd@
+	exec @/usr/sbin/rpc.nfsd@ ${RPCNFSDCOUNT}
 }
 
-nfsd_stop()
+kill()
 {
-	    /bin/killall -2 nfsd
+	@/bin/killall@ -2 nfsd
 }
 #endd

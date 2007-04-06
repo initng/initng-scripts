@@ -6,9 +6,8 @@ source /etc/conf.d/net
 
 setup()
 {
-	# SERVICE: daemon/pump/*
-	iregister service
-	iset need = "system/bootmisc"
+	ireg service #daemon/pump/*
+	iset need = system/bootmisc
 	iexec start
 	iset exec stop = "@/sbin/pump@ --release -i ${NAME}"
 	idone

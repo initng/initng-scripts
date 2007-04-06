@@ -4,28 +4,25 @@
 
 setup()
 {
-	export SERVICE="daemon/postfix/pwcheck"
-	iregister daemon
-	iset need = "system/bootmisc"
+	ireg daemon daemon/postfix/pwcheck
+	iset need = system/bootmisc
 	iset pid_file = "/var/run/pwcheck.pid"
 	iset forks
 	iset exec daemon = "@/usr/sbin/pwcheck@"
 	idone
 
-	export SERVICE="daemon/postfix/newaliases"
-	iregister service
-	iset need = "system/bootmisc"
+	ireg service daemon/postfix/newaliases
+	iset need = system/bootmisc
 	iset exec start = "@newaliases@"
 	idone
 
-	export SERVICE="daemon/postfix"
-	iregister daemon
+	ireg daemon daemon/postfix
 #ifd fedora mandriva
-	iset need = "daemon/postfix/newaliases"
+	iset need = daemon/postfix/newaliases
 #endd
-	iset need = "system/bootmisc"
-	iset use = "daemon/postfix/pwcheck"
-	iset provide = "virtual/mta"
+	iset need = system/bootmisc
+	iset use = daemon/postfix/pwcheck
+	iset provide = virtual/mta
 	iset pid_file = "/var/spool/postfix/pid/master.pid"
 	iset forks
 	iset exec daemon = "@postfix@ start"

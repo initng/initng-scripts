@@ -6,8 +6,9 @@ source /etc/conf.d/net
 
 setup()
 {
-	# SERVICE: daemon/udhcpc/*
-	ireg daemon
+	is_service daemon/udhcpc && exit 1
+
+	ireg daemon #daemon/udhcpc/*
 	iset need = system/bootmisc
 	iset use = system/modules system/coldplug
 	iset pid_file = "/var/run/udhcpc-${NAME}.pid"

@@ -4,12 +4,11 @@
 
 setup()
 {
-	[ "${NAME}" = wpa_supplicant ] && exit 1
+	is_service daemon/wpa_supplicant && exit 1
 
-	# SERIVCE: daemon/wpa_supplicant/*
-	iregister daemon
-	iset need = "system/bootmisc"
-	iset use = "system/ifrename system/modules"
+	ireg daemon #daemon/wpa_supplicant/*
+	iset need = system/bootmisc
+	iset use = system/ifrename system/modules
 	iset pid_file = "/var/run/wpa_supplicant-${NAME}.pid"
 	iset forks
 	iexec daemon
@@ -19,7 +18,7 @@ setup()
 
 daemon()
 {
-	. ${INITNG_PLUGIN_DIR}/scripts/net/functions
+	source ${INITNG_PLUGIN_DIR}/scripts/net/functions
 
 	eval opts=\"\$\{wpa_supplicant_${ifvar}\} -i${iface} -c/etc/wpa_supplicant.conf -B\"
 	[ -f /sbin/wpa_cli.action ] &&

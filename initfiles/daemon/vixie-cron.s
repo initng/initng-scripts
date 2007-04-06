@@ -4,10 +4,9 @@
 
 setup()
 {
-	export SERVICE="daemon/vixie-cron"
-	iregister daemon
-	iset need = "system/bootmisc"
-	iset provide = "virtual/cron"
+	ireg daemon daemon/vixie-cron
+	iset need = system/bootmisc
+	iset provide = virtual/cron
 #ifd gentoo
 	iset pid_file = "/var/run/cron.pid"
 #elsed

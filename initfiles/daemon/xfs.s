@@ -9,18 +9,16 @@ source /etc/conf.d/xfs
 
 setup()
 {
-	export SERVICE="daemon/xfs/chkfontpath"
-	iregister service
-	iset need = "system/bootmisc"
+	ireg service daemon/xfs/chkfontpath
+	iset need = system/bootmisc
 	iexec start = chkfontpath
 	idone
 
-	export SERVICE="daemon/xfs"
-	iregister daemon
+	ireg daemon daemon/xfs
+	iset need = system/bootmisc
 #ifd gentoo
-	iset need = "system/bootmisc"
 #elsed
-	iset need = "system/bootmisc daemon/xfs/chkfontpath"
+	iset need = daemon/xfs/chkfontpath
 #endd
 #ifd debian
 	iset exec daemon = "@/usr/X11R6/bin/xfs@ -droppriv -nodaemon"

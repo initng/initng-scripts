@@ -4,9 +4,8 @@
 
 setup()
 {
-	export SERVICE="daemon/proftpd"
-	iregister daemon
-	iset need = "system/bootmisc virtual/net"
+	ireg daemon daemon/proftpd
+	iset need = system/bootmisc virtual/net
 	iset pid_file = "/var/run/proftpd.pid"
 	iset daemon_stops_badly
 	iset forks

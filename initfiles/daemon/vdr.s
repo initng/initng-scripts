@@ -7,44 +7,41 @@ GROUP="video"
 HOME="/var/vdr"
 CONFIG="/etc/vdr"
 SVDRP_PORT="2001"
-VDR_EXTRA_OPTIONS=""
 EPGFILE="${HOME}/epg.data"
 LANG="de_DE"
 source /etc/conf.d/vdr
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc"
-	iset use = "daemon/lircd"
+	ireg daemon daemon/vdr
+	iset need = system/bootmisc
+	iset use = daemon/lircd
 	iset respawn
 	iset stdall = /var/log/vdr.log
-	iset chdir = ${HOME}
-	iset suid = ${USER}
-	iset sgid = ${GROUP}
-
-	iset exec daemon = vdr_daemon
-
+	iset chdir = "${HOME}"
+	iset suid = "${USER}"
+	iset sgid = "${GROUP}"
+	iexec daemon
 	idone
 }
 
-vdr_daemon()
+daemon()
 {
-		for plugin in ${PLUGINS}
-		do
-			# no joke!
-			eval plugins=\"\${plugins} --plugin=\'\${plugin} \${plugin_${plugin}}\'\"
-		done
-		# why too complicated? su has a new environment,
-		# HOME for example is definitiv an other value.
-		# so we replace first all vars via eval and then we enter su.
-		# no variable should be replaced!
-		eval "exec @/usr/bin/vdr@ \
-				--config='${CONFIG}' \
-				--video='${HOME}' \
-				--epgfile='${EPGFILE}' \
-				--port='${SVDRP_PORT}' \
-				${VDR_EXTRA_OPTIONS} \
-				${plugins}"
+	for plugin in ${PLUGINS}
+	do
+		# no joke!
+		eval plugins=\"\${plugins} --plugin=\'\${plugin} \${plugin_${plugin}}\'\"
+	done
+
+	# why too complicated? su has a new environment,
+	# HOME for example is definitiv an other value.
+	# so we replace first all vars via eval and then we enter su.
+	# no variable should be replaced!
+	eval "exec @/usr/bin/vdr@ \
+			--config='${CONFIG}' \
+			--video='${HOME}' \
+			--epgfile='${EPGFILE}' \
+			--port='${SVDRP_PORT}' \
+			${VDR_EXTRA_OPTIONS} \
+			${plugins}"
 }

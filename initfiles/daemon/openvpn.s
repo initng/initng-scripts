@@ -4,7 +4,7 @@
 
 setup()
 {
-	if [ "${NAME}" = "openvpn" -o "${NAME}" = "prepare" ]; then
+	if is_service daemon/openvpn{,/prepare}; then
 		ireg service daemon/openvpn/prepare
 		iset need = system/bootmisc system/modules/tun
 		iexec start = prepare_start
