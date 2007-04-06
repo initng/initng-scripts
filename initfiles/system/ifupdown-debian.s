@@ -8,9 +8,8 @@ source /etc/default/ifupdown
 
 setup()
 {
-	export SERVICE="system/ifupdown-debian"
-	iregister service
-	iset need = "system/bootmisc"
+	ireg service system/ifupdown-debian
+	iset need = system/bootmisc
 	iexec start
 	iexec stop
 	idone

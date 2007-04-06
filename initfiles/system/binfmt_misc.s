@@ -4,9 +4,8 @@
 
 setup()
 {
-	export SERVICE="system/binfmt_misc"
-	iregister service
-	iset need = "system/bootmisc"
+	ireg service system/binfmt_misc
+	iset need = system/bootmisc
 	iset exec stop = "@sysctl@ -n -w fs.binfmt_misc.status"
 	iexec start
 	idone

@@ -4,9 +4,8 @@
 
 setup()
 {
-	export SERVICE="system/initrd-tools"
-	iregister service
-	iset need = "system/initial"
+	ireg service system/initrd-tools
+	iset need = system/initial
 	iexec start
 	idone
 }

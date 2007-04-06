@@ -4,8 +4,7 @@
 
 setup()
 {
-	export SERVICE="system/sysctl"
-	iregister service
+	ireg service system/sysctl
 	iset need = "system/initial"
 	iexec start
 	idone

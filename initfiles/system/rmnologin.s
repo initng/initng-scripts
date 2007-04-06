@@ -4,8 +4,7 @@
 
 setup()
 {
-	export SERVICE="system/rmnologin"
-	iregister service
+	ireg service system/rmnologin
 	iset need = "system/mountfs/essential"
 	iexec start
 	idone

@@ -4,44 +4,38 @@
 
 setup()
 {
-	export SERVICE="system/udev"
-	iregister virtual
+	ireg virtual system/udev
 	iset critical
-	iset need = "system/udev/filldev system/udev/udevd"
-	iset also_start = "system/udev/move_rules system/udev/retry_failed"
+	iset need = system/udev/{filldev,udevd}
+	iset also_start = system/udev/{move_rules,retry_failed}
 	idone
 
-	export SERVICE="system/udev/udevd"
-	iregister daemon
+	ireg daemon system/udev/udevd
 	iset critical
-	iset need = "system/udev/mountdev system/initial/mountvirtfs"
+	iset need = system/udev/mountdev system/initial/mountvirtfs
 	iset respawn
 	iset exec daemon = "@/sbin/udevd@"
 	idone
 
-	export SERVICE="system/udev/move_rules"
-	iregister service
-	iset need = "system/udev/udevd system/mountroot/rootrw"
+	ireg service system/udev/move_rules
+	iset need = system/udev/udevd system/mountroot/rootrw
 	iexec start = move_rules
 	idone
 
-	export SERVICE="system/udev/retry_failed"
-	iregister service
-	iset need = "system/udev/udevd system/mountfs/essential system/udev/move_rules"
+	ireg service system/udev/retry_failed
+	iset need = system/udev/{udevd,move_rules} system/mountfs/essential
 	iexec start = retry_failed
 	idone
 
-	export SERVICE="system/udev/mountdev"
-	iregister service
+	ireg service system/udev/mountdev
 	iset critical
-	iset need = "system/initial/mountvirtfs"
+	iset need = system/initial/mountvirtfs
 	iexec start = mountdev_start
 	idone
 
-	export SERVICE="system/udev/filldev"
-	iregister service
+	ireg service system/udev/filldev
 	iset critical
-	iset need = "system/udev/udevd"
+	iset need = system/udev/udevd
 	iexec start = filldev_start
 #ifd gentoo enlisy
 	iexec stop = filldev_stop

@@ -8,9 +8,8 @@ source /etc/console-tools/config
 
 setup()
 {
-	export SERVICE="system/console-screen"
-	iregister service
-	iset need = "system/initial system/keymaps system/mountfs/essential"
+	ireg service system/console-screen
+	iset need = system/initial system/keymaps system/mountfs/essential
 	iexec start
 	idone
 }

@@ -12,9 +12,8 @@ SAVEDFILE="/var/run/random-seed"
 
 setup()
 {
-	export SERVICE="system/urandom"
-	iregister service
-	iset need = "system/bootmisc"
+	ireg service system/urandom
+	iset need = system/bootmisc
 	iexec start
 	iexec stop
 	idone

@@ -8,10 +8,9 @@ source /etc/conf.d/bootmisc
 
 setup()
 {
-	export SERVICE="system/bootmisc"
-	iregister service
-	iset need = "system/initial system/mountfs/essential"
-	iset use = "system/hdparm system/swap system/clock"
+	ireg service system/bootmisc
+	iset need = system/initial system/mountfs/essential
+	iset use = system/hdparm system/swap system/clock
 	iexec start
 	idone
 }

@@ -6,15 +6,13 @@ source /etc/sysconfig/nvidia-config-display
 
 setup()
 {
-	export SERVICE="system/nvidia-glx/dev"
-	iregister service
+	ireg service system/nvidia-glx/dev
 	iexec start = dev_start
 	idone
 
-	export SERVICE="system/nvidia-glx"
-	iregister service
-	iset need = "system/bootmisc"
-	iset use = "service/nvidia-glx/dev"
+	ireg service system/nvidia-glx
+	iset need = system/bootmisc
+	iset use = service/nvidia-glx/dev
 	iexec start
 	iexec stop
 	idone

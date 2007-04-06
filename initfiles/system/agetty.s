@@ -4,19 +4,17 @@
 
 setup()
 {
-	# SERVICE: daemon/agetty
-	if [ "${NAME}" = agetty ]
+	if is_service daemon/agetty
 	then
-		iregister virtual
-		iset need = "system/agetty/2 system/agetty/3 system/agetty/4 system/agetty/5 system/agetty/6"
-		iset use = "system/mountfs/essential service/issue"
+		ireg virtual
+		iset need = system/agetty/{2,3,4,5,6}
+		iset use = system/mountfs/essential service/issue
 		idone
 		exit 0
 	fi
 
-	# SERVICE: daemon/agetty/*
-	iregister daemon
-	iset need = "system/bootmisc system/mountfs/home"
+	ireg daemon #daemon/agetty/*
+	iset need = system/bootmisc system/mountfs/home
 	iset provide = "virtual/getty/${NAME}"
 	iset term_timeout = 3
 	iset respawn

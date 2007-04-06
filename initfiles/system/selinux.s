@@ -4,14 +4,12 @@
 
 setup()
 {
-	export SERVICE="system/selinux/dev"
-	iregister service
+	ireg service system/selinux/dev
 	iset need = "system/initial/mountvirtfs"
 	iexec start = dev_start
 	idone
 
-	export SERVICE="system/selinux/relabel"
-	iregister service
+	ireg service system/selinux/relabel
 	iset need = "system/mountroot"
 	iexec start = relabel_start
 	idone

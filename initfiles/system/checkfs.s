@@ -9,10 +9,9 @@ FSCK_LOGFILE="/var/log/fsck/checkfs"
 
 setup()
 {
-	export SERVICE="system/checkfs"
-	iregister service
-	iset need = "system/initial system/mountroot"
-	iset use = "system/sraid system/hdparm"
+	ireg service system/checkfs
+	iset need = system/initial system/mountroot
+	iset use = system/sraid system/hdparm
 	iset never_kill
 	iexec start
 	idone

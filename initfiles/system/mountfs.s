@@ -7,36 +7,32 @@ LOCAL_FS="reiserfs,reiser4,reiserfs,reiser4,ext2,ext3,xfs,jfs,vfat,ntfs,ntfs-3g,
 
 setup()
 {
-	export SERVICE="system/mountfs/essential"
-	iregister service
-	iset need = "system/initial/mountvirtfs system/mountroot system/checkfs"
-	iset use = "system/sraid system/hdparm system/selinux/relabel"
+	ireg service system/mountfs/essential
+	iset need = system/initial/mountvirtfs system/mountroot system/checkfs
+	iset use = system/sraid system/hdparm system/selinux/relabel
 	iset critical
 	iset never_kill
 	iexec start = essential_start
 	iexec stop = essential_stop
 	idone
 
-	export SERVICE="system/mountfs/home"
-	iregister service
-	iset need = "system/mountroot system/checkfs"
+	ireg service system/mountfs/home
+	iset need = system/mountroot system/checkfs
 	iset never_kill
 	iexec start = home_start
 	idone
 
-	export SERVICE="system/mountfs/network"
-	iregister service
-	iset need = "system/initial system/mountfs/essential virtual/net"
-	iset use = "daemon/portmap"
+	ireg service system/mountfs/network
+	iset need = system/initial system/mountfs/essential virtual/net
+	iset use = daemon/portmap
 	iset never_kill
 	iexec start = network_start
 	iexec stop = network_stop
 	idone
 
-	export SERVICE="system/mountfs"
-	iregister service
-	iset need = "system/mountfs/essential system/mountfs/home"
-	iset use = "system/mountfs/network"
+	ireg service system/mountfs
+	iset need = system/mountfs/essential system/mountfs/home
+	iset use = system/mountfs/network
 	iset never_kill
 	iexec start = mountfs_start
 	idone

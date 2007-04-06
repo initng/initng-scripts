@@ -4,8 +4,7 @@
 
 setup()
 {
-	export SERVICE="system/sraid"
-	iregister service
+	ireg service system/sraid
 	iset need = "system/initial system/mountroot"
 	iset critical
 	iexec start

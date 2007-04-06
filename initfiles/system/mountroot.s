@@ -7,45 +7,42 @@ dm_file="${dm_dir}/control"
 
 setup()
 {
-	export SERVICE="system/mountroot/dmsetup"
-	iregister service
-	iset need = "system/initial system/modules/dm-mod"
+	ireg service system/mountroot/dmsetup
+	iset need = system/initial system/modules/dm-mod
 	iset exec start = "@/sbin/dmsetup@ mknodes"
 	idone
 
-	export SERVICE="system/mountroot/lvm"
-	iregister service
-	iset need = "system/initial system/modules/lvm system/modules/lvm-mod system/mountroot/dmsetup"
+	ireg service system/mountroot/lvm
+	iset need = system/initial system/modules/lvm system/modules/lvm-mod \
+	            system/mountroot/dmsetup
 	iexec start = lvm_start
 	idone
 
-	export SERVICE="system/mountroot/evms"
-	iregister service
-	iset need = "system/initial"
+	ireg service system/mountroot/evms
+	iset need = system/initial
 	iset exec start = "@/sbin/evms_activate@"
 	idone
 
- 	export SERVICE="system/mountroot/check"
-	iregister service
-	iset need = "system/initial"
-	iset use = "system/hdparm system/mountroot/evms system/mountroot/lvm system/mountroot/dmsetup"
+ 	ireg service system/mountroot/check
+	iset need = system/initial
+	iset use = system/hdparm system/mountroot/evms system/mountroot/lvm \
+	           system/mountroot/dmsetup
 	iset critical
 	iset never_kill
 	iexec start = check_start
 	idone
 
-	export SERVICE="system/mountroot/rootrw"
-	iregister service
-	iset need = "system/initial system/mountroot/check"
-	iset use = "system/mountroot/evms system/mountroot/lvm system/mountroot/dmsetup"
+	ireg service system/mountroot/rootrw
+	iset need = system/initial system/mountroot/check
+	iset use = system/mountroot/evms system/mountroot/lvm \
+	           system/mountroot/dmsetup
 	iset critical
 	iexec start = rootrw_start
 	iexec stop = rootrw_stop
 	idone
 
-	export SERVICE="system/mountroot"
-	iregister service
-	iset need = "system/initial system/mountroot/rootrw"
+	ireg service system/mountroot
+	iset need = system/initial system/mountroot/rootrw
 	iexec start = mountroot_start
 	idone
 }

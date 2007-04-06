@@ -6,8 +6,7 @@ source /etc/conf.d/domainname
 
 setup()
 {
-	export SERVICE="system/domainname"
-	iregister service
+	ireg service system/domainname
 	iset need = "system/initial"
 	iexec start
 	idone
