@@ -4,11 +4,10 @@
 
 setup()
 {
-	iregister -s "daemon/bluetooth/hciattach/*" service
+	is_service daemon/bluetooth/hciattach && exit 0
 
-	iset -s "daemon/bluetooth/hciattach/*" need = "system/bootmisc daemon/bluetooth/hcid"
-
-	iset -s "daemon/bluetooth/hciattach/*" exec start = "@/usr/sbin/hciattach@ ${NAME}"
-
+	ireg service #daemon/bluetooth/hciattach/*
+	iset need = system/bootmisc daemon/bluetooth/hcid
+	iset exec start = "@/usr/sbin/hciattach@ ${NAME}"
 	idone
 }

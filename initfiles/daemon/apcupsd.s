@@ -4,19 +4,16 @@
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc"
+	ireg daemon daemon/apcupsd
+	iset need = system/bootmisc
 	iset pid_file = "/var/run/apcupsd.pid"
 	iset forks
-
-	iset exec daemon = apcupsd_daemon
-
+	iexec daemon
 	idone
 }
 
-apcupsd_daemon()
+daemon()
 {
 	rm -f /etc/apcupsd/powerfail /etc/nologin
-	/usr/sbin/apcupsd -f /etc/apcupsd/apcupsd.conf
+	exec @/usr/sbin/apcupsd@ -f /etc/apcupsd/apcupsd.conf
 }

@@ -4,16 +4,13 @@
 
 setup()
 {
-	iregister daemon
-
+	ireg daemon daemon/bitlbee-bitlbeed
 	iset suid = nobody
-	iset conflict = "daemon/bitlbee-daemon"
-	iset need = "system/bootmisc virtual/net"
+	iset conflict = daemon/bitlbee-daemon
+	iset need = system/bootmisc virtual/net
 	iset respawn
 	iset forks
 	iset pid_of = bitlbeed
-
-	iset exec daemon = "/usr/bin/bitlbeed /usr/sbin/bitlbee"
-
+	iset exec daemon = "@/usr/bin/bitlbeed@ @/usr/sbin/bitlbee@"
 	idone
 }

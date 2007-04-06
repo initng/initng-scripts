@@ -4,10 +4,8 @@
 
 setup()
 {
-	iregister virtual
-
-	iset need = "system/bootmisc daemon/bluetooth/hcid daemon/bluetooth/sdpd"
-	iset also_stop = "daemon/bluetooth/hcid daemon/bluetooth/sdpd"
-
+	ireg virtual daemon/bluetooth
+	iset need = system/bootmisc daemon/bluetooth/{hcid,sdpd}
+	iset also_stop = daemon/bluetooth/{hcid,sdpd}
 	idone
 }

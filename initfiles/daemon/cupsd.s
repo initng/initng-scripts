@@ -4,12 +4,9 @@
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc virtual/net/lo"
-	iset use = "daemon/printconf daemon/hpiod daemon/hpssd"
-
+	ireg daemon daemon/cupsd
+	iset need = system/bootmisc virtual/net/lo
+	iset use = daemon/printconf daemon/hpiod daemon/hpssd
 	iset exec daemon = "@/usr/sbin/cupsd@ -F"
-
 	idone
 }

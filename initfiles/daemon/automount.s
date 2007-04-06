@@ -18,8 +18,9 @@ setup()
 #ifd fedora
 	ireg daemon daemon/automount
 #elsed
-	# SERVICE: daemon/automount/*
-	ireg daemon
+	is_service daemon/automount && exit 1
+
+	ireg daemon #daemon/automount/*
 #endd
 
 #ifd fedora

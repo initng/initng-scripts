@@ -9,18 +9,21 @@ MODULES="all"
 
 setup()
 {
-	iregister -s "daemon/acpid/modules" service
-	iregister -s "daemon/acpid" daemon
+	ireg service daemon/acpid/modules
+	iset need = system/bootmisc
+	iexec start = modules_start
+	idone
 
-	iset -s "daemon/acpid/modules" need = "system/bootmisc"
-	iset -s "daemon/acpid" need = "system/bootmisc daemon/acpid/modules"
-	iset -s "daemon/acpid" use = "system/discover system/coldplug"
+	ireg daemon daemon/acpid
+	iset need = system/bootmisc daemon/acpid/modules
+	iset use = system/discover system/coldplug
+	iexec daemon
+	idone
+}
 
-	iexec -s "daemon/acpid/modules" start = modules_start
-	iexec -s "daemon/acpid" daemon = "@/usr/sbin/acpid@ -f -c /etc/acpi/events ${OPTIONS}"
-
-	idone -s "daemon/acpid/modules"
-	idone -s "daemon/acpid"
+daemon()
+{
+	exec @/usr/sbin/acpid@ -f -c /etc/acpi/events ${OPTIONS}
 }
 
 modules_start()
@@ -29,7 +32,7 @@ modules_start()
 	[ -d /proc/acpi ] || exit 0
 
 	LIST=`/sbin/lsmod | @sed@ -ne '2,$p'`
-		
+
 	# Get list of available modules
 	LOC="/lib/modules/`uname -r`/kernel/drivers/acpi"
 	if [ -d ${LOC} ]
@@ -39,10 +42,10 @@ modules_start()
 	else
 		MODAVAIL=""
 	fi
-	
+
 	# If no modules is set to load.
 	[ "${MODULES}" = "all" ] && MODULES="${MODAVAIL}"
-	
+
 	if [ -n "${MODULES}" ]
 	then
 		for mod in ${MODULES}

@@ -7,32 +7,30 @@
 	source /etc/default/dbus
 #endd
 
-setup()
-{
-	iregister daemon
-
-	iset need = "system/bootmisc"
-	iset forks
-
 #ifd fedora altlinux mandriva
-	iset pid_file = "/var/run/messagebus.pid"
-#elsed debian pingwinek
-	iset pid_file = "/var/run/dbus/pid"
+PIDFILE="/var/run/messagebus.pid"
+#elsed  debian pingwinek
+PIDFILE="/var/run/dbus/pid"
 #elsed
-	iset pid_file = "/var/run/dbus.pid"
+PIDFILE="/var/run/dbus.pid"
 #endd
 
+setup()
+{
+	ireg daemon daemon/dbus
+	iset need = system/bootmisc
+	iset forks
+	iset pid_file = "${PIDFILE}"
 #ifd debian
-	iset exec daemon = dbus_daemon
+	iexec daemon
 #elsed
 	iset exec daemon = "@/bin/dbus-daemon:/usr/bin/dbus-daemon:/usr/bin/dbus-daemon-1@ --system --fork"
 #endd
-
 	idone
 }
 
 #ifd debian
-dbus_daemon()
+daemon()
 {
 	[ "${ENABLED}" = 0 ] && exit 0
 	#Debian and Ubuntu are using different files

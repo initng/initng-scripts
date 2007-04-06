@@ -6,12 +6,11 @@ source /etc/conf.d/net
 
 setup()
 {
-	[ "${NAME}" = dhcpcd ] && exit 1
+	is_service daemon/dhcpcd && exit 1
 
-	# SERVICE: daemon/dhcpcd/*
-	iregister daemon
-	iset need = "system/bootmisc"
-	iset use = "system/modules system/coldplug"
+	ireg daemon #daemon/dhcpcd/*
+	iset need = system/bootmisc
+	iset use = system/modules system/coldplug
 #ifd arch
 	iset pid_file = "/etc/dhcpc/dhcpcd-${NAME}.pid"
 #elsed

@@ -1,15 +1,11 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc daemon/dbus daemon/avahi-daemon virtual/net"
-
+	ireg daemon daemon/avahi-dnsconfd
+	iset need = system/bootmisc daemon/dbus daemon/avahi-daemon virtual/net
 	iset exec daemon = "@/usr/sbin/avahi-dnsconfd@"
-
 	idone
 }
-
