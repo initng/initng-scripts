@@ -4,9 +4,8 @@
 
 setup()
 {
-	export SERVICE="service/numlock"
-	iregister service
-	iset need = "system/initial system/mountfs/essential"
+	ireg service service/numlock
+	iset need = system/initial system/mountfs/essential
 	iexec start
 	iexec stop
 	idone

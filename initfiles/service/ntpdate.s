@@ -17,9 +17,8 @@ source /etc/conf.d/ntp
 
 setup()
 {
-	export SERVICE="service/ntpdate"
-	iregister service
-	iset need = "system/initial system/mountroot system/mountfs/essential virtual/net"
+	ireg service service/ntpdate
+	iset need = system/initial system/mountfs/essential virtual/net
 #ifd gentoo
 	iset exec start = "@/usr/sbin/ntpdate@ ${NTPCLIENT_OPTS}"
 #elsed

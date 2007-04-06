@@ -4,9 +4,8 @@
 
 setup()
 {
-	# SERVICE: service/chvt/*
-	iregister service
-	iset need = "virtual/getty/${NAME} system/bootmisc"
+	ireg service #service/chvt/*
+	iset need = system/bootmisc "virtual/getty/${NAME}"
 	iset last
 	iset exec start = "@chvt@ ${NAME}"
 	idone

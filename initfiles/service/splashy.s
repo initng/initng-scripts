@@ -11,14 +11,12 @@ source /etc/init.d/splashy-functions.sh
 
 setup()
 {
-	export SERVICE="service/splashy/chvt"
-	iregister service
+	ireg service service/splashy/chvt
 	iexec start = chvt
 	idone
 
-	export SERVICE="service/splashy"
-	iregister service
-	iset need = "system/initial"
+	ireg service service/splashy
+	iset need = system/initial
 	iexec start
 	iexec stop
 	idone

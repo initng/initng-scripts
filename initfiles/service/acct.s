@@ -4,9 +4,8 @@
 
 setup()
 {
-	export SERVICE="service/acct"
-	iregister service
-	iset need = "system/initial system/mountfs/essential"
+	ireg service service/acct
+	iset need = system/initial system/mountfs/essential
 	iset exec stop = "@/usr/sbin/accton@"
 	iexec start
 	idone

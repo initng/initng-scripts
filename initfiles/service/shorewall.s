@@ -4,11 +4,10 @@
 
 setup()
 {
-	export SERVICE="service/shorewall"
-	iregister service
-	iset need = "system/bootmisc virtual/net"
-	iset use = "daemon/ulogd"
-	iset provide = "virtual/firewall"
+	ireg service service/shorewall
+	iset need = system/bootmisc virtual/net
+	iset use = daemon/ulogd
+	iset provide = virtual/firewall
 	iset exec start = "@/sbin/shorewall@ -q start"
 	iset exec stop = "@/sbin/shorewall@ stop"
 	idone

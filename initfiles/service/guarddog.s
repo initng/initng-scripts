@@ -4,10 +4,9 @@
 
 setup()
 {
-	export SERVICE="service/guarddog"
-	iregister service
-	iset need = "system/initial"
-	iset provide = "virtual/firewall"
+	ireg service service/guarddog
+	iset need = system/initial
+	iset provide = virtual/firewall
 	iset exec start = "/etc/rc.firewall"
 	iexec stop
 	idone

@@ -4,10 +4,9 @@
 
 setup()
 {
-	export SERVICE="service/local"
-	iregister service
-	iset need = "system/bootmisc"
-	iset use = "system/coldplug"
+	ireg service service/local
+	iset need = system/bootmisc
+	iset use = system/coldplug
 #ifd fedora mandriva
 	iset exec start = "/etc/rc.d/rc.local"
 #elsed

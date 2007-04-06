@@ -10,9 +10,8 @@ source /etc/default/915resolution
 
 setup()
 {
-	export SERVICE="service/915resolution"
-	iregister service
-	iset need = "system/mountfs/essential"
+	ireg service service/915resolution
+	iset need = system/mountfs/essential
 	iexec start
 	idone
 }

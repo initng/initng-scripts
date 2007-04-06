@@ -4,12 +4,12 @@
 
 setup()
 {
-	iregister service service/readahead/stopper
+	ireg service service/readahead/stopper
 	iset last
 	iexec start = stopper_start
 	idone
 
-	iregister daemon service/readahead/watcher-desktop
+	ireg daemon service/readahead/watcher-desktop
 	iset need = system/mountfs/essential
 	iset also_start = service/readahead/stopper
 	iset forks

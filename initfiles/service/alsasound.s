@@ -7,46 +7,41 @@ alsascrdir="/etc/alsa.d"
 
 setup()
 {
-	export SERVICE="service/alsasound/cards"
-	iregister service
-	iset need = "system/bootmisc"
-	iset use = "system/coldplug system/modules/depmod system/modules"
+	ireg service service/alsasound/cards
+	iset need = system/bootmisc
+	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = cards_start
 	idone
 
-	export SERVICE="service/alsasound/oss"
-	iregister service
-	iset need = "system/bootmisc"
-	iset use = "system/coldplug system/modules/depmod system/modules"
+	ireg service service/alsasound/oss
+	iset need = system/bootmisc
+	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = oss_start
 	idone
 
-	export SERVICE="service/alsasound/seq"
-	iregister service
-	iset need = "system/bootmisc"
-	iset use = "system/coldplug system/modules/depmod system/modules"
+	ireg service service/alsasound/seq
+	iset need = system/bootmisc
+	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = seq_start
 	idone
 
-	export SERVICE="service/alsasound/ioctl32"
-	iregister service
-	iset need = "system/bootmisc"
-	iset use = "system/coldplug system/modules/depmod system/modules"
+	ireg service service/alsasound/ioctl32
+	iset need = system/bootmisc
+	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = ioctl32_start
 	idone
 
-	export SERVICE="service/alsasound/mixerstate"
-	iregister service
-	iset need = "system/bootmisc service/alsasound"
+	ireg service service/alsasound/mixerstate
+	iset need = system/bootmisc service/alsasound
 	iset exec stop = "@alsactl@ -f ${asoundcfg} store"
 	iexec start = mixerstate_start
 	idone
 
-	export SERVICE="service/alsasound"
-	iregister service
-	iset need = "system/bootmisc"
-	iset use = "system/coldplug service/alsasound/cards service/alsasound/ioctl32 service/alsasound/seq service/alsasound/oss system/modules/depmod system/modules"
-	iset also_stop = "service/alsasound/cards service/alsasound/ioctl32 service/alsasound/seq service/alsasound/oss"
+	ireg service service/alsasound
+	iset need = system/bootmisc
+	iset use = system/coldplug service/alsasound/{cards,ioctl32,seq,oss} \
+	           system/modules/depmod system/modules
+	iset also_stop = service/alsasound/{cards,ioctl32,seq,oss}
 	iexec start = alsasound_start
 	idone
 }

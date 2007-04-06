@@ -4,9 +4,8 @@
 
 setup()
 {
-	export SERVICE="service/faketty"
-	iregister service
-	iset need = "system/initial"
+	ireg service service/faketty
+	iset need = system/initial
 	iexec start
 	idone
 }
