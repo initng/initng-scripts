@@ -4,20 +4,18 @@
 
 setup()
 {
-	export SERVICE="daemon/syslogd/prepare"
-	iregister service
-	iset need = "system/bootmisc"
+	ireg service daemon/syslogd/prepare
+	iset need = system/bootmisc
 	iexec start = prepare
 	idone
 
-	export SERVICE="daemon/syslogd"
-	iregister daemon
-	iset provide = "virtual/syslog"
+	ireg daemon daemon/syslogd
+	iset provide = virtual/syslog
+	iset need = system/bootmisc
 #ifd debian
-	iset need = "system/bootmisc daemon/syslogd/prepare"
+	iset need = daemon/syslogd/prepare
 #elsed
-	iset need = "system/bootmisc"
-	iset use = "daemon/syslogd/prepare"
+	iset use = daemon/syslogd/prepare
 #endd
 	iset exec daemon = "@/sbin/syslogd@ -n -m 0"
 	idone

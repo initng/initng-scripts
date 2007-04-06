@@ -10,9 +10,8 @@ source /etc/conf.d/mldonkey
 
 setup()
 {
-	export SERVICE="daemon/mldonkey"
-	iregister daemon
-	iset need = "system/bootmisc virtual/net"
+	ireg daemon daemon/mldonkey
+	iset need = system/bootmisc virtual/net
 	iset suid = "${USER}"
 	iset nice = "${NICE}"
 	iset respawn = yes

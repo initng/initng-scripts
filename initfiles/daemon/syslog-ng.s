@@ -4,13 +4,11 @@
 
 setup()
 {
-	export SERVICE="daemon/syslog-ng"
-	iregister daemon
-	iset provide = "virtual/syslog"
+	ireg daemon daemon/syslog-ng
+	iset provide = virtual/syslog
+	iset need = system/bootmisc
 #ifd debian
-	iset need = "system/bootmisc daemon/syslogd/prepare"
-#elsed
-	iset need = "system/bootmisc"
+	iset need = daemon/syslogd/prepare
 #endd
 	iset pid_file = "/var/run/syslog-ng.pid"
 	iset forks

@@ -12,9 +12,8 @@ source /etc/conf.d/smartd
 
 setup()
 {
-	export SERVICE="daemon/smartd"
-	iregister daemon
-	iset need = "system/bootmisc"
+	ireg daemon daemon/smartd
+	iset need = system/bootmisc
 	iset forks
 	iset pid_of = smartd
 #ifd fedora

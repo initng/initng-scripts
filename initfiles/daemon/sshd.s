@@ -9,26 +9,24 @@ DSA_KEY="/etc/ssh/ssh_host_dsa_key"
 
 setup()
 {
-	iregister -s "daemon/sshd/generate_keys" service
-	iregister -s "daemon/sshd" daemon
+	ireg service daemon/sshd/generate_keys
+	iexec start = generate_keys
+	idone
 
-	iset -s "daemon/sshd" need = "system/bootmisc virtual/net"
-	iset -s "daemon/sshd" conflict = "daemon/dropbear"
-	iset -s "daemon/sshd" use = "daemon/sshd/generate_keys"
-	iset -s "daemon/sshd" pid_file = "/var/run/sshd.pid"
-	iset -s "daemon/sshd" forks
-	iset -s "daemon/sshd" daemon_stops_badly
-
-	iexec -s "daemon/sshd/generate_keys" start = generate_keys_start
-	iexec -s "daemon/sshd" daemon = "@/usr/sbin/sshd@"
-
-	idone -s "daemon/sshd/generate_keys"
-	idone -s "daemon/sshd"
+	ireg daemon daemon/sshd
+	iset need = system/bootmisc virtual/net
+	iset conflict = daemon/dropbear
+	iset use = daemon/sshd/generate_keys
+	iset pid_file = "/var/run/sshd.pid"
+	iset forks
+	iset daemon_stops_badly
+	iexec daemon = "@/usr/sbin/sshd@"
+	idone
 }
 
-generate_keys_start()
+generate_keys()
 {
-	[ ! -s ${RSA1_KEY} ] && \
+	[ ! -s ${RSA1_KEY} ] &&
 		${KEYGEN} -q -t rsa1 -f ${RSA1_KEY} -C '' -N '' 2>&1 >/dev/null
 	if [ ! -s ${RSA_KEY} ]
 	then
@@ -43,4 +41,3 @@ generate_keys_start()
 		chmod 644 ${DSA_KEY}.pub
 	fi
 }
-

@@ -4,22 +4,20 @@
 
 setup()
 {
-	export SERVICE="daemon/sendmail/prepare"
-	iregister service
-	iset need = "system/bootmisc"
-	iexec start = prepare_start
+	ireg service daemon/sendmail/prepare
+	iset need = system/bootmisc
+	iexec start = prepare
 	idone
 
-	export SERVICE="daemon/sendmail"
-	iregister daemon
-	iset need = "system/bootmisc virtual/net"
-	iset use = "daemon/sendmail/prepare"
-	iset provide = "virtual/mta"
+	ireg daemon daemon/sendmail
+	iset need = system/bootmisc virtual/net
+	iset use = daemon/sendmail/prepare
+	iset provide = virtual/mta
 	iset exec daemon = "@/usr/sbin/sendmail@ -q1h -bD"
 	idone
 }
 
-prepare_start()
+prepare()
 {
 	if [ -x /usr/bin/make -a -f /etc/mail/Makefile ]
 	then

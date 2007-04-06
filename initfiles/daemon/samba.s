@@ -4,28 +4,28 @@
 
 setup()
 {
-	iregister -s "daemon/samba/winbind" daemon
-	iregister -s "daemon/samba/smbd" daemon
-	iregister -s "daemon/samba/nmbd" daemon
-	iregister -s "daemon/samba" virtual
+	ireg daemon daemon/samba/winbind
+	iset need = system/bootmisc
+	iset respawn
+	iset exec daemon = "@/usr/sbin/winbindd@ -F"
+	idone
 
-	iset -s "daemon/samba/winbind" need = "system/bootmisc"
-	iset -s "daemon/samba/winbind" respawn
-	iset -s "daemon/samba/smbd" need = "system/bootmisc"
-	iset -s "daemon/samba/smbd" use = "daemon/cupsd daemon/slapd"
-	iset -s "daemon/samba/smbd" respawn
-	iset -s "daemon/samba/nmbd" need = "system/bootmisc"
-	iset -s "daemon/samba/nmbd" use = "daemon/cupsd daemon/slapd"
-	iset -s "daemon/samba/nmbd" respawn
-	iset -s "daemon/samba" also_stop = "daemon/samba/smbd daemon/samba/nmbd"
-	iset -s "daemon/samba" need = "daemon/samba/smbd daemon/samba/nmbd"
+	ireg daemon daemon/samba/smbd
+	iset need = system/bootmisc
+	iset use = daemon/cupsd daemon/slapd
+	iset respawn
+	iset exec daemon = "@/usr/sbin/smbd@ -F"
+	idone
 
-	iexec -s "daemon/samba/winbind" daemon = "@/usr/sbin/winbindd@ -F"
-	iexec -s "daemon/samba/smbd" daemon = "@/usr/sbin/smbd@ -F"
-	iexec -s "daemon/samba/nmbd" daemon = "@/usr/sbin/nmbd@ -F"
+	ireg daemon daemon/samba/nmbd
+	iset need = system/bootmisc
+	iset use = daemon/cupsd daemon/slapd
+	iset respawn
+	iset exec daemon = "@/usr/sbin/nmbd@ -F"
+	idone
 
-	idone -s "daemon/samba/winbind"
-	idone -s "daemon/samba/smbd"
-	idone -s "daemon/samba/nmbd"
-	idone -s "daemon/samba"
+	ireg virtual daemon/samba
+	iset also_stop = daemon/samba/{smbd,nmbd}
+	iset need = daemon/samba/{smbd,nmbd}
+	idone
 }

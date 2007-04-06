@@ -1,15 +1,11 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc service/alsasound"
-
+	ireg daemon daemon/slmodemd
+	iset need = system/bootmisc service/alsasound
 	iset exec daemon = "@/usr/sbin/slmodemd@ --country"
-
 	idone
 }
-

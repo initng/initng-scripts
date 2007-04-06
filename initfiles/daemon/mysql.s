@@ -11,27 +11,25 @@ PIDFILE="/var/run/mysqld/mysqld.pid"
 
 setup()
 {
-	iregister -s "daemon/mysql/initdb" service
-	iregister -s "daemon/mysql" daemon
+	ireg service aemon/mysql/initdb
+	iset need = system/bootmisc
+	iexec start = initdb
+	idone
 
-	iset -s "daemon/mysql/initdb" need = "system/bootmisc"
-	iset -s "daemon/mysql" need = "system/bootmisc virtual/net/lo"
-	iset -s "daemon/mysql" use = "daemon/mysql/initdb"
-	iset -s "daemon/mysql" pid_file = "${PIDFILE}"
-
-	iexec -s "daemon/mysql/initdb" start = initdb_start
+	ireg daemon daemon/mysql
+	iset need = system/bootmisc virtual/net/lo
+	iset use = daemon/mysql/initdb
+	iset pid_file = "${PIDFILE}"
 #ifd fedora mandriva
-	iexec -s "daemon/mysql" daemon = "@/usr/bin/mysqld_safe@ --pid-file"
+	iset exec daemon = "@/usr/bin/mysqld_safe@ --pid-file"
 #elsed
-	iexec -s "daemon/mysql" daemon = "@/usr/bin/mysqld_safe@ --pid-file"
+	iset exec daemon = "@/usr/bin/mysqld_safe@ --pid-file"
 #endd
-	iexec -s "daemon/mysql" kill = mysql_kill
-
-	idone -s "daemon/mysql/initdb"
-	idone -s "daemon/mysql"
+	iexec kill
+	idone
 }
 
-initdb_start()
+initdb()
 {
 #ifd enlisy
 	if [ ! -d ${DATA} ]; then
@@ -54,11 +52,10 @@ initdb_start()
 #endd
 }
 
-mysql_kill()
+kill()
 {
 	# Neccesary for mysqld to stop (we have to send the
 	# SIGKILL to mysqld itself, but initng has the PID
 	# of mysqld_safe - it has to for various reasons)
-	kill $(cat ${PIDFILE})
-	}
+	kill $(<"${PIDFILE}")
 }

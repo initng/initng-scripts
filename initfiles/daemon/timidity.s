@@ -10,11 +10,10 @@ TIMIDITY_OPTS="-B2,8 -Os"
 
 setup()
 {
-	export SERVICE="daemon/timidity"
-	iregister daemon
-	iset need = "service/alsasound system/bootmisc"
+	ireg daemon daemon/timidity
+	iset need = service/alsasound system/bootmisc
 #ifd gentoo
-	iset use = "daemon/esound"
+	iset use = daemon/esound
 #endd
 	iexec daemon
 	idone

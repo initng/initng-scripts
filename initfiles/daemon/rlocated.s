@@ -4,14 +4,11 @@
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc system/modules/rlocate"
+	ireg daemon daemon/rlocated
+	iset need = system/bootmisc system/modules/rlocate
 	iset pid_file = "/var/run/rlocated.pid"
 	iset forks
 	iset daemon_stops_badly
-
 	iset exec daemon = "@/usr/sbin/rlocated@"
-
 	idone
 }
