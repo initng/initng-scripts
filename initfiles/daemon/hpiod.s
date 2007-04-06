@@ -4,17 +4,14 @@
 
 setup()
 {
-	iregister daemon
-
-	iset need = "system/bootmisc virtual/net/lo"
+	ireg daemon daemon/hpiod
+	iset need = system/bootmisc virtual/net/lo
 #ifd debian
 	iset pid_file = "/var/run/hplip/hpiod.pid"
 #elsed
 	iset pid_file = "/var/run/hpiod.pid"
 #endd
 	iset forks
-
 	iset exec daemon = "@/usr/sbin/hpiod@"
-
 	idone
 }

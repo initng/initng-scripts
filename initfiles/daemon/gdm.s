@@ -8,21 +8,16 @@ source /etc/default/gdm
 
 setup()
 {
-	export SERVICE="daemon/gdm"
-	iregister daemon
-	iset need = "system/bootmisc"
-	iset use = "daemon/xfs service/faketty service/xorgconf"
+	ireg daemon daemon/gdm
+	iset need = system/bootmisc
+	iset use = daemon/xfs service/faketty service/xorgconf
 #ifd pingwinek
-	iset use = "system/dbus"
+	iset use = system/dbus
 #elsed
-	iset use = "daemon/915resolution"
+	iset use = daemon/915resolution
 #endd
-	iset conflict = "daemon/kdm daemon/wdm daemon/xdm daemon/entranced"
-	iset provide = "virtual/dm"
-#ifd debian
-	iset exec daemon = "@gdm@ -nodaemon"
-#elsed
+	iset conflict = daemon/kdm daemon/wdm daemon/xdm daemon/entranced
+	iset provide = virtual/dm
 	iset exec daemon = "@/usr/sbin/gdm@ -nodaemon"
-#endd
 	idone
 }

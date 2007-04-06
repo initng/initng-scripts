@@ -4,9 +4,8 @@
 
 setup()
 {
-	export SERVICE="daemon/icecast"
-	iregister daemon
-	iset need = "system/bootmisc"
+	ireg daemon daemon/icecast
+	iset need = system/bootmisc
 	iset respawn
 	iset exec daemon = "@/usr/bin/icecast@ -c /etc/icecast2/icecast.xml"
 	idone

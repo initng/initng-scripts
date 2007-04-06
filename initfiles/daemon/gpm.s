@@ -16,9 +16,8 @@ source /etc/conf.d/gpm
 
 setup()
 {
-	export SERVICE="daemon/gpm"
-	iregister daemon
-	iset need = "system/bootmisc"
+	ireg daemon daemon/gpm
+	iset need = system/bootmisc
 #ifd debian
 #elsed
 	iset pid_file = "/var/run/gpm.pid"

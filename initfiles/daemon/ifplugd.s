@@ -13,21 +13,20 @@ source /etc/conf.d/ifplugd
 
 setup()
 {
-	# SERVICE: daemon/ifplugd
-	if [ "${NAME}" = ifplugd ]; then
-		iregister service
-		iset need = "system/bootmisc"
-		iset use = "system/modules system/coldplug system/ifrename"
+	if is_service daemon/ifplugd
+	then
+		ireg service
+		iset need = system/bootmisc
+		iset use = system/modules system/coldplug system/ifrename
 		iexec start
 		iexec stop
 		idone
 		exit 0
 	fi
 
-	# SERVICE: daemon/ifplugd/*
-	iregister daemon
-	iset need = "system/bootmisc"
-	iset use = "system/modules system/coldplug system/ifrename"
+	ireg daemon #daemon/ifplugd/*
+	iset need = system/bootmisc
+	iset use = system/modules system/coldplug system/ifrename
 	iset stdall = /dev/null
 #ifd debian
 	iexec daemon
@@ -44,7 +43,7 @@ daemon()
 	A=`eval echo \$\{ARGS_${IF1}\}`
 	[ -z "${A}" ] && A="${ARGS}"
 
-	exec @/usr/sbin/ifplugd@ --no-daemon -i ${NAME} ${A};
+	exec @/usr/sbin/ifplugd@ --no-daemon -i ${NAME} ${A}
 }
 #endd
 

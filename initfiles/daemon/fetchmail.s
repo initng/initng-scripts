@@ -4,9 +4,8 @@
 
 setup()
 {
-	export SERVICE="daemon/fetchmail"
-	iregister daemon
-	iset need = "system/bootmisc daemon/sendmail virtual/net"
+	ireg daemon daemon/fetchmail
+	iset need = system/bootmisc daemon/sendmail virtual/net
 	iset exec daemon = "@/usr/bin/fetchmail@ -f /etc/fetchmailrc"
 	idone
 }
