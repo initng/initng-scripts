@@ -8,6 +8,9 @@ RC_TTY_NUMBER="11"
 source /etc/sysconfig/console
 #elsed debian ubuntu
 source /etc/console-tools/config
+#elsed enlisy
+source /etc/conf.d/rc
+source /etc/conf.d/consolefont
 #elsed
 source /etc/rc.conf
 source /etc/conf.d/consolefont

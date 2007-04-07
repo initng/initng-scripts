@@ -12,7 +12,10 @@ CONFFILE="${CONFDIR}/${CONFFILEROOT}.${EXT}.gz"
 source /etc/sysconfig/console
 #elsed fedora pingwinek mandriva
 source /etc/sysconfig/keyboard
-#elsed gentoo enlisy
+#elsed enlisy
+source /etc/conf.d/rc
+source /etc/conf.d/keymaps
+#elsed gentoo
 source /etc/rc.conf
 source /etc/conf.d/keymaps
 #elsed

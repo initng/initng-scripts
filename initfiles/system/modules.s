@@ -109,6 +109,8 @@ start()
 	load_modules /etc/modules
 #elsed lfs
 	load_modules /etc/sysconfig/modules
+#elsed enlisy
+	load_modules /etc/conf.d/modules
 #elsed
 	load_modules /etc/modules
 #endd
