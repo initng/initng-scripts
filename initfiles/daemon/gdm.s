@@ -16,7 +16,7 @@ setup()
 #elsed
 	iset use = daemon/915resolution
 #endd
-	iset conflict = daemon/kdm daemon/wdm daemon/xdm daemon/entranced
+	iset conflict = daemon/kdm daemon/wdm daemon/xdm daemon/entranced daemon/slim
 	iset provide = virtual/dm
 	iset exec daemon = "@/usr/sbin/gdm@ -nodaemon"
 	idone

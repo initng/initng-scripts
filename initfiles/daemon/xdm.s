@@ -6,7 +6,7 @@ setup()
 {
 	ireg daemon daemon/xdm
 	iset need = system/bootmisc
-	iset conflict = daemon/gdm daemon/kdm daemon/wdm daemon/entranced
+	iset conflict = daemon/gdm daemon/kdm daemon/wdm daemon/entranced daemon/slim
 	iset use = system/modules system/coldplug service/faketty
 	iset provide = virtual/dm
 #ifd debian

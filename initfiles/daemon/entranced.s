@@ -7,7 +7,7 @@ setup()
 	ireg daemon daemon/entranced
 	iset need = system/bootmisc
 	iset provide = virtual/dm
-	iset conflict = daemon/xdm daemon/kdm daemon/gdm daemon/wdm
+	iset conflict = daemon/xdm daemon/kdm daemon/gdm daemon/wdm daemon/slim
 	iset pid_file = "/var/run/entranced.pid"
 	iset respawn
 	iset forks
