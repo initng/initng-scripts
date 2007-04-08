@@ -2,7 +2,8 @@
 # DESCRIPTION:
 # WWW:
 
-source /etc/sysconfig/nvidia-config-display
+[ -f /etc/sysconfig/nvidia-config-display ] &&
+	source /etc/sysconfig/nvidia-config-display
 
 setup()
 {

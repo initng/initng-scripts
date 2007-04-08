@@ -2,12 +2,12 @@
 # DESCRIPTION:
 # WWW:
 
-source /etc/conf.d/pcmcia
+[ -f /etc/conf.d/pcmcia ] && source /etc/conf.d/pcmcia
 
 setup()
 {
 	ireg service system/pcmcia
-	iset need = "system/bootmisc"
+	iset need = system/bootmisc
 	iexec start
 	idone
 }

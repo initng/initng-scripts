@@ -19,7 +19,7 @@ source /etc/conf.d/keymaps
 source /etc/rc.conf
 source /etc/conf.d/keymaps
 #elsed
-source /etc/keymaps.conf
+[ -f /etc/keymaps.conf ] && source /etc/keymaps.conf
 #endd
 
 setup()

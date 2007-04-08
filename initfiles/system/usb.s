@@ -5,10 +5,10 @@
 setup()
 {
 	ireg service system/usb
-#ifd fedora
 	iset need = system/bootmisc
+#ifd fedora
 #elsed
-	iset need = system/bootmisc system/modules/usbcore
+	iset need = system/modules/usbcore
 #endd
 	iexec start
 	idone

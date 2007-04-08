@@ -4,7 +4,7 @@
 
 RUN_DIR="/etc/network/run"
 IFSTATE="/etc/network/run/ifstate"
-source /etc/default/ifupdown
+[ -f /etc/default/ifupdown ] && source /etc/default/ifupdown
 
 setup()
 {

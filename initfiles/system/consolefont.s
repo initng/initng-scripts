@@ -12,8 +12,8 @@ source /etc/console-tools/config
 source /etc/conf.d/rc
 source /etc/conf.d/consolefont
 #elsed
-source /etc/rc.conf
-source /etc/conf.d/consolefont
+[ -f /etc/rc.conf ] && source /etc/rc.conf
+[ -f /etc/conf.d/consolefont ] && source /etc/conf.d/consolefont
 #endd
 
 setup()

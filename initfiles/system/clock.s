@@ -6,7 +6,7 @@ source /etc/default/rcS
 #elsed fedora lfs mandriva
 source /etc/sysconfig/clock
 #elsed
-source /etc/conf.d/clock
+[ -f /etc/conf.d/clock ] && source /etc/conf.d/clock
 #endd
 
 setup()

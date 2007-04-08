@@ -5,7 +5,7 @@
 setup()
 {
 	ireg service system/rmnologin
-	iset need = "system/mountfs/essential"
+	iset need = system/mountfs/essential
 	iexec start
 	idone
 }

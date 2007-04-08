@@ -5,12 +5,12 @@
 setup()
 {
 	ireg service system/selinux/dev
-	iset need = "system/initial/mountvirtfs"
+	iset need = system/initial/mountvirtfs
 	iexec start = dev_start
 	idone
 
 	ireg service system/selinux/relabel
-	iset need = "system/mountroot"
+	iset need = system/mountroot
 	iexec start = relabel_start
 	idone
 }

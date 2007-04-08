@@ -3,9 +3,9 @@
 # WWW:
 
 #ifd debian
-source /etc/default/rcS
 POOLSIZE="512"
 SAVEDFILE="/var/lib/urandom/random-seed"
+[ -f /etc/default/rcS ] && source /etc/default/rcS
 #elsed
 SAVEDFILE="/var/run/random-seed"
 #endd
