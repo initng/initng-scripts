@@ -1139,5 +1139,13 @@ int main(int argc, char **argv)
     /* close bouth input and output file */
     fclose(in);
     fclose(out);
+
+
+    if (outfile)
+    {
+	chmod(outfile, 755);
+    
+    }
+
     exit(0);
 }
