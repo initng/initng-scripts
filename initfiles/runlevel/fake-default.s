@@ -1,0 +1,2 @@
+#!/sbin/runiscript runlevel
+example
