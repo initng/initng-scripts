@@ -3,9 +3,9 @@
 # WWW:
 
 #ifd fedora suse mandriva
-source /etc/sysconfig/lm_sensors
+. /etc/sysconfig/lm_sensors
 #elsed
-[ -f /etc/conf.d/lm_sensors ] && source /etc/conf.d/lm_sensors
+[ -f /etc/conf.d/lm_sensors ] && . /etc/conf.d/lm_sensors
 #endd
 
 setup()

@@ -5,13 +5,13 @@
 #ifd debian
 NTPSERVERS="pool.ntp.org"
 NTPOPTIONS=""
-source /etc/default/ntpdate
+. /etc/default/ntpdate
 #elsed gentoo
 NTPCLIENT_OPTS="-b -s pool.ntp.org"
-source /etc/conf.d/ntp-client
+. /etc/conf.d/ntp-client
 #elsed
 NTPSERVERS="pool.ntp.org"
-[ -f /etc/conf.d/ntp ] && source /etc/conf.d/ntp
+[ -f /etc/conf.d/ntp ] && . /etc/conf.d/ntp
 #endd
 
 setup()

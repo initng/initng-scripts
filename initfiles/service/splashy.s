@@ -4,10 +4,10 @@
 
 spl_pidfile="/etc/splashy/splashy.pid"
 spl_fifo="/etc/splashy/splashy.fifo"
-source /etc/default/splashy
+. /etc/default/splashy
 SPL_MSG="Starting ${NAME} boot sequence"
 
-source /etc/init.d/splashy-functions.sh
+. /etc/init.d/splashy-functions.sh
 
 setup()
 {

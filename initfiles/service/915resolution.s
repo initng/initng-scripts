@@ -3,9 +3,9 @@
 # WWW:
 
 #ifd fedora mandriva
-source /etc/sysconfig/915resolution
+. /etc/sysconfig/915resolution
 #elsed
-[ -f /etc/default/915resolution ] && source /etc/default/915resolution
+[ -f /etc/default/915resolution ] && . /etc/default/915resolution
 #endd
 
 setup()
