@@ -2,7 +2,7 @@
 # DESCRIPTION:
 # WWW:
 
-source /etc/conf.d/net
+[ -f /etc/conf.d/net ] && . /etc/conf.d/net
 
 setup()
 {

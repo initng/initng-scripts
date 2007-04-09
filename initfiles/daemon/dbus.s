@@ -4,7 +4,7 @@
 
 #ifd debian pingwinek
 	DAEMONUSER="messagebus"
-	source /etc/default/dbus
+	. /etc/default/dbus
 #endd
 
 #ifd fedora altlinux mandriva

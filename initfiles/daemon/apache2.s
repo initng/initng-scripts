@@ -3,9 +3,9 @@
 # WWW: http://httpd.apache.org
 
 #ifd debian
-	source /etc/default/apache2
+	. /etc/default/apache2
 #elsed
-	source /etc/conf.d/apache2
+	[ -f /etc/conf.d/apache2 ] && . /etc/conf.d/apache2
 #endd
 
 setup()

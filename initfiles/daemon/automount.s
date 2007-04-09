@@ -4,10 +4,10 @@
 
 #ifd fedora
 PIDFILE="/var/lock/subsys/autofs"
-source /etc/sysconfig/autofs
+. /etc/sysconfig/autofs
 #elsed
 TIMEOUT="30"
-source /etc/conf.d/automount
+[ -f /etc/conf.d/automount ] && . /etc/conf.d/automount
 MOUNTPOINT="/mnt/${NAME}"
 PIDFILE="/var/run/autofs.${NAME}.pid"
 CONFFILE="/etc/autofs/auto.${NAME}"

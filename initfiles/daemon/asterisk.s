@@ -4,9 +4,9 @@
 
 ASTERISK_USER="asterisk"
 #ifd debian
-	source /etc/default/asterisk
+	. /etc/default/asterisk
 #elsed
-	source /etc/conf.d/asterisk
+	[ -f /etc/conf.d/asterisk ] && . /etc/conf.d/asterisk
 #endd
 
 setup()

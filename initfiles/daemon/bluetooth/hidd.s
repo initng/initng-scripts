@@ -4,7 +4,7 @@
 
 HIDD_OPTIONS="--server"
 #ifd gentoo
-source /etc/conf.d/bluetooth
+. /etc/conf.d/bluetooth
 #endd
 
 setup()

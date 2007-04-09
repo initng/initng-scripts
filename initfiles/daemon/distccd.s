@@ -14,7 +14,7 @@ LISTEN="0.0.0.0"
 NICE="10"
 #endd
 
-source /etc/conf.d/distccd
+[ -f /etc/conf.d/distccd ] && . /etc/conf.d/distccd
 
 setup()
 {

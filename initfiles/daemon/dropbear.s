@@ -9,7 +9,7 @@ DSA_KEY="/etc/ssh/dropbear_dsa_host_key"
 DROPBEAR_PORT="22"
 DROPBEAR_EXTRA_ARGS=""
 NO_START="0"
-source /etc/default/dropbear
+[ -f /etc/default/dropbear ] && . /etc/default/dropbear
 
 setup()
 {

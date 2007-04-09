@@ -4,7 +4,7 @@
 
 MODULES="all"
 #ifd debian
-	source /etc/default/acpid
+	. /etc/default/acpid
 #endd
 
 setup()
