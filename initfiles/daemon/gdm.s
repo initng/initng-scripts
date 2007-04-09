@@ -3,7 +3,7 @@
 # WWW: http://www.gnome.org/projects/gdm/
 
 #ifd debian
-source /etc/default/gdm
+. /etc/default/gdm
 #endd
 
 setup()

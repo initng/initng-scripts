@@ -5,7 +5,7 @@
 #ifd debian
 	PIDDIR="/var/run/hal"
 	DAEMONUSER="hal"
-	source /etc/default/hal
+	. /etc/default/hal
 #elsed gentoo
 	PIDDIR="/var/run"
 #endd

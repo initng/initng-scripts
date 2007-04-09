@@ -3,7 +3,7 @@
 # WWW:
 
 #ifd debian
-source /etc/default/klogd
+. /etc/default/klogd
 #endd
 
 setup()

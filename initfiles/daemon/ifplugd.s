@@ -3,12 +3,9 @@
 # WWW:
 
 #ifd debian
-source /etc/default/ifplugd
-#endd
-#ifd debian
-source /etc/default/ifplugd
+. /etc/default/ifplugd
 #elsed gentoo
-source /etc/conf.d/ifplugd
+. /etc/conf.d/ifplugd
 #endd
 
 setup()

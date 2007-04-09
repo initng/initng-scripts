@@ -3,9 +3,9 @@
 # WWW:
 
 #ifd debian
-source /etc/defaults/exim4
+. /etc/defaults/exim4
 #elsed gentoo
-source /etc/conf.d/exim
+. /etc/conf.d/exim
 #endd
 
 setup()

@@ -6,12 +6,12 @@
 device="/dev/input/mice"
 type="imps2"
 append=""
-source /etc/gpm.conf
+. /etc/gpm.conf
 #elsed
 MOUSE="imps2"
 MOUSEDEV="/dev/input/mice"
 APPEND=""
-source /etc/conf.d/gpm
+[ -f /etc/conf.d/gpm ] && . /etc/conf.d/gpm
 #endd
 
 setup()

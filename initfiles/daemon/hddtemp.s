@@ -10,9 +10,9 @@ SEPARATOR="|"
 SYSLOG="0"
 RUN_DAEMON="yes"
 #ifd debian
-source /etc/default/hddtemp
+. /etc/default/hddtemp
 #elsed
-source /etc/conf.d/hddtemp
+[ -f /etc/conf.d/hddtemp ] && . /etc/conf.d/hddtemp
 #endd
 
 setup()

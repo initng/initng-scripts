@@ -3,7 +3,7 @@
 # WWW:
 
 #ifd debian ubuntu
-source /etc/default/gdm
+. /etc/default/gdm
 #endd
 
 setup()
