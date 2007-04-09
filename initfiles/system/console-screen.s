@@ -3,7 +3,7 @@
 # WWW:
 
 #ifd debian
-source /etc/console-tools/config
+. /etc/console-tools/config
 #endd
 
 setup()

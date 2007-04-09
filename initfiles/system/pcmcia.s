@@ -2,7 +2,7 @@
 # DESCRIPTION:
 # WWW:
 
-[ -f /etc/conf.d/pcmcia ] && source /etc/conf.d/pcmcia
+[ -f /etc/conf.d/pcmcia ] && . /etc/conf.d/pcmcia
 
 setup()
 {

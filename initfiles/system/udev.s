@@ -114,7 +114,7 @@ mountdev_start()
 filldev_start()
 {
 #ifd gentoo enlisy
-	source /etc/conf.d/rc
+	. /etc/conf.d/rc
 	if [ "${RC_DEVICE_TARBALL}" = "yes" -a -e /lib/udev-state/devices.tar.bz2 ]
 	then
 		cd /dev
@@ -249,7 +249,7 @@ filldev_start()
 
 filldev_stop()
 {
-	source /etc/conf.d/rc
+	. /etc/conf.d/rc
 	if [ "${RC_DEVICE_TARBALL}" = "yes" ]
 	then
 		cd /dev

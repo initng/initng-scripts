@@ -5,9 +5,9 @@
 #elsed
 HOSTNAME="localhost"
 #ifd fedora mandriva
-source /etc/sysconfig/network
+. /etc/sysconfig/network
 #elsed
-[ -f /etc/conf.d/hostname ] && source /etc/conf.d/hostname
+[ -f /etc/conf.d/hostname ] && . /etc/conf.d/hostname
 #endd
 #endd
 

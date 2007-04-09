@@ -2,11 +2,11 @@
 # DESCRIPTION: Syncs the hardware clock and system time at startup and shutdown
 
 #ifd debian linspire
-source /etc/default/rcS
+. /etc/default/rcS
 #elsed fedora lfs mandriva
-source /etc/sysconfig/clock
+. /etc/sysconfig/clock
 #elsed
-[ -f /etc/conf.d/clock ] && source /etc/conf.d/clock
+[ -f /etc/conf.d/clock ] && . /etc/conf.d/clock
 #endd
 
 setup()

@@ -5,15 +5,15 @@
 RC_TTY_NUMBER="11"
 #ifd fedora pingwinek mandriva
 #elsed lfs
-source /etc/sysconfig/console
+. /etc/sysconfig/console
 #elsed debian ubuntu
-source /etc/console-tools/config
+. /etc/console-tools/config
 #elsed enlisy
-source /etc/conf.d/rc
-source /etc/conf.d/consolefont
+. /etc/conf.d/rc
+. /etc/conf.d/consolefont
 #elsed
-[ -f /etc/rc.conf ] && source /etc/rc.conf
-[ -f /etc/conf.d/consolefont ] && source /etc/conf.d/consolefont
+[ -f /etc/rc.conf ] && . /etc/rc.conf
+[ -f /etc/conf.d/consolefont ] && . /etc/conf.d/consolefont
 #endd
 
 setup()

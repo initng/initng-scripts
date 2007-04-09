@@ -3,7 +3,7 @@
 # WWW:
 
 [ -f /etc/sysconfig/nvidia-config-display ] &&
-	source /etc/sysconfig/nvidia-config-display
+	. /etc/sysconfig/nvidia-config-display
 
 setup()
 {

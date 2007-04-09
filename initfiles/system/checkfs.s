@@ -3,7 +3,7 @@
 # WWW:
 
 #ifd debian
-source /etc/default/rcS
+. /etc/default/rcS
 FSCK_LOGFILE="/var/log/fsck/checkfs"
 #endd
 

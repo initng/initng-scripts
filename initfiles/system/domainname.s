@@ -2,7 +2,7 @@
 # DESCRIPTION:
 # WWW:
 
-[ -f /etc/conf.d/domainname ] && source /etc/conf.d/domainname
+[ -f /etc/conf.d/domainname ] && . /etc/conf.d/domainname
 
 setup()
 {

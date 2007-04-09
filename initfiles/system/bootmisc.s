@@ -3,7 +3,7 @@
 # WWW:
 
 #ifd gentoo
-source /etc/conf.d/bootmisc
+. /etc/conf.d/bootmisc
 #endd
 
 setup()

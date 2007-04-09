@@ -3,9 +3,9 @@
 # WWW:
 
 #ifd gentoo
-source /etc/conf.d/hdparm
+. /etc/conf.d/hdparm
 #elsed debian
-source /etc/default/hdparm
+. /etc/default/hdparm
 #endd
 
 setup()

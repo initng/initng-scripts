@@ -9,17 +9,17 @@ CONFFILEROOT="boottime"
 EXT="kmap"
 CONFFILE="${CONFDIR}/${CONFFILEROOT}.${EXT}.gz"
 #elsed lfs
-source /etc/sysconfig/console
+. /etc/sysconfig/console
 #elsed fedora pingwinek mandriva
-source /etc/sysconfig/keyboard
+. /etc/sysconfig/keyboard
 #elsed enlisy
-source /etc/conf.d/rc
-source /etc/conf.d/keymaps
+. /etc/conf.d/rc
+. /etc/conf.d/keymaps
 #elsed gentoo
-source /etc/rc.conf
-source /etc/conf.d/keymaps
+. /etc/rc.conf
+. /etc/conf.d/keymaps
 #elsed
-[ -f /etc/keymaps.conf ] && source /etc/keymaps.conf
+[ -f /etc/keymaps.conf ] && . /etc/keymaps.conf
 #endd
 
 setup()
@@ -50,7 +50,7 @@ start()
 
 		if
 			CHARMAP=$(sh -c '
-					source /etc/environment >/dev/null 2>&1
+					. /etc/environment >/dev/null 2>&1
 					@locale@ charmap
 				')
 		[ "${CHARMAP}" = "UTF-8" ]
