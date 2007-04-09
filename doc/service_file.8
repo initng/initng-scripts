@@ -6,18 +6,136 @@ NAME:
 DESCRIPTION:
    Service files are InitNG's scripts for managing services
    and you find them in /etc/initng
+   
+HISTORY:
+   The fileformat used in initng pre versions (also known as the .i files) are supervised by a new fileformat current in development, The new files are not just data files that is parsed into memory telling initng in variables how to start a service, and what to run, and so on, the new format is actually executables, or scripts that is executed first on setup when initng is teatching about the services, but also later on again when executing an event, like a daemon start, or kill.
+
+SETUP SECTION:
+
+START or STOP section:
 
 
-OPERATIONS:
-   setup()
+CUSTOM COMMANDS:
+  You can add custom commands by:
+  
+  <insert example here>
+  
+  Execution of custom commands works like that:
+  
+  <insert example here>
+  
+  Getting a list of Custom commands is as easy as:
+  
+  <insert example here>
+  
+SEE ALSO
+  <insert referenced manpages here>
 
-   iregister
+EXAMPLE FILE /etc/initng/example:
+
+#!/sbin/runiscript
+
+setup()
+{
+	# Register new service type, the $SERVICE will be "example" here.
+	ireg service $SERVICE
+	#	iset need = "system/bootmisc"
+
+		iexec start = strange_name_for_start
+		iexec stop
+	# Tell initng this service is done parsing.
+	idone
+}
+
+strange_name_for_start()
+{
+	echo "Starting $SERVICE"
+	echo "env:"
+	/usr/bin/env
+	exit 0
+}
+
+stop()
+{
+	echo "Stopping $SERVICE here"
+	exit 0
+}
+
+
+SECTION setup():
+  First when initng are trying to find/and know about a service, its finds the "s-file" and executes the setup() function thru an bash-wrapper. When initng is executing the setup() section it has an file-socket (fd 3) open to initng as an setup-channel, with the small executables iset, ireg, iexec, idone.. the script will configure the memory-area bound to this service in initng-memory setting options, settings, creating additional services.
+  
+  Because the setup section is executing, and not only parsing variables, there is possible to write code, that will setup initng diffrent on diffrent systems, and also doing test, for example if there dont exist a cdrom drive on the computer, there is no need for scedule a cdrom driver load once the depencensys for this service is met, (for example mounting the / drive so we can acces the driver) and just quit the setup section without creating the service. Also you can have tests, dynamicly if a service needs diffrent dependencys in diffrent times, for example. if samba is started, the setup section scans the smb.conf file, and makes sure to tell initng that every path shared shud be mounted until samba is started. Having this brings a new way of dynamics to initng that other init-system dont even are close to deliver.  
+
+Every "s-file" requires an setup() section.
+
+
+SECTION Start() Stop() and CrasyCustomStart():
+  
+The script file may have a start or stop section,  (with sections meens a bash function called from wrapper in service file executing)
+these are not required, and are sometimes just unnessesary.
+
+If you have a file /etc/initng/test
+
+And it contains an
+
+start()
+{
+	echo "Hello World"
+}
+
+strange_another()
+{
+	echo "Hello again"
+}
+
+you can execute it by
+
+# /etc/initng/test internal_start
+
+And
+
+# /etc/initng/test internal_strange_another
+
+And this is the way initng uses to execute that sections in the "s-file" by telling initng in the setup() phase with
+
+	iexec start = strange_name_for_start
+	iexec stop
+
+Meens that initng will find start execution code in service file section strange_name_for_start() and stop default section name by stop()
+
+OPERATIONS IN Setup()
 
    ireg
+   
+   Use iregister in setup section to allocate and register a new service known to initng, specify the name for the service you are creating as the options, if name is not provided the name will be taken from the name and path of the service file.
+   
+   This must be called before iset and iexec may be called at all.
 
    iset
+   Use this commant to set a variable in a created service for initng, that can be a variable only intresting by the start() section later on in this script, or maby a variable telling initng whats the deps are for this service.
 
    iexec
+	This is a chort command for i set
+	iexec start
+	is the same as
+	iset start = /full/path/to/service/file internal_start
+	witch just for saving space
 
    idone
+   	Must be called in the end indikating that all iset is fully set, and the instructions set are ready for execution, dont forget this one.
+   	If not set, the service is indikated as a failure, and initng things the setup part is broaken for that service.
 
+VARIABLES FROM INITNG
+ When the "s-files" are executed initng will setup environ-variables that you may use.
+ 
+ The onse set by iset in setup section will be set on start, stop and other later executions, also $INITNG_VERSION and similar.
+ One usefull is the $SERVICE that tells your script what service the user is out after.
+ 
+ If you might write net/device and you got a setup request you see $SERVICE "net/device/eth0" and you know what to do there.
+ 
+ There is more variables, updates will follow once the api stabilizes.
+ 
+ 
+  Written By Jimmy Wennlund <jimmy.wennlund@gmail.com>
+  
