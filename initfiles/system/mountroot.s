@@ -172,8 +172,7 @@ rootrw_stop()
 
 mountroot_start()
 {
-	@rm@ /etc/mtab
-	if ! /bin/echo -n "" >> /etc/mtab
+	if ! : > /etc/mtab
 	then
 		echo "Skipping /etc/mtab initialization (ro root?)"
 		exit 0
