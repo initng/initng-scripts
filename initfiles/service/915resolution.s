@@ -2,10 +2,10 @@
 # DESCRIPTION:
 # WWW:
 
-#ifd fedora lfs mandriva
+#ifd fedora mandriva
 source /etc/sysconfig/915resolution
 #elsed
-source /etc/default/915resolution
+[ -f /etc/default/915resolution ] && source /etc/default/915resolution
 #endd
 
 setup()

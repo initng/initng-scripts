@@ -5,7 +5,7 @@
 #ifd fedora suse mandriva
 source /etc/sysconfig/lm_sensors
 #elsed
-source /etc/conf.d/lm_sensors
+[ -f /etc/conf.d/lm_sensors ] && source /etc/conf.d/lm_sensors
 #endd
 
 setup()
