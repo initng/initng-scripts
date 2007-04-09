@@ -18,7 +18,7 @@ setup()
 
 daemon()
 {
-	source ${INITNG_PLUGIN_DIR}/scripts/net/functions
+	. ${INITNG_PLUGIN_DIR}/scripts/net/functions
 
 	eval opts=\"\$\{wpa_supplicant_${ifvar}\} -i${iface} -c/etc/wpa_supplicant.conf -B\"
 	[ -f /sbin/wpa_cli.action ] &&
@@ -32,7 +32,7 @@ daemon()
 		exit 0
 	fi
 
-	source "${libdir}/wpa_supplicant"
+	. "${libdir}/wpa_supplicant"
 	if ! wpa_supplicant_associate
 	then
 		@wpa_cli@ -i${iface} terminate

@@ -3,7 +3,7 @@
 # WWW:
 
 user="nobody"
-source /etc/conf.d/irexec
+[ -f /etc/conf.d/irexec ] && . /etc/conf.d/irexec
 
 setup()
 {

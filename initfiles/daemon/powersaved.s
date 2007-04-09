@@ -4,12 +4,12 @@
 
 #ifd suse
 CONFIG="/etc/sysconfig/powersave"
-source /etc/sysconfig/powersave/common
-source /etc/sysconfig/powersave/cpufreq
+. /etc/sysconfig/powersave/common
+. /etc/sysconfig/powersave/cpufreq
 #elsed
 CONFIG="/etc/powersave"
-source /etc/powersave/common
-source /etc/powersave/cpufreq
+[ -f /etc/powersave/common ] && . /etc/powersave/common
+[ -f /etc/powersave/cpufreq ] && . /etc/powersave/cpufreq
 #endd
 LOGGER="@echo@"
 SYSFS_PATH="/sys/devices/system/cpu/cpu0/cpufreq"

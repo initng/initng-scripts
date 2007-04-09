@@ -6,7 +6,7 @@ MLDONKEY_DIR="/home/p2p/mldonkey"
 USER="p2p"
 NICE="1"
 LOG="/var/log/mldonkey.log"
-source /etc/conf.d/mldonkey
+[ -f /etc/conf.d/mldonkey ] && . /etc/conf.d/mldonkey
 
 setup()
 {

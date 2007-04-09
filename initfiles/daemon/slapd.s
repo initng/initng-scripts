@@ -3,7 +3,7 @@
 # WWW:
 
 #ifd gentoo
-source /etc/conf.d/slapd
+. /etc/conf.d/slapd
 #endd
 
 setup()

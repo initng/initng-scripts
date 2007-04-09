@@ -3,11 +3,11 @@
 # WWW: http://smartmontools.sourceforge.net
 
 #ifd fedora mandriva
-source /etc/sysconfig/smartmontools
+. /etc/sysconfig/smartmontools
 #elsed debian
-source /etc/default/smartmontools
+. /etc/default/smartmontools
 #elsed
-source /etc/conf.d/smartd
+[ -f /etc/conf.d/smartd ] && . /etc/conf.d/smartd
 #endd
 
 setup()

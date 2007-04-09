@@ -4,7 +4,7 @@
 
 user="nobody"
 conf="/etc/lircrcd.conf"
-source /etc/conf.d/lircrcd
+[ -f /etc/conf.d/lircrcd ] && . /etc/conf.d/lircrcd
 
 setup()
 {

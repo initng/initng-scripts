@@ -3,9 +3,9 @@
 # WWW:
 
 #ifd debian linspire
-source /etc/default/portmap
+. /etc/default/portmap
 #elsed
-source /etc/conf.d/portmap
+[ -f /etc/conf.d/portmap ] && . /etc/conf.d/portmap
 #endd
 
 setup()

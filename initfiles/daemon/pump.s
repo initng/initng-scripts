@@ -2,7 +2,7 @@
 # DESCRIPTION: DHCP/BOOTP client
 # WWW: http://ftp.debian.org/debian/pool/main/p/pump/
 
-source /etc/conf.d/net
+[ -f /etc/conf.d/net ] && . /etc/conf.d/net
 
 setup()
 {

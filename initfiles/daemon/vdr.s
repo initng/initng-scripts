@@ -9,7 +9,7 @@ CONFIG="/etc/vdr"
 SVDRP_PORT="2001"
 EPGFILE="${HOME}/epg.data"
 LANG="de_DE"
-source /etc/conf.d/vdr
+[ -f /etc/conf.d/vdr ] && . /etc/conf.d/vdr
 
 setup()
 {

@@ -3,7 +3,7 @@
 # WWW:
 
 #ifd gentoo
-source /etc/conf.d/lircd
+. /etc/conf.d/lircd
 #endd
 
 setup()

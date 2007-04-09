@@ -3,7 +3,7 @@
 # WWW:
 
 MINI_HTTPD_DOCROOT=/
-source /etc/conf.d/mini_httpd
+[ -f /etc/conf.d/mini_httpd ] && . /etc/conf.d/mini_httpd
 
 setup()
 {

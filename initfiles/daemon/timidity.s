@@ -3,7 +3,7 @@
 # WWW: http://timidity.sourceforge.net
 
 #ifd gentoo
-source /etc/conf.d/timidity
+. /etc/conf.d/timidity
 #elsed
 TIMIDITY_OPTS="-B2,8 -Os"
 #endd

@@ -6,7 +6,7 @@ VDR_HOST="localhost"
 VDR_PORT="2002"
 SERV_HOST="localhost"
 SERV_PORT="2001"
-source /etc/conf.d/svdrpd
+[ -f /etc/conf.d/svdrpd ] && . /etc/conf.d/svdrpd
 
 setup()
 {

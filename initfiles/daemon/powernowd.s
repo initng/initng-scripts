@@ -4,7 +4,7 @@
 
 #ifd debian
 OPTIONS="-q -m 2"
-source /etc/default/powernowd
+. /etc/default/powernowd
 #endd
 
 setup()

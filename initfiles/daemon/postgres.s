@@ -2,7 +2,7 @@
 # DESCRIPTION: Relational database
 # WWW: http://www.postgresql.org/
 
-source /usr/share/postgresql-common/init.d-functions
+. /usr/share/postgresql-common/init.d-functions
 
 #ifd debian
 #elsed
@@ -14,7 +14,7 @@ PGDATA="/var/lib/postgresql/data"
 PGUSER="postgres"
 PGGROUP="postgres"
 #ifd gentoo
-source /etc/conf.d/postgresql
+. /etc/conf.d/postgresql
 #endd
 #ifd pingwinek
 PGDATA="/srv/pgsql"
@@ -26,7 +26,7 @@ PGGROUP="postgres"
 PGLOG="${PGDATA}/postgresql.log"
 PGOPTS="-p5432"
 #ifd gentoo
-source /etc/conf.d/postgresql
+. /etc/conf.d/postgresql
 #endd
 #endd
 

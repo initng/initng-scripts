@@ -3,7 +3,7 @@
 # WWW:
 
 #ifd gentoo
-source /etc/conf.d/ntpd
+. /etc/conf.d/ntpd
 #endd
 
 setup()

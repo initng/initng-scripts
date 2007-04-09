@@ -5,7 +5,7 @@
 OIDENT_USER="nobody"
 OIDENT_GROUP="nogroup"
 #ifd debian
-source /etc/default/oidentd
+. /etc/default/oidentd
 #endd
 
 setup()

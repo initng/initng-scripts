@@ -6,7 +6,7 @@ CONFFILE="/etc/snmp/snmpd.conf"
 PIDFILE="/var/run/snmpd.pid"
 OPTIONS="-Lsd -a"
 #ifd fedora mandriva
-source /etc/snmp/snmpd.options
+. /etc/snmp/snmpd.options
 #endd
 
 setup()

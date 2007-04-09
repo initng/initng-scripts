@@ -3,9 +3,7 @@
 # WWW: http://www.xinetd.org
 
 #ifd gentoo
-source /etc/conf.d/xinetd
-#elsed
-XINETD_OPTS=
+. /etc/conf.d/xinetd
 #endd
 
 setup()

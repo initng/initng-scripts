@@ -4,9 +4,9 @@
 
 #ifd gentoo
 RPCNFSDCOUNT="8"
-source /etc/conf.d/nfs
+. /etc/conf.d/nfs
 #elsed fedora mandriva
-source /etc/sysconfig/nfs
+. /etc/sysconfig/nfs
 #endd
 
 setup()

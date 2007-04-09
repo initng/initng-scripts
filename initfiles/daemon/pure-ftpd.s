@@ -3,7 +3,7 @@
 # WWW: http://www.pureftpd.org/project/pure-ftpd
 
 #ifd gentoo
-source /etc/conf.d/pure-ftpd
+. /etc/conf.d/pure-ftpd
 #endd
 
 setup()

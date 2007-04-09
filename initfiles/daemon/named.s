@@ -5,7 +5,7 @@
 CPU="1"
 KEY="/etc/bind/rndc.key"
 PIDFILE="/var/run/named/named.pid"
-source /etc/conf.d/named
+[ -f /etc/conf.d/named ] && . /etc/conf.d/named
 
 setup()
 {

@@ -4,7 +4,7 @@
 
 #ifd gentoo
 XFS_PORT="-1"
-source /etc/conf.d/xfs
+. /etc/conf.d/xfs
 #endd
 
 setup()
