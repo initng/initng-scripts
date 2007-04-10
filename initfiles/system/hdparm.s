@@ -5,6 +5,7 @@
 #ifd gentoo
 . /etc/conf.d/hdparm
 #elsed debian
+[ -f /etc/default/hdparm ] || exit 0
 . /etc/default/hdparm
 #endd
 

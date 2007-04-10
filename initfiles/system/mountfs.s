@@ -14,13 +14,13 @@ setup()
 	iset never_kill
 	iexec start = essential_start
 	iexec stop = essential_stop
-	idone
+	idone system/mountfs/essential
 
 	ireg service system/mountfs/home
 	iset need = system/mountroot system/checkfs
 	iset never_kill
 	iexec start = home_start
-	idone
+	idone /system/mountfs/home
 
 	ireg service system/mountfs/network
 	iset need = system/initial system/mountfs/essential virtual/net
@@ -28,7 +28,7 @@ setup()
 	iset never_kill
 	iexec start = network_start
 	iexec stop = network_stop
-	idone
+	idone system/mountfs/network
 
 	ireg service system/mountfs
 	iset need = system/mountfs/essential system/mountfs/home
