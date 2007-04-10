@@ -8,33 +8,33 @@ LOCAL_FS="reiserfs,reiser4,reiserfs,reiser4,ext2,ext3,xfs,jfs,vfat,ntfs,ntfs-3g,
 setup()
 {
 	ireg service system/mountfs/essential
-	iset need = system/initial/mountvirtfs system/mountroot system/checkfs
-	iset use = system/sraid system/hdparm system/selinux/relabel
-	iset critical
-	iset never_kill
-	iexec start = essential_start
-	iexec stop = essential_stop
+	iset -s system/mountfs/essential need = system/initial/mountvirtfs system/mountroot system/checkfs
+	iset -s system/mountfs/essential use = system/sraid system/hdparm system/selinux/relabel
+	iset -s system/mountfs/essential critical
+	iset -s system/mountfs/essential never_kill
+	iexec -s system/mountfs/essential start = essential_start
+	iexec -s system/mountfs/essential stop = essential_stop
 	idone system/mountfs/essential
 
 	ireg service system/mountfs/home
-	iset need = system/mountroot system/checkfs
-	iset never_kill
-	iexec start = home_start
+	iset -s system/mountfs/home need = system/mountroot system/checkfs
+	iset -s system/mountfs/home never_kill
+	iexec -s system/mountfs/home start = home_start
 	idone /system/mountfs/home
 
 	ireg service system/mountfs/network
-	iset need = system/initial system/mountfs/essential virtual/net
-	iset use = daemon/portmap
-	iset never_kill
-	iexec start = network_start
-	iexec stop = network_stop
+	iset -s system/mountfs/network need = system/initial system/mountfs/essential virtual/net
+	iset -s system/mountfs/network use = daemon/portmap
+	iset -s system/mountfs/network never_kill
+	iexec -s system/mountfs/network start = network_start
+	iexec -s system/mountfs/network stop = network_stop
 	idone system/mountfs/network
 
 	ireg service system/mountfs
-	iset need = system/mountfs/essential system/mountfs/home
-	iset use = system/mountfs/network
-	iset never_kill
-	iexec start = mountfs_start
+	iset -s system/mountfs need = system/mountfs/essential system/mountfs/home
+	iset -s system/mountfs use = system/mountfs/network
+	iset -s system/mountfs never_kill
+	iexec -s system/mountfs start = mountfs_start
 	idone
 }
 
@@ -85,7 +85,7 @@ home_start()
 network_start()
 {
 	@mount@ -a -F -t "${NET_FS}" ||
-		@mount@ -a -t "${NET_FS}"
+	@mount@ -a -t "${NET_FS}"
 }
 
 network_stop()
