@@ -4,11 +4,6 @@
 
 setup()
 {
-	ireg virtual system/udev
-	iset -s system/udev critical
-	iset -s system/udev need = system/udev/filldev system/udfev/udevd
-	iset -s system/udev also_start = system/udev/move_rules system/udev/retry_failed
-	idone system/udev
 
 	ireg daemon system/udev/udevd
 	iset -s system/udev/udevd critical
@@ -41,6 +36,15 @@ setup()
 	iexec -s system/udev/filldev stop = filldev_stop
 #endd
 	idone system/udev/filldev
+
+	# Puting this last, saves some cpu, becouse the deps abow are allredy in memory, and not need to be reparsed
+	# puting this first, it will stop after finding this service.
+	ireg virtual system/udev
+	iset -s system/udev critical
+	iset -s system/udev need = system/udev/filldev system/udev/udevd
+	iset -s system/udev also_start = system/udev/move_rules system/udev/retry_failed
+	idone system/udev
+
 }
 
 move_rules()
