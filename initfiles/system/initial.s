@@ -4,7 +4,7 @@
 
 setup()
 {
-    if [ "$SERVICE" == "system/initial/mountvirtfs" ]
+    if [ "$SERVICE" = "system/initial/mountvirtfs" ]
     then
 	ireg service
 	iexec start = mountvirtfs_start
@@ -12,7 +12,7 @@ setup()
 	idone
     fi
 
-    if [ "$SERVICE" == "system/initial/filldev" ]
+    if [ "$SERVICE" = "system/initial/filldev" ]
     then
 	ireg service
 	iset need = system/initial/mountvirtfs
@@ -22,7 +22,7 @@ setup()
 	idone
     fi
 
-    if [ "$SERVICE" == "system/initial/loglevel" ]
+    if [ "$SERVICE" = "system/initial/loglevel" ]
     then
 	ireg service
 	iset exec start = "@/sbin/dmesg@ -n 1"
@@ -30,7 +30,7 @@ setup()
 	idone
     fi
     
-    if [ "$SERVICE" == "system/initial" ]
+    if [ "$SERVICE" = "system/initial" ]
     then
 	ireg virtual
 	iset critical
