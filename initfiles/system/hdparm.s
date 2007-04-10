@@ -5,13 +5,11 @@
 #ifd gentoo
 . /etc/conf.d/hdparm
 #elsed debian
-[ -f /etc/default/hdparm ] || exit 0
-. /etc/default/hdparm
 #endd
 
 setup()
 {
-	ireg service system/hdparm
+	iregister service
 	iset need = system/initial
 	iexec start
 	idone
@@ -19,6 +17,8 @@ setup()
 
 start()
 {
+    [ -f /etc/default/hdparm ] || exit 0
+    . /etc/default/hdparm
 	for device in /dev/hd?
 	do
 		# check that the block device really exists

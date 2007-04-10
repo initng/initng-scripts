@@ -19,9 +19,9 @@ setup()
 	idone
 }
 
-[ -x @/sbin/hwclock@ ] || exit 0
+#[ -x @/sbin/hwclock@ ] || exit 0
 #ifd debian
-[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
+#[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
 #endd
 
 setupopts() {
