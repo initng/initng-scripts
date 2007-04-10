@@ -7,7 +7,11 @@ LOCAL_FS="reiserfs,reiser4,reiserfs,reiser4,ext2,ext3,xfs,jfs,vfat,ntfs,ntfs-3g,
 
 setup()
 {
-	export SERVICE="system/mountfs/essential"
+
+    # Depending on what initng really want, setup that service.
+
+    if [ "$SERVICE" == "system/mountfs/essential" ]
+    then
 	ireg service
 	iset need = system/initial/mountvirtfs system/mountroot system/checkfs
 	iset use = system/sraid system/hdparm system/selinux/relabel
@@ -16,15 +20,19 @@ setup()
 	iexec start = essential_start
 	iexec stop = essential_stop
 	idone
+    fi
 
-	export SERVICE="system/mountfs/home"
+    if [ "$SERVICE" == "system/mountfs/home" ]
+    then
 	ireg service
 	iset need = system/mountroot system/checkfs
 	iset never_kill
 	iexec start = home_start
 	idone
+    fi
 
-	export SERVICE="system/mountfs/network"
+    if [ "$SERVICE" == "system/mountfs/network" ]
+    then
 	ireg service
 	iset need = system/initial system/mountfs/essential virtual/net
 	iset use = daemon/portmap
@@ -32,14 +40,17 @@ setup()
 	iexec start = network_start
 	iexec stop = network_stop
 	idone
+    fi
 
-	export SERVICE="system/mountfs"
+    if [ "$SERVICE" == "system/mountfs" ]
+    then
 	ireg service
 	iset need = system/mountfs/essential system/mountfs/home
 	iset use = system/mountfs/network
 	iset never_kill
 	iexec start = mountfs_start
 	idone
+    fi
 }
 
 essential_start()
