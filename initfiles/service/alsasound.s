@@ -7,41 +7,66 @@ alsascrdir="/etc/alsa.d"
 
 setup()
 {
-	ireg service service/alsasound/cards
+	# create service/alsasound/cards
+	export SERVICE="service/alsasound/cards"
+	ireg service
 	iset need = system/bootmisc
 	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = cards_start
 	idone
 
-	ireg service service/alsasound/oss
+	# create service/alsasound/oss
+	export SERVICE="service/alsasound/oss"
+	ireg service
 	iset need = system/bootmisc
 	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = oss_start
 	idone
 
-	ireg service service/alsasound/seq
+	# create service/alsasound/swq
+	export SERVICE="service/alsasound/seq"
+	ireg service
 	iset need = system/bootmisc
 	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = seq_start
 	idone
 
-	ireg service service/alsasound/ioctl32
+	# create service/alsasound/ioctl32
+	export SERVICE="service/alsasound/ioctl32"
+	ireg service
 	iset need = system/bootmisc
 	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = ioctl32_start
 	idone
 
-	ireg service service/alsasound/mixerstate
+	# create service/alsasound/mixerstate
+	export SERVICE="service/alsasound/mixerstate"
+	ireg service
 	iset need = system/bootmisc service/alsasound
 	iset exec stop = "@alsactl@ -f ${asoundcfg} store"
 	iexec start = mixerstate_start
 	idone
 
+	# finally create service/alsasound that will launch the rest
+	export SERVICE="service/alsasound"
 	ireg service service/alsasound
 	iset need = system/bootmisc
-	iset use = system/coldplug service/alsasound/{cards,ioctl32,seq,oss} \
-	           system/modules/depmod system/modules
-	iset also_stop = service/alsasound/{cards,ioctl32,seq,oss}
+	iset use = \
+		    system/coldplug \
+		    service/alsasound/cards \
+		    service/alsasound/ioctl32 \
+		    service/alsasound/seq \
+		    service/alsasound/oss \
+	            system/modules/depmod \
+		    system/modules
+		    
+	# Bring down these subservices if service/alsasound is stopped
+	iset also_stop = \
+		    service/alsasound/cards \
+		    service/alsasound/ioctl32 \
+		    service/alsasound/seq \
+		    service/alsasound/oss
+		    
 	iexec start = alsasound_start
 	idone
 }
