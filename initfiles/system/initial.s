@@ -4,32 +4,40 @@
 
 setup()
 {
-	export SERVICE=system/initial/mountvirtfs
+    if [ "$SERVICE" == "system/initial/mountvirtfs" ]
+    then
 	ireg service
 	iexec start = mountvirtfs_start
 	iset critical
 	idone
+    fi
 
-	export SERVICE=system/initial/filldev
+    if [ "$SERVICE" == "system/initial/filldev" ]
+    then
 	ireg service
 	iset need = system/initial/mountvirtfs
 	iset use = system/udev/mountdev
 	iset critical
 	iexec start = filldev_start
 	idone
+    fi
 
-	export SERVICE=system/initial/loglevel
+    if [ "$SERVICE" == "system/initial/loglevel" ]
+    then
 	ireg service
 	iset exec start = "@/sbin/dmesg@ -n 1"
 	iset exec stop = "@/sbin/dmesg@ -n 2"
 	idone
-
-	export SERVICE=system/initial
+    fi
+    
+    if [ "$SERVICE" == "system/initial" ]
+    then
 	ireg virtual
 	iset critical
 	iset need = system/initial/loglevel system/initial/mountvirtfs system/initial/filldev
 	iset use = system/selinux/dev system/udev
 	idone
+    fi
 }
 
 mountvirtfs_start()
