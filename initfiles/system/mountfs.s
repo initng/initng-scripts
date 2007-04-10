@@ -10,7 +10,7 @@ setup()
 
     # Depending on what initng really want, setup that service.
 
-    if [ "$SERVICE" == "system/mountfs/essential" ]
+    if [ "$SERVICE" = "system/mountfs/essential" ]
     then
 	ireg service
 	iset need = system/initial/mountvirtfs system/mountroot system/checkfs
@@ -22,7 +22,7 @@ setup()
 	idone
     fi
 
-    if [ "$SERVICE" == "system/mountfs/home" ]
+    if [ "$SERVICE" = "system/mountfs/home" ]
     then
 	ireg service
 	iset need = system/mountroot system/checkfs
@@ -31,7 +31,7 @@ setup()
 	idone
     fi
 
-    if [ "$SERVICE" == "system/mountfs/network" ]
+    if [ "$SERVICE" = "system/mountfs/network" ]
     then
 	ireg service
 	iset need = system/initial system/mountfs/essential virtual/net
@@ -42,7 +42,7 @@ setup()
 	idone
     fi
 
-    if [ "$SERVICE" == "system/mountfs" ]
+    if [ "$SERVICE" = "system/mountfs" ]
     then
 	ireg service
 	iset need = system/mountfs/essential system/mountfs/home
