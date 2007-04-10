@@ -7,31 +7,31 @@ setup()
 	ireg virtual system/udev
 	iset critical
 	iset need = system/udev/{filldev,udevd}
-	iset also_start = system/udev/{move_rules,retry_failed}
-	idone
+	iset also_start = system/udev/move_rules system/udev/retry_failed
+	idone system/udev
 
 	ireg daemon system/udev/udevd
 	iset critical
 	iset need = system/udev/mountdev system/initial/mountvirtfs
 	iset respawn
 	iset exec daemon = "@/sbin/udevd@"
-	idone
+	idone system/udev/udevd
 
 	ireg service system/udev/move_rules
 	iset need = system/udev/udevd system/mountroot/rootrw
 	iexec start = move_rules
-	idone
+	idone system/udev/move_rules
 
 	ireg service system/udev/retry_failed
 	iset need = system/udev/{udevd,move_rules} system/mountfs/essential
 	iexec start = retry_failed
-	idone
+	idone system/udev/retry_failed
 
 	ireg service system/udev/mountdev
 	iset critical
 	iset need = system/initial/mountvirtfs
 	iexec start = mountdev_start
-	idone
+	idone system/udev/mountdev
 
 	ireg service system/udev/filldev
 	iset critical
@@ -40,7 +40,7 @@ setup()
 #ifd gentoo enlisy
 	iexec stop = filldev_stop
 #endd
-	idone
+	idone system/udev/filldev
 }
 
 move_rules()
