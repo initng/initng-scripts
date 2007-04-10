@@ -7,23 +7,34 @@ dm_file="${dm_dir}/control"
 
 setup()
 {
-	ireg service system/mountroot/dmsetup
+    if [ "$SERVICE" = "system/mountroot/dmsetup" ]
+    then
+	ireg service
 	iset need = system/initial system/modules/dm-mod
 	iset exec start = "@/sbin/dmsetup@ mknodes"
 	idone
+    fi
 
-	ireg service system/mountroot/lvm
+    if [ "$SERVICE" = "system/mountroot/lvm" ]
+    then
+	ireg service
 	iset need = system/initial system/modules/lvm system/modules/lvm-mod \
 	            system/mountroot/dmsetup
 	iexec start = lvm_start
 	idone
+    fi
 
-	ireg service system/mountroot/evms
+    if [ "$SERVICE" = "system/mountroot/evms" ]
+    then
+	ireg service
 	iset need = system/initial
 	iset exec start = "@/sbin/evms_activate@"
 	idone
+    fi
 
- 	ireg service system/mountroot/check
+    if [ "$SERVICE" = "system/mountroot/check" ]
+    then
+ 	ireg service
 	iset need = system/initial
 	iset use = system/hdparm system/mountroot/evms system/mountroot/lvm \
 	           system/mountroot/dmsetup
@@ -31,8 +42,11 @@ setup()
 	iset never_kill
 	iexec start = check_start
 	idone
+    fi
 
-	ireg service system/mountroot/rootrw
+    if [ "$SERVICE" = "system/mountroot/rootrw" ]
+    then
+	ireg service
 	iset need = system/initial system/mountroot/check
 	iset use = system/mountroot/evms system/mountroot/lvm \
 	           system/mountroot/dmsetup
@@ -40,11 +54,15 @@ setup()
 	iexec start = rootrw_start
 	iexec stop = rootrw_stop
 	idone
+    fi
 
-	ireg service system/mountroot
+    if [ "$SERVICE" = "system/mountroot" ]
+    then
+	ireg service
 	iset need = system/initial system/mountroot/rootrw
 	iexec start = mountroot_start
 	idone
+    fi
 }
 
 lvm_start()

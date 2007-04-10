@@ -7,48 +7,59 @@ alsascrdir="/etc/alsa.d"
 
 setup()
 {
+    if [ "$SERVICE" = "service/alsasound/cards" ]
+    then
 	# create service/alsasound/cards
-	export SERVICE="service/alsasound/cards"
 	ireg service
 	iset need = system/bootmisc
 	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = cards_start
 	idone
+    fi
 
+    if [ "$SERVICE" = "service/alsasound/oss" ]
+    then
 	# create service/alsasound/oss
-	export SERVICE="service/alsasound/oss"
 	ireg service
 	iset need = system/bootmisc
 	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = oss_start
 	idone
+    fi
 
+    if [ "$SERVICE" = "service/alsasound/swq" ]
+    then
 	# create service/alsasound/swq
-	export SERVICE="service/alsasound/seq"
 	ireg service
 	iset need = system/bootmisc
 	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = seq_start
 	idone
+    fi
 
+    if [ "$SERVICE" = "service/alsasound/ioctl32" ]
+    then
 	# create service/alsasound/ioctl32
-	export SERVICE="service/alsasound/ioctl32"
 	ireg service
 	iset need = system/bootmisc
 	iset use = system/coldplug system/modules/depmod system/modules
 	iexec start = ioctl32_start
 	idone
+    fi
 
+    if [ "$SERVICE" = "service/alsasound/mixerstate" ]
+    then
 	# create service/alsasound/mixerstate
-	export SERVICE="service/alsasound/mixerstate"
 	ireg service
 	iset need = system/bootmisc service/alsasound
 	iset exec stop = "@alsactl@ -f ${asoundcfg} store"
 	iexec start = mixerstate_start
 	idone
+    fi
 
-	# finally create service/alsasound that will launch the rest
-	export SERVICE="service/alsasound"
+    if [ "$SERVICE" = "service/alsasound" ]
+    then
+	# create service/alsasound that will launch the rest
 	ireg service service/alsasound
 	iset need = system/bootmisc
 	iset use = \
@@ -69,6 +80,7 @@ setup()
 		    
 	iexec start = alsasound_start
 	idone
+    fi
 }
 
 cards_start()
