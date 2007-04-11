@@ -243,6 +243,8 @@ static const char *probe_distribution(void)
         return ("kanotix");
     if (is_file("/etc/enlisy-release"))
         return ("enlisy");
+    if (is_file("/etc/sourcemage-release"))
+        return ("sourcemage");
 
     D_("Probe failed\n");
     return ("unknown");
