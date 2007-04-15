@@ -8,13 +8,13 @@ conf="/etc/lircrcd.conf"
 
 setup()
 {
-	ireg daemon daemon/lirc/lircrcd
-	iset need = daemon/lirc/lircd
-	iset respawn
-	iset suid = "${user}"
-	iset pid_of = lircrcd
-	iexec daemon
-	idone
+	ireg daemon daemon/lirc/lircrcd && {
+		iset need = daemon/lirc/lircd
+		iset respawn
+		iset suid = "${user}"
+		iset pid_of = lircrcd
+		iexec daemon
+	}
 }
 
 daemon()

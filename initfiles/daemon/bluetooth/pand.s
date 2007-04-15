@@ -4,8 +4,8 @@
 
 setup()
 {
-	ireg daemon daemon/bluetooth/pand
-	iset need = system/bootmisc daemon/bluetooth/hcid
-	iset exec daemon = "@/usr/bin/pand@ --nodetach --listen --role NAP"
-	idone
+	ireg daemon daemon/bluetooth/pand && {
+		iset need = system/bootmisc daemon/bluetooth/hcid
+		iset exec daemon = "@/usr/bin/pand@ --nodetach --listen --role NAP"
+	}
 }

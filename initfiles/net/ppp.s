@@ -1,14 +1,14 @@
-# NAME: 
-# DESCRIPTION: 
-# WWW: 
+# NAME:
+# DESCRIPTION:
+# WWW:
 
 setup()
 {
-	iregister daemon
+	[ "${SERVICE}" = net/ppp ] && return 1
 
-	iset need = "system/bootmisc system/modules"
-	iset use = "system/coldplug daemon/bluetooth/rfcomm"
-	iset exec daemon = "@/usr/sbin/pppd@ call $NAME nodetach"
-
-	idone
+	ireg daemon && {
+		iset need = system/bootmisc system/modules
+		iset use = system/coldplug daemon/bluetooth/rfcomm
+		iset exec daemon = "@/usr/sbin/pppd@ call $NAME nodetach"
+	}
 }

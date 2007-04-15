@@ -3,23 +3,18 @@
 # WWW:
 
 #ifd debian
-. /etc/defaults/exim4
+[ -f /etc/defaults/exim4 ] && . /etc/defaults/exim4
 #elsed gentoo
-. /etc/conf.d/exim
+[ -f /etc/conf.d/exim ] && . /etc/conf.d/exim
 #endd
 
 setup()
 {
-	ireg daemon daemon/exim/listener
-	iset need = system/bootmisc virtual/net daemon/exim/updateconf
-	iset conflict = daemon/exim/combined
-	iset provide = virtual/mta
-	iset pid_file = "/var/run/exim4/exim.pid"
-	iexec daemon
-	idone
-}
-
-daemon()
-{
-	exec @/usr/sbin/exim4@ -bdf "${SMTPLISTENEROPTIONS}" "${COMMONOPTIONS}"
+	ireg daemon daemon/exim/listener && {
+		iset need = system/bootmisc virtual/net daemon/exim/updateconf
+		iset conflict = daemon/exim/combined
+		iset provide = virtual/mta
+		iset pid_file = "/var/run/exim4/exim.pid"
+		iset exec daemon = "@/usr/sbin/exim4@ -bdf ${SMTPLISTENEROPTIONS} ${COMMONOPTIONS}"
+	}
 }

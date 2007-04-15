@@ -2,15 +2,15 @@
 
 setup()
 {
-	ireg service daemon/vmware/vmnet/prepare
-	iset need = system/bootmisc system/modules/vmnet
-	iexec start = prepare
-	idone
+	ireg service daemon/vmware/vmnet/prepare && {
+		iset need = system/bootmisc system/modules/vmnet
+		iexec start = prepare
+	}
 
-	ireg daemon daemon/vmware/vmnet
-	iset need = system/bootmisc daemon/vmware/vmnet/prepare
-	iset exec daemon = "@/opt/vmware/bin/vmnet-bridge@ /dev/vmnet0 eth0"
-	idone
+	ireg daemon daemon/vmware/vmnet && {
+		iset need = system/bootmisc daemon/vmware/vmnet/prepare
+		iset exec daemon = "@/opt/vmware/bin/vmnet-bridge@ /dev/vmnet0 eth0"
+	}
 }
 
 prepare()
