@@ -13,10 +13,10 @@ HOSTNAME="localhost"
 
 setup()
 {
-	ireg service system/hostname
-	iset need = system/initial
-	iexec start
-	idone
+	ireg service system/hostname && {
+		iset need = system/initial
+		iexec start
+	}
 }
 
 #ifd debian

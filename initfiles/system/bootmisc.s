@@ -3,16 +3,16 @@
 # WWW:
 
 #ifd gentoo
-. /etc/conf.d/bootmisc
+[ -f /etc/conf.d/bootmisc ] && . /etc/conf.d/bootmisc
 #endd
 
 setup()
 {
-	ireg service system/bootmisc
-	iset need = system/initial system/mountfs/essential
-	iset use = system/hdparm system/swap system/clock
-	iexec start
-	idone
+	ireg service system/bootmisc && {
+		iset need = system/initial system/mountfs/essential
+		iset use = system/hdparm system/swap system/clock
+		iexec start
+	}
 }
 
 start()

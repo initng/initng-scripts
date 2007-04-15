@@ -4,11 +4,11 @@
 
 setup()
 {
-	ireg service system/sraid
-	iset need = system/initial system/mountroot
-	iset critical
-	iexec start
-	idone
+	ireg service system/sraid && {
+		iset need = system/initial system/mountroot
+		iset critical
+		iexec start
+	}
 }
 
 start()

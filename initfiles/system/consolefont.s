@@ -5,12 +5,12 @@
 RC_TTY_NUMBER="11"
 #ifd fedora pingwinek mandriva
 #elsed lfs
-. /etc/sysconfig/console
+[ -f /etc/sysconfig/console ] && . /etc/sysconfig/console
 #elsed debian ubuntu
-. /etc/console-tools/config
+[ -f /etc/console-tools/config ] && . /etc/console-tools/config
 #elsed enlisy
-. /etc/conf.d/rc
-. /etc/conf.d/consolefont
+[ -f /etc/conf.d/rc ] && . /etc/conf.d/rc
+[ -f /etc/conf.d/rc ] && . /etc/conf.d/consolefont
 #elsed
 [ -f /etc/rc.conf ] && . /etc/rc.conf
 [ -f /etc/conf.d/consolefont ] && . /etc/conf.d/consolefont
@@ -18,14 +18,14 @@ RC_TTY_NUMBER="11"
 
 setup()
 {
-	ireg service system/consolefont
-	iset need = system/bootmisc system/keymaps
+	ireg service system/consolefont && {
+		iset need = system/bootmisc system/keymaps
 #ifd fedora pingwinek
-	iset exec start = "/sbin/setsysfont"
+		iset exec start = "/sbin/setsysfont"
 #elsed
-	iexec start
+		iexec start
 #endd
-	idone
+	}
 }
 
 #ifd fedora pingwinek

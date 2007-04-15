@@ -3,18 +3,18 @@
 # WWW:
 
 #ifd debian
-. /etc/default/rcS
 FSCK_LOGFILE="/var/log/fsck/checkfs"
+[ -f /etc/default/rcS ] && . /etc/default/rcS
 #endd
 
 setup()
 {
-	ireg service system/checkfs
-	iset need = system/initial system/mountroot
-	iset use = system/sraid system/hdparm
-	iset never_kill
-	iexec start
-	idone
+	ireg service system/checkfs && {
+		iset need = system/initial system/mountroot
+		iset use = system/sraid system/hdparm
+		iset never_kill
+		iexec start
+	}
 }
 
 start()

@@ -9,26 +9,26 @@ CONFFILEROOT="boottime"
 EXT="kmap"
 CONFFILE="${CONFDIR}/${CONFFILEROOT}.${EXT}.gz"
 #elsed lfs
-. /etc/sysconfig/console
+[ -f /etc/sysconfig/console ] && . /etc/sysconfig/console
 #elsed fedora pingwinek mandriva
-. /etc/sysconfig/keyboard
+[ -f /etc/sysconfig/keyboard ] && . /etc/sysconfig/keyboard
 #elsed enlisy
-. /etc/conf.d/rc
-. /etc/conf.d/keymaps
+[ -f /etc/conf.d/rc ] && . /etc/conf.d/rc
+[ -f /etc/conf.d/keymaps ] && . /etc/conf.d/keymaps
 #elsed gentoo
-. /etc/rc.conf
-. /etc/conf.d/keymaps
+[ -f /etc/rc.conf ] && . /etc/rc.conf
+[ -f /etc/conf.d/keymaps ] && . /etc/conf.d/keymaps
 #elsed
 [ -f /etc/keymaps.conf ] && . /etc/keymaps.conf
 #endd
 
 setup()
 {
-	ireg service system/keymaps
-	iset need = system/bootmisc
-	iset use = system/sysctl
-	iexec start
-	idone
+	ireg service system/keymaps && {
+		iset need = system/bootmisc
+		iset use = system/sysctl
+		iexec start
+	}
 }
 
 start()

@@ -6,10 +6,10 @@
 
 setup()
 {
-	ireg service system/pcmcia
-	iset need = system/bootmisc
-	iexec start
-	idone
+	ireg service system/pcmcia && {
+		iset need = system/bootmisc
+		iexec start
+	}
 }
 
 start()

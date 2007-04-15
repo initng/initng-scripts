@@ -7,16 +7,17 @@
 
 setup()
 {
-	ireg service system/nvidia-glx/dev
-	iexec start = dev_start
-	idone
+	ireg service system/nvidia-glx/dev && {
+		iexec start = dev_start
+		return 0
+	}
 
-	ireg service system/nvidia-glx
-	iset need = system/bootmisc
-	iset use = service/nvidia-glx/dev
-	iexec start
-	iexec stop
-	idone
+	ireg service system/nvidia-glx && {
+		iset need = system/bootmisc
+		iset use = service/nvidia-glx/dev
+		iexec start
+		iexec stop
+	}
 }
 
 dev_start()

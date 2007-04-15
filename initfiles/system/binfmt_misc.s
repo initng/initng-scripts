@@ -4,11 +4,11 @@
 
 setup()
 {
-	ireg service system/binfmt_misc
-	iset need = system/bootmisc
-	iset exec stop = "@sysctl@ -n -w fs.binfmt_misc.status"
-	iexec start
-	idone
+	ireg service system/binfmt_misc && {
+		iset need = system/bootmisc
+		iset exec stop = "@sysctl@ -n -w fs.binfmt_misc.status"
+		iexec start
+	}
 }
 
 start()

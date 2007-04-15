@@ -8,11 +8,11 @@ IFSTATE="/etc/network/run/ifstate"
 
 setup()
 {
-	ireg service system/ifupdown-debian
-	iset need = system/bootmisc
-	iexec start
-	iexec stop
-	idone
+	ireg service system/ifupdown-debian && {
+		iset need = system/bootmisc
+		iexec start
+		iexec stop
+	}
 }
 
 start()

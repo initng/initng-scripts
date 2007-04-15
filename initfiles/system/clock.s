@@ -2,27 +2,22 @@
 # DESCRIPTION: Syncs the hardware clock and system time at startup and shutdown
 
 #ifd debian linspire
-. /etc/default/rcS
+[ -f /etc/default/rcS ] && . /etc/default/rcS
 #elsed fedora lfs mandriva
-. /etc/sysconfig/clock
+[ -f /etc/sysconfig/clock ] && . /etc/sysconfig/clock
 #elsed
 [ -f /etc/conf.d/clock ] && . /etc/conf.d/clock
 #endd
 
 setup()
 {
-	ireg service system/clock
-	iset need = system/initial
-	iset use = system/modules
-	iexec start
-	iexec stop
-	idone
+	ireg service system/clock && {
+		iset need = system/initial
+		iset use = system/modules
+		iexec start
+		iexec stop
+	}
 }
-
-#[ -x @/sbin/hwclock@ ] || exit 0
-#ifd debian
-#[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
-#endd
 
 setupopts() {
 #ifd debian linspire lfs
@@ -65,6 +60,11 @@ setupopts() {
 
 start()
 {
+	[ -x @/sbin/hwclock@ ] || exit 0
+#ifd debian
+	[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
+#endd
+
 	readonly="no"
 
 	if ! touch /etc/adjtime 2>/dev/null
@@ -84,6 +84,11 @@ start()
 
 stop()
 {
+	[ -x @/sbin/hwclock@ ] || exit 0
+#ifd debian
+	[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
+#endd
+
 	# Don't tweak the hardware clock on LiveCD halt.
 	#[ -n ${CDBOOT} ] && return 0
 

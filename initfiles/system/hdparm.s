@@ -3,22 +3,23 @@
 # WWW:
 
 #ifd gentoo
-. /etc/conf.d/hdparm
+CONFFILE=/etc/conf.d/hdparm
 #elsed debian
+CONFFILE=/etc/default/hdparm
 #endd
 
 setup()
 {
-	iregister service
-	iset need = system/initial
-	iexec start
-	idone
+	ireg service system/hdparm && {
+		iset need = system/initial
+		iexec start
+	}
 }
 
 start()
 {
-    [ -f /etc/default/hdparm ] || exit 0
-    . /etc/default/hdparm
+	[ -f "${CONFFILE}" ] || exit 0
+	. "${CONFFILE}"
 	for device in /dev/hd?
 	do
 		# check that the block device really exists

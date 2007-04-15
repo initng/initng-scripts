@@ -4,10 +4,10 @@
 
 setup()
 {
-	ireg service system/serial
-	iset need = system/initial system/mountroot system/modules/serial
-	iexec start
-	idone
+	ireg service system/serial && {
+		iset need = system/initial system/mountroot system/modules/serial
+		iexec start
+	}
 }
 
 start()

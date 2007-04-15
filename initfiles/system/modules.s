@@ -4,28 +4,27 @@
 
 setup()
 {
-	if is_service system/modules{,/depmod}
-	then
-		ireg service system/modules/depmod
+	ireg service system/modules/depmod && {
 		iset need = system/initial system/mountroot
 		iexec start = depmod_start
-		idone
+		return 0
+	}
 
-		ireg service system/modules
+	ireg service system/modules && {
 		iset need = system/initial system/mountroot system/modules/loop
 		iset use = system/modules/depmod
 		iexec start
-		idone
-		exit 0
-	fi
+		return 0
+	}
 
-	ireg service #system/modules/*
-	iset need = system/initial
-	[ "${NAME}" = dm-mod ] || iset use = system/modules/depmod
-	iset stdall = /dev/null
-	iexec start = module_load
-	iexec stop = module_unload
-	idone
+	# system/modules/*
+	ireg service && {
+		iset need = system/initial
+		[ "${NAME}" = dm-mod ] || iset use = system/modules/depmod
+		iset stdall = /dev/null
+		iexec start = module_load
+		iexec stop = module_unload
+	}
 }
 
 depmod_start()

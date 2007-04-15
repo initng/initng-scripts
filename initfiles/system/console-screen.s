@@ -3,15 +3,16 @@
 # WWW:
 
 #ifd debian
-. /etc/console-tools/config
+[ -f /etc/console-tools/config ] && . /etc/console-tools/config
 #endd
 
 setup()
 {
-	ireg service system/console-screen
-	iset need = system/initial system/keymaps system/mountfs/essential
-	iexec start
-	idone
+	ireg service system/console-screen && {
+		iset need = system/initial system/keymaps \
+		            system/mountfs/essential
+		iexec start
+	}
 }
 
 start()

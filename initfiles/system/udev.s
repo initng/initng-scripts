@@ -4,63 +4,48 @@
 
 setup()
 {
+	ireg daemon system/udev/udevd && {
+		iset critical
+		iset need = system/udev/mountdev system/initial/mountvirtfs
+		iset respawn
+		iset exec daemon = "@/sbin/udevd@"
+		return 0
+	}
 
-    if [ "$SERVICE" = "system/udev/udevd" ]
-    then	
-	ireg daemon
-	iset critical
-	iset need = system/udev/mountdev system/initial/mountvirtfs
-	iset respawn
-	iset exec daemon = "@/sbin/udevd@"
-	idone
-    fi
+	ireg service system/udev/move_rules && {
+		iset need = system/udev/udevd system/mountroot/rootrw
+		iexec start = move_rules
+		return 0
+	}
 
-    if [ "$SERVICE" = "system/udev/move_rules" ]
-    then	
-	ireg service
-	iset need = system/udev/udevd system/mountroot/rootrw
-	iexec start = move_rules
-	idone
-    fi
+	ireg service system/udev/retry_failed && {
+		iset need = system/udev/udevd system/udev/move_rules system/mountfs/essential
+		iexec start = retry_failed
+		return 0
+	}
 
-    if [ "$SERVICE" = "system/udev/retry_failed" ]
-    then	
-	ireg service
-	iset need = system/udev/udevd system/udev/move_rules system/mountfs/essential
-	iexec start = retry_failed
-	idone
-    fi
+	ireg service system/udev/mountdev && {
+		iset critical
+		iset need = system/initial/mountvirtfs
+		iexec start = mountdev_start
+		return 0
+	}
 
-    if [ "$SERVICE" = "system/udev/mountdev" ]
-    then	
-	ireg service
-	iset critical
-	iset need = system/initial/mountvirtfs
-	iexec start = mountdev_start
-	idone
-    fi
-
-    if [ "$SERVICE" = "system/udev/filldev" ]
-    then	
-	ireg service
-	iset critical
-	iset need = system/udev/udevd
-	iexec start = filldev_start
+	ireg service system/udev/filldev && {
+		iset critical
+		iset need = system/udev/udevd
+		iexec start = filldev_start
 #ifd gentoo enlisy
-	iexec stop = filldev_stop
+		iexec stop = filldev_stop
 #endd
-	idone
-    fi
+		return 0
+	}
 
-    if [ "$SERVICE" = "system/udev" ]
-    then	
-	ireg virtual
-	iset critical
-	iset need = system/udev/filldev system/udev/udevd
-	iset also_start = system/udev/move_rules system/udev/retry_failed
-	idone
-    fi
-
+	ireg virtual system/udev && {
+		iset critical
+		iset need = system/udev/filldev system/udev/udevd
+		iset also_start = system/udev/move_rules system/udev/retry_failed
+	}
 }
 
 move_rules()

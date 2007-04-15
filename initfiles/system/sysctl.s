@@ -4,10 +4,10 @@
 
 setup()
 {
-	ireg service system/sysctl
-	iset need = system/initial
-	iexec start
-	idone
+	ireg service system/sysctl && {
+		iset need = system/initial
+		iexec start
+	}
 }
 
 start()

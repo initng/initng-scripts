@@ -8,49 +8,38 @@ LOCAL_FS="reiserfs,reiser4,reiserfs,reiser4,ext2,ext3,xfs,jfs,vfat,ntfs,ntfs-3g,
 setup()
 {
 
-    # Depending on what initng really want, setup that service.
+	ireg service system/mountfs/essential && {
+		iset need = system/initial/mountvirtfs system/mountroot system/checkfs
+		iset use = system/sraid system/hdparm system/selinux/relabel
+		iset critical
+		iset never_kill
+		iexec start = essential_start
+		iexec stop = essential_stop
+		return 0
+	}
 
-    if [ "$SERVICE" = "system/mountfs/essential" ]
-    then
-	ireg service
-	iset need = system/initial/mountvirtfs system/mountroot system/checkfs
-	iset use = system/sraid system/hdparm system/selinux/relabel
-	iset critical
-	iset never_kill
-	iexec start = essential_start
-	iexec stop = essential_stop
-	idone
-    fi
+	ireg service system/mountfs/home && {
+		iset need = system/mountroot system/checkfs
+		iset never_kill
+		iexec start = home_start
+		return 0
+	}
 
-    if [ "$SERVICE" = "system/mountfs/home" ]
-    then
-	ireg service
-	iset need = system/mountroot system/checkfs
-	iset never_kill
-	iexec start = home_start
-	idone
-    fi
+	ireg service system/mountfs/network && {
+		iset need = system/initial system/mountfs/essential virtual/net
+		iset use = daemon/portmap
+		iset never_kill
+		iexec start = network_start
+		iexec stop = network_stop
+		return 0
+	}
 
-    if [ "$SERVICE" = "system/mountfs/network" ]
-    then
-	ireg service
-	iset need = system/initial system/mountfs/essential virtual/net
-	iset use = daemon/portmap
-	iset never_kill
-	iexec start = network_start
-	iexec stop = network_stop
-	idone
-    fi
-
-    if [ "$SERVICE" = "system/mountfs" ]
-    then
-	ireg service
-	iset need = system/mountfs/essential system/mountfs/home
-	iset use = system/mountfs/network
-	iset never_kill
-	iexec start = mountfs_start
-	idone
-    fi
+	ireg service system/mountfs && {
+		iset need = system/mountfs/essential system/mountfs/home
+		iset use = system/mountfs/network
+		iset never_kill
+		iexec start = mountfs_start
+	}
 }
 
 essential_start()
