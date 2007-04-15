@@ -127,8 +127,8 @@ for l; do
 done
 
 for rl in ${runlevels}; do
-	write_runlevel ${rl} > "${CONFDIR}/${rl}"
-	chmod 755 "${CONFDIR}/${rl}"
+	write_runlevel ${rl} > "${CONFDIR}/${rl%.*}"
+	chmod 755 "${CONFDIR}/${rl%.*}"
 done
 
 echo "Done generating files."
