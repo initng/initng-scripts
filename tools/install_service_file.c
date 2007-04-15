@@ -47,7 +47,7 @@
 #define LEN(STR) (sizeof(STR) - 1)
 
 #ifndef INITNG_ROOT
-#define INITNG_ROOT "/etc/init"
+#define INITNG_ROOT "/etc/initng"
 #endif
 
 static char **path;
@@ -71,7 +71,7 @@ struct s_overlay
 
 static struct s_overlay const STATIC_OVERLAYS[] = {
     {"/lib/initng", INITNG_PLUGIN_DIR},
-    {"/etc/init", INITNG_ROOT},
+    {"/etc/initng", INITNG_ROOT},
     {0, 0}
 };
 
@@ -250,7 +250,7 @@ static const char *probe_distribution(void)
     return ("unknown");
 }
 
-/* this should split a sring into an "argv" like array using char delim */
+/* this should split a string into an "argv" like array using char delim */
 /* dont use this any more, due to some obscure memory mgmt bug! 
    struct my_ll
    {
@@ -1144,10 +1144,8 @@ int main(int argc, char **argv)
 
 
     if (outfile)
-    {
-	chmod(outfile, 755);
-    
-    }
+	chmod(outfile, S_IRUSR | S_IWUSR | S_IXUSR |
+                       S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 
-    exit(0);
+    return (0);
 }
