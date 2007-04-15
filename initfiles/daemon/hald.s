@@ -3,25 +3,25 @@
 # WWW: http://www.freedesktop.org/Software/hal
 
 #ifd debian
-	PIDDIR="/var/run/hal"
-	DAEMONUSER="hal"
-	. /etc/default/hal
+PIDDIR="/var/run/hal"
+DAEMONUSER="hal"
+[ -f /etc/default/hal ] && . /etc/default/hal
 #elsed gentoo
-	PIDDIR="/var/run"
+PIDDIR="/var/run"
 #endd
 
 setup()
 {
-	ireg daemon daemon/hald
-	iset need = system/bootmisc daemon/dbus
-	iset use = daemon/acpid
-	iset stdall = "/dev/null"
-	iset forks
+	ireg daemon daemon/hald && {
+		iset need = system/bootmisc daemon/dbus
+		iset use = daemon/acpid
+		iset stdall = "/dev/null"
+		iset forks
 #ifd debian gentoo
-	iset pid_file = "${PIDDIR}/hald.pid"
+		iset pid_file = "${PIDDIR}/hald.pid"
 #endd
-	iexec daemon
-	idone
+		iexec daemon
+	}
 }
 
 

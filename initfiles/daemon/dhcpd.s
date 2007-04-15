@@ -4,8 +4,8 @@
 
 setup()
 {
-	ireg daemon daemon/dhcpd
-	iset need = system/bootmisc
-	iset exec daemon = "@/usr/sbin/dhcpd@ -f"
-	idone
+	ireg daemon daemon/dhcpd && {
+		iset need = system/bootmisc
+		iset exec daemon = "@/usr/sbin/dhcpd@ -f"
+	}
 }

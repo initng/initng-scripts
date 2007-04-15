@@ -13,19 +13,20 @@ NO_START="0"
 
 setup()
 {
-	ireg service daemon/dropbear/generate_keys
-	iexec start = generate_keys
-	idone
+	ireg service daemon/dropbear/generate_keys && {
+		iexec start = generate_keys
+		return 0
+	}
 
-	ireg daemon daemon/dropbear
-	iset need = system/bootmisc virtual/net
-	iset conflict = daemon/sshd
-	iset use = daemon/dropbear/generate_keys
-	iset pid_file = "/var/run/dropbear.pid"
-	iset forks
-	iset daemon_stops_badly
-	iexec daemon
-	idone
+	ireg daemon daemon/dropbear && {
+		iset need = system/bootmisc virtual/net
+		iset conflict = daemon/sshd
+		iset use = daemon/dropbear/generate_keys
+		iset pid_file = "/var/run/dropbear.pid"
+		iset forks
+		iset daemon_stops_badly
+		iexec daemon
+	}
 }
 
 generate_keys()

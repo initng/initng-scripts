@@ -18,17 +18,17 @@ NICE="10"
 
 setup()
 {
-	ireg daemon daemon/distccd
-	iset need = system/bootmisc virtual/net
-	iset suid = distcc
+	ireg daemon daemon/distccd && {
+		iset need = system/bootmisc virtual/net
+		iset suid = distcc
 #ifd gentoo
-	iset pid_file = "${DISTCCD_PIDFILE}"
+		iset pid_file = "${DISTCCD_PIDFILE}"
 #elsed
-	iset pid_file = "${PIDFILE}"
+		iset pid_file = "${PIDFILE}"
 #endd
-	iset forks
-	iexec daemon
-	idone
+		iset forks
+		iexec daemon
+	}
 }
 
 daemon()

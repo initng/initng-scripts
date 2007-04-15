@@ -4,13 +4,13 @@
 
 setup()
 {
-	ireg daemon daemon/ddclient
-	iset suid = ddclient
-	iset sgid = ddclient
-	iset need = virtual/net system/bootmisc
-	iset pid_file = "/var/run/ddclient/ddclient.pid"
-	iset forks
-	iset respawn
-	iset exec daemon = "@/usr/sbin/ddclient@"
-	idone
+	ireg daemon daemon/ddclient && {
+		iset suid = ddclient
+		iset sgid = ddclient
+		iset need = virtual/net system/bootmisc
+		iset pid_file = "/var/run/ddclient/ddclient.pid"
+		iset forks
+		iset respawn
+		iset exec daemon = "@/usr/sbin/ddclient@"
+	}
 }

@@ -4,12 +4,12 @@
 
 setup()
 {
-	ireg daemon daemon/apcupsd
-	iset need = system/bootmisc
-	iset pid_file = "/var/run/apcupsd.pid"
-	iset forks
-	iexec daemon
-	idone
+	ireg daemon daemon/apcupsd && {
+		iset need = system/bootmisc
+		iset pid_file = "/var/run/apcupsd.pid"
+		iset forks
+		iexec daemon
+	}
 }
 
 daemon()

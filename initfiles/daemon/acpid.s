@@ -4,26 +4,22 @@
 
 MODULES="all"
 #ifd debian
-	. /etc/default/acpid
+[ -f /etc/default/acpid ] && . /etc/default/acpid
 #endd
 
 setup()
 {
-	ireg service daemon/acpid/modules
-	iset need = system/bootmisc
-	iexec start = modules_start
-	idone
+	ireg service daemon/acpid/modules && {
+		iset need = system/bootmisc
+		iexec start = modules_start
+		return 0
+	}
 
-	ireg daemon daemon/acpid
-	iset need = system/bootmisc daemon/acpid/modules
-	iset use = system/discover system/coldplug
-	iexec daemon
-	idone
-}
-
-daemon()
-{
-	exec @/usr/sbin/acpid@ -f -c /etc/acpi/events ${OPTIONS}
+	ireg daemon daemon/acpid && {
+		iset need = system/bootmisc daemon/acpid/modules
+		iset use = system/discover system/coldplug
+		iset exec daemon = "@/usr/sbin/acpid@ -f -c /etc/acpi/events ${OPTIONS}"
+	}
 }
 
 modules_start()

@@ -4,21 +4,21 @@
 
 setup()
 {
-	ireg daemon daemon/denyhosts
-	iset need = system/bootmisc
-	iset use = daemon/sshd daemon/syslog-ng
+	ireg daemon daemon/denyhosts && {
+		iset need = system/bootmisc
+		iset use = daemon/sshd daemon/syslog-ng
 #ifd fedora
-	iset pid_file = "/var/lock/subsys/denyhosts"
+		iset pid_file = "/var/lock/subsys/denyhosts"
 #elsed
-	iset pid_file = "/var/run/denyhosts.pid"
+		iset pid_file = "/var/run/denyhosts.pid"
 #endd
-	iset forks
+		iset forks
 #ifd fedora
-	iexec daemon = denyhosts_daemon
+		iexec daemon = denyhosts_daemon
 #elsed
-	iset exec daemon = "@denyhosts@ --daemon -c /etc/denyhosts.conf"
+		iset exec daemon = "@denyhosts@ --daemon -c /etc/denyhosts.conf"
 #endd
-	idone
+	}
 }
 
 #ifd fedora

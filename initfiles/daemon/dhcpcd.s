@@ -6,21 +6,22 @@
 
 setup()
 {
-	is_service daemon/dhcpcd && exit 1
+	[ "${SERVICE}" = daemon/dhcpcd ] && return 1
 
-	ireg daemon #daemon/dhcpcd/*
-	iset need = system/bootmisc
-	iset use = system/modules system/coldplug
+	# daemon/dhcpcd/*
+	ireg daemon && {
+		iset need = system/bootmisc
+		iset use = system/modules system/coldplug
 #ifd arch
-	iset pid_file = "/etc/dhcpc/dhcpcd-${NAME}.pid"
+		iset pid_file = "/etc/dhcpc/dhcpcd-${NAME}.pid"
 #elsed
-	iset pid_file = "/var/run/dhcpcd-${NAME}.pid"
+		iset pid_file = "/var/run/dhcpcd-${NAME}.pid"
 #endd
-	iset forks
-	iset respawn
-	iset daemon_stops_badly
-	iexec daemon
-	idone
+		iset forks
+		iset respawn
+		iset daemon_stops_badly
+		iexec daemon
+	}
 }
 
 daemon()

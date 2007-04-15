@@ -3,8 +3,8 @@
 # WWW: http://dbus.freedesktop.org/
 
 #ifd debian pingwinek
-	DAEMONUSER="messagebus"
-	. /etc/default/dbus
+DAEMONUSER="messagebus"
+[ -f /etc/default/dbus ] && . /etc/default/dbus
 #endd
 
 #ifd fedora altlinux mandriva
@@ -17,16 +17,16 @@ PIDFILE="/var/run/dbus.pid"
 
 setup()
 {
-	ireg daemon daemon/dbus
-	iset need = system/bootmisc
-	iset forks
-	iset pid_file = "${PIDFILE}"
+	ireg daemon daemon/dbus && {
+		iset need = system/bootmisc
+		iset forks
+		iset pid_file = "${PIDFILE}"
 #ifd debian
-	iexec daemon
+		iexec daemon
 #elsed
-	iset exec daemon = "@/bin/dbus-daemon:/usr/bin/dbus-daemon:/usr/bin/dbus-daemon-1@ --system --fork"
+		iset exec daemon = "@/bin/dbus-daemon:/usr/bin/dbus-daemon:/usr/bin/dbus-daemon-1@ --system --fork"
 #endd
-	idone
+	}
 }
 
 #ifd debian

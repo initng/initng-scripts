@@ -4,9 +4,9 @@
 
 setup()
 {
-	ireg daemon daemon/consolekit
-	iset need = system/bootmisc
-	iset pid_file = "/var/run/console-kit-daemon.pid"
-	iset exec daemon = "@/usr/sbin/console-kit-daemon@"
-	idone
+	ireg daemon daemon/consolekit && {
+		iset need = system/bootmisc
+		iset pid_file = "/var/run/console-kit-daemon.pid"
+		iset exec daemon = "@/usr/sbin/console-kit-daemon@"
+	}
 }

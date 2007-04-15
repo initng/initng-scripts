@@ -2,7 +2,6 @@
 # DESCRIPTION:
 # WWW:
 
-SERVICE="true"
 DISKS="/dev/hd? /dev/sr? /dev/sg? /dev/sd?"
 INTERFACE="0.0.0.0"
 PORT="7634"
@@ -10,19 +9,19 @@ SEPARATOR="|"
 SYSLOG="0"
 RUN_DAEMON="yes"
 #ifd debian
-. /etc/default/hddtemp
+[ -f /etc/default/hddtemp ] && . /etc/default/hddtemp
 #elsed
 [ -f /etc/conf.d/hddtemp ] && . /etc/conf.d/hddtemp
 #endd
 
 setup()
 {
-	ireg daemon daemon/hddtemp
-	iset need = system/bootmisc
-	iset forks
-	iset pid_of = hddtemp
-	iexec daemon
-	idone
+	ireg daemon daemon/hddtemp && {
+		iset need = system/bootmisc
+		iset forks
+		iset pid_of = hddtemp
+		iexec daemon
+	}
 }
 
 daemon()
