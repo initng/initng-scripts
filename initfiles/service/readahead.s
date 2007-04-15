@@ -4,35 +4,39 @@
 
 setup()
 {
-	ireg service service/readahead/stopper
-	iset last
-	iexec start = stopper_start
-	idone
+	ireg service service/readahead/stopper && {
+		iset last
+		iexec start = stopper_start
+		return 0
+	}
 
-	ireg daemon service/readahead/watcher-desktop
-	iset need = system/mountfs/essential
-	iset also_start = service/readahead/stopper
-	iset forks
-	iexec daemon = watcher_desktop_daemon
-	idone
+	ireg daemon service/readahead/watcher-desktop && {
+		iset need = system/mountfs/essential
+		iset also_start = service/readahead/stopper
+		iset forks
+		iexec daemon = watcher_desktop_daemon
+		return 0
+	}
 
-	ireg daemon service/readahead/watcher
-	iset need = system/mountfs/essential
-	iset also_start = service/readahead/stopper
-	iset forks
-	iset pid_file = "/var/run/readahead-watch.pid"
-	iexec daemon = watcher_daemon
-	idone
+	ireg daemon service/readahead/watcher && {
+		iset need = system/mountfs/essential
+		iset also_start = service/readahead/stopper
+		iset forks
+		iset pid_file = "/var/run/readahead-watch.pid"
+		iexec daemon = watcher_daemon
+		return 0
+	}
 
-	ireg service service/readahead/desktop
-	iset need = system/mountfs/essential
-	iexec start = desktop_start
-	idone
+	ireg service service/readahead/desktop && {
+		iset need = system/mountfs/essential
+		iexec start = desktop_start
+		return 0
+	}
 
-	ireg service service/readahead
-	iset need = system/mountfs/essential
-	iexec start
-	idone
+	ireg service service/readahead && {
+		iset need = system/mountfs/essential
+		iexec start
+	}
 }
 
 stopper_start()

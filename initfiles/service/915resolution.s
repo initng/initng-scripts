@@ -3,17 +3,17 @@
 # WWW:
 
 #ifd fedora mandriva
-. /etc/sysconfig/915resolution
+[ -f /etc/sysconfig/915resolution ] && . /etc/sysconfig/915resolution
 #elsed
 [ -f /etc/default/915resolution ] && . /etc/default/915resolution
 #endd
 
 setup()
 {
-	ireg service service/915resolution
-	iset need = system/mountfs/essential
-	iexec start
-	idone
+	ireg service service/915resolution && {
+		iset need = system/mountfs/essential
+		iexec start
+	}
 }
 
 start()

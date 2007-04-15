@@ -7,80 +7,49 @@ alsascrdir="/etc/alsa.d"
 
 setup()
 {
-    if [ "$SERVICE" = "service/alsasound/cards" ]
-    then
-	# create service/alsasound/cards
-	ireg service
-	iset need = system/bootmisc
-	iset use = system/coldplug system/modules/depmod system/modules
-	iexec start = cards_start
-	idone
-    fi
+	ireg service service/alsasound/cards && {
+		iset need = system/bootmisc
+		iset use = system/coldplug system/modules/depmod system/modules
+		iexec start = cards_start
+		return 0
+	}
 
-    if [ "$SERVICE" = "service/alsasound/oss" ]
-    then
-	# create service/alsasound/oss
-	ireg service
-	iset need = system/bootmisc
-	iset use = system/coldplug system/modules/depmod system/modules
-	iexec start = oss_start
-	idone
-    fi
+	ireg service service/alsasound/oss && {
+		iset need = system/bootmisc
+		iset use = system/coldplug system/modules/depmod system/modules
+		iexec start = oss_start
+		return 0
+	}
 
-    if [ "$SERVICE" = "service/alsasound/swq" ]
-    then
-	# create service/alsasound/swq
-	ireg service
-	iset need = system/bootmisc
-	iset use = system/coldplug system/modules/depmod system/modules
-	iexec start = seq_start
-	idone
-    fi
+	ireg service service/alsasound/swq && {
+		iset need = system/bootmisc
+		iset use = system/coldplug system/modules/depmod system/modules
+		iexec start = seq_start
+		return 0
+	}
 
-    if [ "$SERVICE" = "service/alsasound/ioctl32" ]
-    then
-	# create service/alsasound/ioctl32
-	ireg service
-	iset need = system/bootmisc
-	iset use = system/coldplug system/modules/depmod system/modules
-	iexec start = ioctl32_start
-	idone
-    fi
+	ireg service service/alsasound/ioctl32 && {
+		iset need = system/bootmisc
+		iset use = system/coldplug system/modules/depmod system/modules
+		iexec start = ioctl32_start
+		return 0
+	}
 
-    if [ "$SERVICE" = "service/alsasound/mixerstate" ]
-    then
-	# create service/alsasound/mixerstate
-	ireg service
-	iset need = system/bootmisc service/alsasound
-	iset exec stop = "@alsactl@ -f ${asoundcfg} store"
-	iexec start = mixerstate_start
-	idone
-    fi
+	ireg service service/alsasound/mixerstate && {
+		iset need = system/bootmisc service/alsasound
+		iset exec stop = "@alsactl@ -f ${asoundcfg} store"
+		iexec start = mixerstate_start
+		return 0
+	}
 
-    if [ "$SERVICE" = "service/alsasound" ]
-    then
-	# create service/alsasound that will launch the rest
-	ireg service service/alsasound
-	iset need = system/bootmisc
-	iset use = \
-		    system/coldplug \
-		    service/alsasound/cards \
-		    service/alsasound/ioctl32 \
-		    service/alsasound/seq \
-		    service/alsasound/oss \
-	            system/modules/depmod \
-		    system/modules
-		    
-	# Bring down these subservices if service/alsasound is stopped
-	iset also_stop = \
-		    service/alsasound/cards \
-		    service/alsasound/ioctl32 \
-		    service/alsasound/seq \
-		    service/alsasound/oss
-		    
-	iexec start = alsasound_start
-	idone
-    fi
+	ireg service service/alsasound && {
+		iset need = system/bootmisc
+		iset use = system/coldplug system/modules \
+		           service/alsasound/{cards,ioctl32,seq,oss}
+		# Bring down these subservices if service/alsasound is stopped
+		iset also_stop = service/alsasound/{cards,ioctl32,seq,oss}
+		iexec start = alsasound_start
+	}
 }
 
 cards_start()

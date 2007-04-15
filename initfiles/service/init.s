@@ -10,10 +10,12 @@ RCDIR="/etc/init.d"
 
 setup()
 {
-	ireg service #service/init/*
-	iset need = system/bootmisc
-	iset exec start = "${RCDIR}/${NAME} start"
-	iset exec stop = "${RCDIR}/${NAME} stop"
-	iset last
-	idone
+	[ "${SERVICE}" = service/init ] && exit 1
+
+	# service/init/*
+	ireg service && {
+		iset need = system/bootmisc system/mountfs
+		iset exec start = "${RCDIR}/${NAME} start"
+		iset exec stop = "${RCDIR}/${NAME} stop"
+	}
 }

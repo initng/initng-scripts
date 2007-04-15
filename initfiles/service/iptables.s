@@ -10,12 +10,12 @@ STATEFILE="/var/lib/iptables/rules-save"
 
 setup()
 {
-	ireg service service/iptables
-	iset need = system/initial system/mountfs/essential system/hostname \
-	            virtual/net/lo
-	iset provide = virtual/firewall
-	iexec start
-	idone
+	ireg service service/iptables && {
+		iset need = system/initial system/mountfs/essential \
+		            system/hostname virtual/net/lo
+		iset provide = virtual/firewall
+		iexec start
+	}
 }
 
 start()

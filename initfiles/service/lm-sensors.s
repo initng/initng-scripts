@@ -3,27 +3,28 @@
 # WWW:
 
 #ifd fedora suse mandriva
-. /etc/sysconfig/lm_sensors
+[ -f /etc/sysconfig/lm_sensors ] && . /etc/sysconfig/lm_sensors
 #elsed
 [ -f /etc/conf.d/lm_sensors ] && . /etc/conf.d/lm_sensors
 #endd
 
 setup()
 {
-	ireg service service/lm-sensors/modules
-	iset need = system/bootmisc system/modules/i2c-core
-	iset use = system/modules
-	iset stdall = "/dev/null"
-	iexec start = modules_start
-	iexec stop = modules_stop
-	idone
+	ireg service service/lm-sensors/modules && {
+		iset need = system/bootmisc system/modules/i2c-core
+		iset use = system/modules
+		iset stdall = "/dev/null"
+		iexec start = modules_start
+		iexec stop = modules_stop
+		return 0
+	}
 
-	ireg service service/lm-sensors
-	iset need = system/bootmisc service/lm-sensors/modules
-	iset use = system/modules
-	iset stdout = "/dev/null"
-	iexec start
-	idone
+	ireg service service/lm-sensors && {
+		iset need = system/bootmisc service/lm-sensors/modules
+		iset use = system/modules
+		iset stdout = "/dev/null"
+		iexec start
+	}
 }
 
 modules_start()

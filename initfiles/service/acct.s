@@ -4,11 +4,11 @@
 
 setup()
 {
-	ireg service service/acct
-	iset need = system/initial system/mountfs/essential
-	iset exec stop = "@/usr/sbin/accton@"
-	iexec start
-	idone
+	ireg service service/acct && {
+		iset need = system/initial system/mountfs/essential
+		iset exec stop = "@/usr/sbin/accton@"
+		iexec start
+	}
 }
 
 start()

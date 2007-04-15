@@ -4,22 +4,23 @@
 
 spl_pidfile="/etc/splashy/splashy.pid"
 spl_fifo="/etc/splashy/splashy.fifo"
-. /etc/default/splashy
+[ -f /etc/default/splashy ] && . /etc/default/splashy
 SPL_MSG="Starting ${NAME} boot sequence"
 
 . /etc/init.d/splashy-functions.sh
 
 setup()
 {
-	ireg service service/splashy/chvt
-	iexec start = chvt
-	idone
+	ireg service service/splashy/chvt && {
+		iexec start = chvt
+		return 0
+	}
 
-	ireg service service/splashy
-	iset need = system/initial
-	iexec start
-	iexec stop
-	idone
+	ireg service service/splashy && {
+		iset need = system/initial
+		iexec start
+		iexec stop
+	}
 }
 
 start()

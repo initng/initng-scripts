@@ -20,10 +20,10 @@ distro="Unknown distro"
 
 setup()
 {
-	ireg service service/issue
-	iset need = system/initial system/mountroot
-	iexec start
-	idone
+	ireg service service/issue && {
+		iset need = system/initial system/mountroot
+		iexec start
+	}
 }
 
 start()

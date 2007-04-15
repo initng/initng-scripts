@@ -4,11 +4,10 @@
 
 #ifd debian
 NTPSERVERS="pool.ntp.org"
-NTPOPTIONS=""
-. /etc/default/ntpdate
+[ -f /etc/default/ntpdate ] && . /etc/default/ntpdate
 #elsed gentoo
 NTPCLIENT_OPTS="-b -s pool.ntp.org"
-. /etc/conf.d/ntp-client
+[ -f /etc/conf.d/ntp-client ] && . /etc/conf.d/ntp-client
 #elsed
 NTPSERVERS="pool.ntp.org"
 [ -f /etc/conf.d/ntp ] && . /etc/conf.d/ntp
@@ -16,17 +15,12 @@ NTPSERVERS="pool.ntp.org"
 
 setup()
 {
-	ireg service service/ntpdate
-	iset need = system/initial system/mountfs/essential virtual/net
-	iexec start
-	idone
-}
-
-start()
-{
+	ireg service service/ntpdate && {
+		iset need = system/initial system/mountfs/essential virtual/net
 #ifd gentoo
-	exec @/usr/sbin/ntpdate@ ${NTPCLIENT_OPTS}
+		iset exec start = "@/usr/sbin/ntpdate@ ${NTPCLIENT_OPTS}"
 #elsed
-	exec @/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}
+		iset exec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
 #endd
+	}
 }

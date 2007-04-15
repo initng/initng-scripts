@@ -4,10 +4,10 @@
 
 setup()
 {
-	ireg service service/xorgconf
-	iset need = system/bootmisc
-	iexec start
-	idone
+	ireg service service/xorgconf && {
+		iset need = system/bootmisc
+		iexec start
+	}
 }
 
 start()

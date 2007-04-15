@@ -4,10 +4,10 @@
 
 setup()
 {
-	ireg service service/faketty
-	iset need = system/initial
-	iexec start
-	idone
+	ireg service service/faketty && {
+		iset need = system/initial
+		iexec start
+	}
 }
 
 start()

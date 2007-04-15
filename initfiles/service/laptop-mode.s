@@ -4,11 +4,11 @@
 
 setup()
 {
-	ireg service service/laptop-mode
-	iset need = system/bootmisc
-	iexec start
-	iexec stop
-	idone
+	ireg service service/laptop-mode && {
+		iset need = system/bootmisc
+		iexec start
+		iexec stop
+	}
 }
 
 start()

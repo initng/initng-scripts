@@ -4,13 +4,13 @@
 
 setup()
 {
-	ireg service service/aumix
-	iset use = service/alsasound
-	iset need = system/initial system/bootmisc
-	iset stdall = "/dev/null"
-	iset exec stop = "@/usr/bin/aumix@ -f /etc/aumixrc -S"
-	iexec start
-	idone
+	ireg service service/aumix && {
+		iset use = service/alsasound
+		iset need = system/initial system/bootmisc
+		iset stdall = "/dev/null"
+		iset exec stop = "@/usr/bin/aumix@ -f /etc/aumixrc -S"
+		iexec start
+	}
 }
 
 start()

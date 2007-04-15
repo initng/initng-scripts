@@ -4,11 +4,11 @@
 
 setup()
 {
-	ireg service service/numlock
-	iset need = system/initial system/mountfs/essential
-	iexec start
-	iexec stop
-	idone
+	ireg service service/numlock && {
+		iset need = system/initial system/mountfs/essential
+		iexec start
+		iexec stop
+	}
 }
 
 start()
