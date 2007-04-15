@@ -10,15 +10,15 @@ LOG="/var/log/mldonkey.log"
 
 setup()
 {
-	ireg daemon daemon/mldonkey
-	iset need = system/bootmisc virtual/net
-	iset suid = "${USER}"
-	iset nice = "${NICE}"
-	iset respawn = yes
-	iset stdall = "${LOG}"
-	iset exec daemon = "@/usr/bin/mlnet@"
-	iexec kill
-	idone
+	ireg daemon daemon/mldonkey && {
+		iset need = system/bootmisc virtual/net
+		iset suid = "${USER}"
+		iset nice = "${NICE}"
+		iset respawn = yes
+		iset stdall = "${LOG}"
+		iset exec daemon = "@/usr/bin/mlnet@"
+		iexec kill
+	}
 }
 
 kill()

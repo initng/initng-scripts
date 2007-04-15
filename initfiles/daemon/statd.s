@@ -4,8 +4,8 @@
 
 setup()
 {
-	ireg daemon daemon/statd
-	iset need = system/initial daemon/portmap virtual/net
-	iset exec daemon = "@rpc.statd@ -F"
-	idone
+	ireg daemon daemon/statd && {
+		iset need = system/initial daemon/portmap virtual/net
+		iset exec daemon = "@rpc.statd@ -F"
+	}
 }

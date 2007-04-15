@@ -4,16 +4,17 @@
 
 setup()
 {
-	is_service daemon/wpa_supplicant && exit 1
+	[ "${SERVICE}" = daemon/wpa_supplicant ] && return 1
 
-	ireg daemon #daemon/wpa_supplicant/*
-	iset need = system/bootmisc
-	iset use = system/ifrename system/modules
-	iset pid_file = "/var/run/wpa_supplicant-${NAME}.pid"
-	iset forks
-	iexec daemon
-	iexec kill
-	idone
+	# daemon/wpa_supplicant/*
+	ireg daemon && {
+		iset need = system/bootmisc
+		iset use = system/ifrename system/modules
+		iset pid_file = "/var/run/wpa_supplicant-${NAME}.pid"
+		iset forks
+		iexec daemon
+		iexec kill
+	}
 }
 
 daemon()

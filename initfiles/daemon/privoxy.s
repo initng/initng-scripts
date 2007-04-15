@@ -4,12 +4,12 @@
 
 setup()
 {
-	ireg daemon daemon/privoxy
-	iset need = system/bootmisc
-	iset pid_file = "/var/run/privoxy.pid"
-	iset forks
-	iset respawn
-	iset daemon_stops_badly
-	iset exec daemon = "@/usr/sbin/privoxy@ --pidfile /var/run/privoxy.pid --user privoxy.privoxy /etc/privoxy/config"
-	idone
+	ireg daemon daemon/privoxy && {
+		iset need = system/bootmisc
+		iset pid_file = "/var/run/privoxy.pid"
+		iset forks
+		iset respawn
+		iset daemon_stops_badly
+		iset exec daemon = "@/usr/sbin/privoxy@ --pidfile /var/run/privoxy.pid --user privoxy.privoxy /etc/privoxy/config"
+	}
 }

@@ -6,11 +6,14 @@
 
 setup()
 {
-	ireg service #daemon/pump/*
-	iset need = system/bootmisc
-	iexec start
-	iset exec stop = "@/sbin/pump@ --release -i ${NAME}"
-	idone
+	[ "${SERVICE}" = daemon/pump ] && return 1
+
+	# daemon/pump/*
+	ireg service && {
+		iset need = system/bootmisc
+		iexec start
+		iset exec stop = "@/sbin/pump@ --release -i ${NAME}"
+	}
 }
 
 start()

@@ -9,10 +9,10 @@ PIDFILE="/var/run/named/named.pid"
 
 setup()
 {
-	ireg daemon daemon/named
-	iset need = system/bootmisc virtual/net
-	iset suid = named
-	iset pid_file = "${PIDFILE}"
-	iset exec daemon = "@named@ -n ${CPU} ${OPTIONS} -u named"
-	idone
+	ireg daemon daemon/named && {
+		iset need = system/bootmisc virtual/net
+		iset suid = named
+		iset pid_file = "${PIDFILE}"
+		iset exec daemon = "@named@ -n ${CPU} ${OPTIONS} -u named"
+	}
 }

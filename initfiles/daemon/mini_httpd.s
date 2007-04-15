@@ -7,10 +7,10 @@ MINI_HTTPD_DOCROOT=/
 
 setup()
 {
-	ireg daemon daemon/mini_httpd
-	iset need = system/bootmisc virtual/net
-	iexec daemon
-	idone
+	ireg daemon daemon/mini_httpd && {
+		iset need = system/bootmisc virtual/net
+		iexec daemon
+	}
 }
 
 daemon()

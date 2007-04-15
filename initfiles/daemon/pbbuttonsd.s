@@ -4,8 +4,8 @@
 
 setup()
 {
-	ireg daemon daemon/pbbuttonsd
-	iset need = service/alsasound virtual/net/lo
-	iset exec daemon = "@/usr/bin/pbbuttonsd@"
-	idone
+	ireg daemon daemon/pbbuttonsd && {
+		iset need = service/alsasound virtual/net/lo
+		iset exec daemon = "@/usr/bin/pbbuttonsd@"
+	}
 }

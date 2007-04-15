@@ -4,18 +4,18 @@
 
 #ifd debian
 OPTIONS="-q -m 2"
-. /etc/default/powernowd
+[ -f /etc/default/powernowd ] && . /etc/default/powernowd
 #endd
 
 setup()
 {
-	ireg daemon daemon/powernowd
-	iset need = system/bootmisc
-	iset use = service/speedstep
+	ireg daemon daemon/powernowd && {
+		iset need = system/bootmisc
+		iset use = service/speedstep
 #ifd debian
-	iset exec daemon = "@/usr/sbin/powernowd@ ${OPTIONS}"
+		iset exec daemon = "@/usr/sbin/powernowd@ ${OPTIONS}"
 #elsed
-	iset exec daemon = "@/usr/sbin/powernowd@ -q"
+		iset exec daemon = "@/usr/sbin/powernowd@ -q"
 #endd
-	idone
+	}
 }

@@ -10,16 +10,10 @@ SERV_PORT="2001"
 
 setup()
 {
-	ireg daemon daemon/svdrpd
-	iset need = system/bootmisc
-	iset use = daemon/vdr
-	iset respawn
-	iexec daemon
-	idone
-}
-
-daemon()
-{
-	exec @/usr/bin/svdrpd@ "${VDR_HOST}" "${VDR_PORT}" "${SERV_HOST}" \
-	                       "${SERV_PORT}"
+	ireg daemon daemon/svdrpd && {
+		iset need = system/bootmisc
+		iset use = daemon/vdr
+		iset respawn
+		iset exec daemon = "@/usr/bin/svdrpd@ ${VDR_HOST} ${VDR_PORT} ${SERV_HOST} ${SERV_PORT}"
+	}
 }

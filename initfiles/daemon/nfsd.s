@@ -4,24 +4,24 @@
 
 #ifd gentoo
 RPCNFSDCOUNT="8"
-. /etc/conf.d/nfs
+[ -f /etc/conf.d/nfs ] && . /etc/conf.d/nfs
 #elsed fedora mandriva
-. /etc/sysconfig/nfs
+[ -f /etc/sysconfig/nfs ] && . /etc/sysconfig/nfs
 #endd
 
 setup()
 {
-	ireg daemon daemon/nfsd
-	iset need = system/initial daemon/portmap
+	ireg daemon daemon/nfsd && {
+		iset need = system/initial daemon/portmap
 #ifd gentoo
-	iset need = virtual/net
-	iexec daemon
-	iexec kill
+		iset need = virtual/net
+		iexec daemon
+		iexec kill
 #elsed
-	iset pid_of = rpc.nfsd
-	iset exec daemon = "@rpc.nfsd@ ${RPCNFSDARGS} ${RPCNFSDCOUNT}"
+		iset pid_of = rpc.nfsd
+		iset exec daemon = "@rpc.nfsd@ ${RPCNFSDARGS} ${RPCNFSDCOUNT}"
 #endd
-	idone
+	}
 }
 
 #ifd gentoo

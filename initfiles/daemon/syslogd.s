@@ -4,21 +4,22 @@
 
 setup()
 {
-	ireg service daemon/syslogd/prepare
-	iset need = system/bootmisc
-	iexec start = prepare
-	idone
+	ireg service daemon/syslogd/prepare && {
+		iset need = system/bootmisc
+		iexec start = prepare
+		return 0
+	}
 
-	ireg daemon daemon/syslogd
-	iset provide = virtual/syslog
-	iset need = system/bootmisc
+	ireg daemon daemon/syslogd && {
+		iset provide = virtual/syslog
+		iset need = system/bootmisc
 #ifd debian
-	iset need = daemon/syslogd/prepare
+		iset need = daemon/syslogd/prepare
 #elsed
-	iset use = daemon/syslogd/prepare
+		iset use = daemon/syslogd/prepare
 #endd
-	iset exec daemon = "@/sbin/syslogd@ -n -m 0"
-	idone
+		iset exec daemon = "@/sbin/syslogd@ -n -m 0"
+	}
 }
 
 prepare()

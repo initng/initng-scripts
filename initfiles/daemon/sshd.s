@@ -9,19 +9,20 @@ DSA_KEY="/etc/ssh/ssh_host_dsa_key"
 
 setup()
 {
-	ireg service daemon/sshd/generate_keys
-	iexec start = generate_keys
-	idone
+	ireg service daemon/sshd/generate_keys && {
+		iexec start = generate_keys
+		return 0
+	}
 
-	ireg daemon daemon/sshd
-	iset need = system/bootmisc virtual/net
-	iset conflict = daemon/dropbear
-	iset use = daemon/sshd/generate_keys
-	iset pid_file = "/var/run/sshd.pid"
-	iset forks
-	iset daemon_stops_badly
-	iexec daemon = "@/usr/sbin/sshd@"
-	idone
+	ireg daemon daemon/sshd && {
+		iset need = system/bootmisc virtual/net
+		iset conflict = daemon/dropbear
+		iset use = daemon/sshd/generate_keys
+		iset pid_file = "/var/run/sshd.pid"
+		iset forks
+		iset daemon_stops_badly
+		iexec daemon = "@/usr/sbin/sshd@"
+	}
 }
 
 generate_keys()

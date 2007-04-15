@@ -5,30 +5,28 @@
 #ifd debian
 device="/dev/input/mice"
 type="imps2"
-append=""
-. /etc/gpm.conf
+[ -f /etc/gpm.conf ] && . /etc/gpm.conf
 #elsed
 MOUSE="imps2"
 MOUSEDEV="/dev/input/mice"
-APPEND=""
 [ -f /etc/conf.d/gpm ] && . /etc/conf.d/gpm
 #endd
 
 setup()
 {
-	ireg daemon daemon/gpm
-	iset need = system/bootmisc
+	ireg daemon daemon/gpm && {
+		iset need = system/bootmisc
 #ifd debian
 #elsed
-	iset pid_file = "/var/run/gpm.pid"
-	iset forks
+		iset pid_file = "/var/run/gpm.pid"
+		iset forks
 #endd
 #ifd debian
-	iexec daemon
+		iexec daemon
 #elsed
-	iset exec daemon = "@/usr/sbin/gpm@ -m ${MOUSEDEV} -t ${MOUSE} ${APPEND}"
+		iset exec daemon = "@/usr/sbin/gpm@ -m ${MOUSEDEV} -t ${MOUSE} ${APPEND}"
 #endd
-	idone
+	}
 }
 
 #ifd debian

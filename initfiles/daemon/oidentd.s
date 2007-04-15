@@ -10,10 +10,10 @@ OIDENT_GROUP="nogroup"
 
 setup()
 {
-	ireg daemon daemon/oidentd
-	iset need = system/initial system/mountroot virtual/net
-	iexec daemon
-	idone
+	ireg daemon daemon/oidentd && {
+		iset need = system/initial system/mountroot virtual/net
+		iexec daemon
+	}
 }
 
 daemon()

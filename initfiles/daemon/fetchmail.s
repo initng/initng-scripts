@@ -4,8 +4,8 @@
 
 setup()
 {
-	ireg daemon daemon/fetchmail
-	iset need = system/bootmisc daemon/sendmail virtual/net
-	iset exec daemon = "@/usr/bin/fetchmail@ -f /etc/fetchmailrc"
-	idone
+	ireg daemon daemon/fetchmail && {
+		iset need = system/bootmisc daemon/sendmail virtual/net
+		iset exec daemon = "@/usr/bin/fetchmail@ -f /etc/fetchmailrc"
+	}
 }

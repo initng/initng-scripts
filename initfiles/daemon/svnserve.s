@@ -4,8 +4,8 @@
 
 setup()
 {
-	ireg daemon daemon/svnserve
-	iset need = system/bootmisc
-	iset exec daemon = "@/usr/bin/svnserve@ --daemon --foreground --root"
-	idone
+	ireg daemon daemon/svnserve && {
+		iset need = system/bootmisc
+		iset exec daemon = "@/usr/bin/svnserve@ --daemon --foreground --root"
+	}
 }

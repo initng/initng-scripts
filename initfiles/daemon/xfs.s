@@ -9,25 +9,26 @@ XFS_PORT="-1"
 
 setup()
 {
-	ireg service daemon/xfs/chkfontpath
-	iset need = system/bootmisc
-	iexec start = chkfontpath
-	idone
+	ireg service daemon/xfs/chkfontpath && {
+		iset need = system/bootmisc
+		iexec start = chkfontpath
+		return 0
+	}
 
-	ireg daemon daemon/xfs
-	iset need = system/bootmisc
+	ireg daemon daemon/xfs && {
+		iset need = system/bootmisc
 #ifd gentoo
 #elsed
-	iset need = daemon/xfs/chkfontpath
+		iset need = daemon/xfs/chkfontpath
 #endd
 #ifd debian
-	iset exec daemon = "@/usr/X11R6/bin/xfs@ -droppriv -nodaemon"
+		iset exec daemon = "@/usr/X11R6/bin/xfs@ -droppriv -nodaemon"
 #elsed gentoo
-	iexec daemon
+		iexec daemon
 #elsed
-	iset exec daemon = "@/usr/bin/xfs@ -droppriv -nodaemon"
+		iset exec daemon = "@/usr/bin/xfs@ -droppriv -nodaemon"
 #endd
-	idone
+	}
 }
 #ifd gentoo
 

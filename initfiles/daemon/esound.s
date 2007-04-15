@@ -4,8 +4,8 @@
 
 setup()
 {
-	ireg daemon daemon/esound
-	iset need = system/bootmisc service/alsasound
-	iset exec daemon = "@/usr/bin/esd@ -nobeeps -as 2 -tcp -public"
-	idone
+	ireg daemon daemon/esound && {
+		iset need = system/bootmisc service/alsasound
+		iset exec daemon = "@/usr/bin/esd@ -nobeeps -as 2 -tcp -public"
+	}
 }

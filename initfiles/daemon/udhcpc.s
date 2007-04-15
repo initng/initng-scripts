@@ -6,16 +6,17 @@
 
 setup()
 {
-	is_service daemon/udhcpc && exit 1
+	[ "${SERVICE}" = daemon/udhcpc ] && return 1
 
-	ireg daemon #daemon/udhcpc/*
-	iset need = system/bootmisc
-	iset use = system/modules system/coldplug
-	iset pid_file = "/var/run/udhcpc-${NAME}.pid"
-	iset respawn
-	iset forks
-	iexec daemon
-	idone
+	# daemon/udhcpc/*
+	ireg daemon && {
+		iset need = system/bootmisc
+		iset use = system/modules system/coldplug
+		iset pid_file = "/var/run/udhcpc-${NAME}.pid"
+		iset respawn
+		iset forks
+		iexec daemon
+	}
 }
 
 daemon()

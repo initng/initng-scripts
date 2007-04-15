@@ -4,17 +4,18 @@
 
 setup()
 {
-	ireg service daemon/sendmail/prepare
-	iset need = system/bootmisc
-	iexec start = prepare
-	idone
+	ireg service daemon/sendmail/prepare && {
+		iset need = system/bootmisc
+		iexec start = prepare
+		return 0
+	}
 
-	ireg daemon daemon/sendmail
-	iset need = system/bootmisc virtual/net
-	iset use = daemon/sendmail/prepare
-	iset provide = virtual/mta
-	iset exec daemon = "@/usr/sbin/sendmail@ -q1h -bD"
-	idone
+	ireg daemon daemon/sendmail && {
+		iset need = system/bootmisc virtual/net
+		iset use = daemon/sendmail/prepare
+		iset provide = virtual/mta
+		iset exec daemon = "@/usr/sbin/sendmail@ -q1h -bD"
+	}
 }
 
 prepare()

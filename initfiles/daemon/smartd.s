@@ -12,16 +12,16 @@
 
 setup()
 {
-	ireg daemon daemon/smartd
-	iset need = system/bootmisc
-	iset forks
-	iset pid_of = smartd
+	ireg daemon daemon/smartd && {
+		iset need = system/bootmisc
+		iset forks
+		iset pid_of = smartd
 #ifd fedora
 #elsed
-	iset pid_file = "/var/run/smartd.pid"
+		iset pid_file = "/var/run/smartd.pid"
 #endd
-	iexec daemon
-	idone
+		iexec daemon
+	}
 }
 
 daemon()

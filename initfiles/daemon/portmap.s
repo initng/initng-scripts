@@ -3,26 +3,21 @@
 # WWW:
 
 #ifd debian linspire
-. /etc/default/portmap
+[ -f /etc/default/portmap ] && . /etc/default/portmap
 #elsed
 [ -f /etc/conf.d/portmap ] && . /etc/conf.d/portmap
 #endd
 
 setup()
 {
-	ireg daemon daemon/portmap
-	iset need = system/bootmisc virtual/net
-	iset forks
-	iset pid_of = portmap
-	iexec daemon
-	idone
-}
-
-daemon()
-{
+	ireg daemon daemon/portmap && {
+		iset need = system/bootmisc virtual/net
+		iset forks
+		iset pid_of = portmap
 #ifd debian linspire
-	exec @/sbin/portmap@ ${OPTIONS}
+		iset exec daemon = "@/sbin/portmap@ ${OPTIONS}"
 #elsed
-	exec @/sbin/portmap@ -d ${PORTMAP_OPTS}
+		iset exec daemon = "@/sbin/portmap@ -d ${PORTMAP_OPTS}"
 #endd
+	}
 }

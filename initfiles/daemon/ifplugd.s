@@ -3,34 +3,32 @@
 # WWW:
 
 #ifd debian
-. /etc/default/ifplugd
+[ -f /etc/default/ifplugd ] && . /etc/default/ifplugd
 #elsed gentoo
-. /etc/conf.d/ifplugd
+[ -f /etc/conf.d/ifplugd ] && . /etc/conf.d/ifplugd
 #endd
 
 setup()
 {
-	if is_service daemon/ifplugd
-	then
-		ireg service
+	ireg service daemon/ifplugd && {
 		iset need = system/bootmisc
 		iset use = system/modules system/coldplug system/ifrename
 		iexec start
 		iexec stop
-		idone
-		exit 0
-	fi
+		return 0
+	}
 
-	ireg daemon #daemon/ifplugd/*
-	iset need = system/bootmisc
-	iset use = system/modules system/coldplug system/ifrename
-	iset stdall = /dev/null
+	# daemon/ifplugd/*
+	ireg daemon && {
+		iset need = system/bootmisc
+		iset use = system/modules system/coldplug system/ifrename
+		iset stdall = /dev/null
 #ifd debian
-	iexec daemon
+		iexec daemon
 #elsed
-	iset exec daemon = "@/usr/sbin/ifplugd@ --no-daemon -i ${NAME}"
+		iset exec daemon = "@/usr/sbin/ifplugd@ --no-daemon -i ${NAME}"
 #endd
-	idone
+	}
 }
 
 #ifd debian

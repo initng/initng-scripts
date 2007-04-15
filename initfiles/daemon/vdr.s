@@ -8,21 +8,21 @@ HOME="/var/vdr"
 CONFIG="/etc/vdr"
 SVDRP_PORT="2001"
 EPGFILE="${HOME}/epg.data"
-LANG="de_DE"
+#LANG="de_DE"
 [ -f /etc/conf.d/vdr ] && . /etc/conf.d/vdr
 
 setup()
 {
-	ireg daemon daemon/vdr
-	iset need = system/bootmisc
-	iset use = daemon/lircd
-	iset respawn
-	iset stdall = /var/log/vdr.log
-	iset chdir = "${HOME}"
-	iset suid = "${USER}"
-	iset sgid = "${GROUP}"
-	iexec daemon
-	idone
+	ireg daemon daemon/vdr && {
+		iset need = system/bootmisc
+		iset use = daemon/lircd
+		iset respawn
+		iset stdall = /var/log/vdr.log
+		iset chdir = "${HOME}"
+		iset suid = "${USER}"
+		iset sgid = "${GROUP}"
+		iexec daemon
+	}
 }
 
 daemon()

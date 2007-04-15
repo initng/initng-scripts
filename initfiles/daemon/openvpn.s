@@ -4,24 +4,24 @@
 
 setup()
 {
-	if is_service daemon/openvpn{,/prepare}; then
-		ireg service daemon/openvpn/prepare
+	ireg service daemon/openvpn/prepare && {
 		iset need = system/bootmisc system/modules/tun
 		iexec start = prepare_start
-		idone
+		return 0
+	}
 
-		ireg service daemon/openvpn
+	ireg service daemon/openvpn && {
 		iset need = system/bootmisc system/modules/tun
 		iexec start
 		iexec stop
-		idone
-		exit 0
-	fi
+		return 0
+	}
 
-	ireg daemon #daemon/openvpn/*
-	iset need = system/bootmisc virtual/net
-	iset exec daemon = "@/usr/sbin/openvpn@ --config /etc/openvpn/${NAME}/local.conf --writepid /var/run/openvpn-${NAME}.pid --cd /etc/openvpn/${NAME}"
-	idone
+	# daemon/openvpn/*
+	ireg daemon && {
+		iset need = system/bootmisc virtual/net
+		iset exec daemon = "@/usr/sbin/openvpn@ --config /etc/openvpn/${NAME}/local.conf --writepid /var/run/openvpn-${NAME}.pid --cd /etc/openvpn/${NAME}"
+	}
 }
 
 prepare_start()

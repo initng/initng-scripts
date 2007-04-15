@@ -4,14 +4,14 @@
 
 setup()
 {
-	ireg daemon daemon/xend
-	iset need = system/bootmisc virtual/net/lo \
-	            system/modules/{blkbk,blktap,netbk,netloop}
-	iset use = system/mountfs
-	iset pid_file = "/var/run/xend/xend.pid"
-	iexec daemon
-	iset exec kill = "@/usr/sbin/xend@ stop"
-	idone
+	ireg daemon daemon/xend && {
+		iset need = system/bootmisc virtual/net/lo \
+		            system/modules/{blkbk,blktap,netbk,netloop}
+		iset use = system/mountfs
+		iset pid_file = "/var/run/xend/xend.pid"
+		iexec daemon
+		iset exec kill = "@/usr/sbin/xend@ stop"
+	}
 }
 
 xend_daemon()

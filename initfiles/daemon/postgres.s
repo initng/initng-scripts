@@ -6,61 +6,66 @@
 
 #ifd debian
 #elsed
+
 #ifd pingwinek
 PGDATA="/srv/pgsql"
 #elsed
 PGDATA="/var/lib/postgresql/data"
 #endd
+
 PGUSER="postgres"
 PGGROUP="postgres"
+
 #ifd gentoo
-. /etc/conf.d/postgresql
+[ -f /etc/conf.d/postgresql ] && . /etc/conf.d/postgresql
 #endd
+
 #ifd pingwinek
 PGDATA="/srv/pgsql"
 #elsed
 PGDATA="/var/lib/postgresql/data"
 #endd
+
 PGUSER="postgres"
 PGGROUP="postgres"
 PGLOG="${PGDATA}/postgresql.log"
 PGOPTS="-p5432"
-#ifd gentoo
-. /etc/conf.d/postgresql
-#endd
 #endd
 
 setup()
 {
 #ifd debian
-	ireg daemon #daemon/postgres/*
-	iset need = system/bootmisc
-	iset provide = virtual/postgres
-	iset suid = postgres
-	iset sgid = postgres
-	iset pid_file = "/var/run/postgresql/${NAME}-main.pid"
-	iset forks
-	iexec daemon
-	iexec kill
-	idone
+	[ "${SERVICE}" = daemon/postgres ] && return 1
+
+	# daemon/postgres/*
+	ireg daemon && {
+		iset need = system/bootmisc
+		iset provide = virtual/postgres
+		iset suid = postgres
+		iset sgid = postgres
+		iset pid_file = "/var/run/postgresql/${NAME}-main.pid"
+		iset forks
+		iexec daemon
+		iexec kill
+	}
 #elsed
-	ireg service daemon/postgres/initdb
-	iset need = system/bootmisc
-	iexec start = initdb_start
-	idone
+	ireg service daemon/postgres/initdb && {
+		iset need = system/bootmisc
+		iexec start = initdb_start
+		return 0
+	}
 
-	ireg daemon daemon/postgres
-	iset need = system/bootmisc
-	iset use = daemon/postgres/initdb
-	iset suid = "${PGUSER}"
-	iset sgid = "${PGGROUP}"
-	iset pid_file = "${PGDATA}/postmaster.pid"
-	iset forks
-	iexec daemon
-	iset exec kill = "@/usr/bin/pg_ctl@ -D${PGDATA} -s -m fast stop"
-	idone
+	ireg daemon daemon/postgres && {
+		iset need = system/bootmisc
+		iset use = daemon/postgres/initdb
+		iset suid = "${PGUSER}"
+		iset sgid = "${PGGROUP}"
+		iset pid_file = "${PGDATA}/postmaster.pid"
+		iset forks
+		iexec daemon
+		iset exec kill = "@/usr/bin/pg_ctl@ -D${PGDATA} -s -m fast stop"
+	}
 #endd
-
 }
 
 #ifd debian

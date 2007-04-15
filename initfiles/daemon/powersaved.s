@@ -4,30 +4,30 @@
 
 #ifd suse
 CONFIG="/etc/sysconfig/powersave"
-. /etc/sysconfig/powersave/common
-. /etc/sysconfig/powersave/cpufreq
 #elsed
 CONFIG="/etc/powersave"
-[ -f /etc/powersave/common ] && . /etc/powersave/common
-[ -f /etc/powersave/cpufreq ] && . /etc/powersave/cpufreq
 #endd
+[ -f "${CONFIG}/common" ] && . "${CONFIG}/common"
+[ -f "${CONFIG}/cpufreq" ] && . "${CONFIG}/cpufreq"
+
 LOGGER="@echo@"
 SYSFS_PATH="/sys/devices/system/cpu/cpu0/cpufreq"
 
 setup()
 {
-	ireg service daemon/powersaved/prepare
-	iset need = system/bootmisc daemon/acpid
-	iexec start = prepare_start
-	idone
+	ireg service daemon/powersaved/prepare && {
+		iset need = system/bootmisc daemon/acpid
+		iexec start = prepare_start
+		return 0
+	}
 
-	ireg daemon daemon/powersaved
-	iset need = system/bootmisc system/modules daemon/dbus daemon/hald \
-	            daemon/powersaved/prepare daemon/acpid
-	iset pid_file = "/var/run/powersaved.pid"
-	iset forks
-	iset exec daemon = "@/usr/sbin/powersaved@ -d -f /var/run/acpid.socket"
-	idone
+	ireg daemon daemon/powersaved && {
+		iset need = system/bootmisc system/modules daemon/dbus \
+	        	    daemon/powersaved/prepare daemon/acpid daemon/hald
+		iset pid_file = "/var/run/powersaved.pid"
+		iset forks
+		iset exec daemon = "@/usr/sbin/powersaved@ -d -f /var/run/acpid.socket"
+	}
 }
 
 prepare_start()

@@ -8,16 +8,17 @@
 
 setup()
 {
-	ireg daemon daemon/gdm
-	iset need = system/bootmisc
-	iset use = daemon/xfs service/faketty service/xorgconf
+	ireg daemon daemon/gdm && {
+		iset need = system/bootmisc
+		iset use = daemon/xfs service/faketty service/xorgconf
 #ifd pingwinek
-	iset use = system/dbus
+		iset use = system/dbus
 #elsed
-	iset use = daemon/915resolution
+		iset use = daemon/915resolution
 #endd
-	iset conflict = daemon/kdm daemon/wdm daemon/xdm daemon/entranced daemon/slim
-	iset provide = virtual/dm
-	iset exec daemon = "@/usr/sbin/gdm@ -nodaemon"
-	idone
+		iset conflict = daemon/kdm daemon/wdm daemon/xdm \
+		                daemon/entranced daemon/slim
+		iset provide = virtual/dm
+		iset exec daemon = "@/usr/sbin/gdm@ -nodaemon"
+	}
 }

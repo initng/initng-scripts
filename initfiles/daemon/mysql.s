@@ -11,22 +11,23 @@ PIDFILE="/var/run/mysqld/mysqld.pid"
 
 setup()
 {
-	ireg service aemon/mysql/initdb
-	iset need = system/bootmisc
-	iexec start = initdb
-	idone
+	ireg service aemon/mysql/initdb && {
+		iset need = system/bootmisc
+		iexec start = initdb
+		return 0
+	}
 
-	ireg daemon daemon/mysql
-	iset need = system/bootmisc virtual/net/lo
-	iset use = daemon/mysql/initdb
-	iset pid_file = "${PIDFILE}"
+	ireg daemon daemon/mysql && {
+		iset need = system/bootmisc virtual/net/lo
+		iset use = daemon/mysql/initdb
+		iset pid_file = "${PIDFILE}"
 #ifd fedora mandriva
-	iset exec daemon = "@/usr/bin/mysqld_safe@ --pid-file"
+		iset exec daemon = "@/usr/bin/mysqld_safe@ --pid-file"
 #elsed
-	iset exec daemon = "@/usr/bin/mysqld_safe@ --pid-file"
+		iset exec daemon = "@/usr/bin/mysqld_safe@ --pid-file"
 #endd
-	iexec kill
-	idone
+		iexec kill
+	}
 }
 
 initdb()
