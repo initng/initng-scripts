@@ -63,12 +63,16 @@ setup()
 #elsed
 	ireg virtual system/coldplug && {
 #endd
-		iset need = system/bootmisc system/coldplug/{pci,usb,input}
-		iset also_stop = system/bootmisc system/coldplug/{pci,usb,input}
+		iset need = system/bootmisc system/coldplug/pci \
+			    system/coldplug/usb system/coldplug/input
+		iset also_stop = system/bootmisc system/coldplug/pci \
+				 system/coldplug/usb system/coldplug/input
 #ifd gentoo pingwinek lfs
 #elsed
-		iset need = system/coldplug/{isapnp,ide,scsi}
-		iset also_stop = system/coldplug/{isapnp,ide,scsi}
+		iset need = system/coldplug/isapnp system/coldplug/ide \
+			    system/coldplug/scsi
+		iset also_stop = system/coldplug/isapnp system/coldplug/ide \
+				 system/coldplug/scsi
 #endd
 		iset use = system/modules
 #ifd unknown_system

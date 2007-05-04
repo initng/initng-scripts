@@ -18,6 +18,8 @@ CONFFILE="${CONFDIR}/${CONFFILEROOT}.${EXT}.gz"
 #elsed gentoo
 [ -f /etc/rc.conf ] && . /etc/rc.conf
 [ -f /etc/conf.d/keymaps ] && . /etc/conf.d/keymaps
+#elsed sourcemage
+[ -f /etc/sysconfig/keymap ] && . /etc/sysconfig/keymap
 #elsed
 [ -f /etc/keymaps.conf ] && . /etc/keymaps.conf
 #endd
@@ -115,7 +117,11 @@ start()
 	# Set terminal encoding to either ASCII or UNICODE.
 	# See utf-8(7) for more information.
 	termencoding=
+#ifd sourcemage
+	if [ -n "${UNICODE_START}" ]
+#elsed
 	if [ "${UNICODE}" = "yes" ]
+#endd
 	then
 		dumpkey_opts=""
 		[ -n "${DUMPKEYS_CHARSET}" ] && dumpkey_opts="-c ${DUMPKEYS_CHARSET}"

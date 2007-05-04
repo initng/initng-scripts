@@ -5,7 +5,8 @@
 setup()
 {
 	ireg virtual daemon/agetty && {
-		iset need = system/agetty/{2,3,4,5,6}
+		iset need = system/agetty/2 system/agetty/3 system/agetty/4 \
+			    system/agetty/5 system/agetty/6
 		iset use = system/mountfs/essential service/issue
 		return 0
 	}

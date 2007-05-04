@@ -14,8 +14,8 @@ setup()
 	}
 
 	ireg service system/mountroot/lvm && {
-		iset need = system/initial system/modules/{lvm,lvm-mod} \
-	        	    system/mountroot/dmsetup
+		iset need = system/initial system/modules/lvm \
+			    system/modules/lvm-mod system/mountroot/dmsetup
 		iexec start = lvm_start
 		return 0
 	}
@@ -38,7 +38,8 @@ setup()
 
 	ireg service system/mountroot/rootrw && {
 		iset need = system/initial system/mountroot/check
-		iset use = system/mountroot/{evms,lvm,dmsetup}
+		iset use = system/mountroot/evms system/mountroot/lvm \
+			   system/mountroot/dmsetup
 		iset critical
 		iexec start = rootrw_start
 		iexec stop = rootrw_stop

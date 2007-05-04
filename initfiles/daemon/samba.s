@@ -28,7 +28,7 @@ setup()
 	}
 
 	ireg virtual daemon/samba && {
-		iset also_stop = daemon/samba/{smbd,nmbd}
-		iset need = daemon/samba/{smbd,nmbd}
+		iset also_stop = daemon/samba/smbd daemon/samba/nmbd
+		iset need = daemon/samba/smbd daemon/samba/nmbd
 	}
 }

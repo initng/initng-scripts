@@ -13,7 +13,7 @@ setup()
 {
 	ireg daemon daemon/exim/combined && {
 		iset need = system/bootmisc virtual/net daemon/exim/updateconf
-		iset conflict = daemon/exim/{queuerunner,listner}
+		iset conflict = daemon/exim/queuerunner daemon/exim/listner
 		iset provide = virtual/mta
 		iset pid_file = "/var/run/exim4/exim.pid"
 		iset exec daemon = "@/usr/sbin/exim4@ -bdf -q${QFLAGS}${QUEUEINTERVAL} ${COMMONOPTIONS} ${QUEUERUNNEROPTIONS} ${SMTPLISTENEROPTIONS}"

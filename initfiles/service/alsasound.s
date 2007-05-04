@@ -45,9 +45,12 @@ setup()
 	ireg service service/alsasound && {
 		iset need = system/bootmisc
 		iset use = system/coldplug system/modules \
-		           service/alsasound/{cards,ioctl32,seq,oss}
+		           service/alsasound/cards service/alsasound/ioctl32 \
+			   service/alsasound/seq service/alsasound/oss
 		# Bring down these subservices if service/alsasound is stopped
-		iset also_stop = service/alsasound/{cards,ioctl32,seq,oss}
+		iset also_stop = service/alsasound/cards \
+				 service/alsasound/ioctl32 \
+				 service/alsasound/seq service/alsasound/oss
 		iexec start = alsasound_start
 	}
 }

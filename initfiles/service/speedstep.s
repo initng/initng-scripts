@@ -6,8 +6,11 @@ setup()
 {
 	ireg service service/speedstep && {
 		iset need = system/bootmisc \
-	        	    system/modules/cpufreq_{ondemand,userspace,stats} \
-			    system/modules/cpufreq_{conservative,powersave} \
+	        	    system/modules/cpufreq_ondemand \
+			    system/modules/cpufreq_userspace \
+			    system/modules/cpufreq_stats \
+			    system/modules/cpufreq_conservative \
+			    system/modules/cpufreq_powersave \
 			    system/modules/speedstep_centrino
 		iset use = system/modules system/coldplug
 		iexec start

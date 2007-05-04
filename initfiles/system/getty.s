@@ -5,11 +5,13 @@
 setup()
 {
 	ireg virtual system/getty && {
-		iset need = system/getty/{2,3,4,5,6}
+		iset need = system/getty/2 system/getty/3 system/getty/4 \
+			    system/getty/5 system/getty/6
 		iset use = system/mountfs/essential service/issue
 		return 0
 	}
 
+	# daemon/getty/*
 	ireg daemon && {
 		iset need = system/bootmisc system/mountfs/home
 		iset provide = "virtual/getty/$NAME"
