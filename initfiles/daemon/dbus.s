@@ -9,7 +9,7 @@ DAEMONUSER="messagebus"
 
 #ifd fedora altlinux mandriva
 PIDFILE="/var/run/messagebus.pid"
-#elsed  debian pingwinek
+#elsed debian pingwinek sourcemage
 PIDFILE="/var/run/dbus/pid"
 #elsed
 PIDFILE="/var/run/dbus.pid"
