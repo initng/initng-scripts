@@ -62,7 +62,7 @@ start()
 {
 	[ -x @/sbin/hwclock@ ] || exit 0
 #ifd debian
-	[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
+	[ "${HWCLOCKACCESS}" = "no" ] && exit 0
 #endd
 
 	readonly="no"
@@ -86,7 +86,7 @@ stop()
 {
 	[ -x @/sbin/hwclock@ ] || exit 0
 #ifd debian
-	[ "${HWCLOCKACCESS}" = "yes" ] || exit 0
+	[ "${HWCLOCKACCESS}" = "no" ] && exit 0
 #endd
 
 	# Don't tweak the hardware clock on LiveCD halt.
