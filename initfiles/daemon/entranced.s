@@ -1,10 +1,11 @@
+# SERVICE: daemon/entranced
 # NAME: Entrance
 # DESCRIPTION: Graphical login/display manager
 # WWW: http://xcomputerman.com/pages/entrance.html
 
 setup()
 {
-	ireg daemon daemon/entranced && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset provide = virtual/dm
 		iset conflict = daemon/xdm daemon/kdm daemon/gdm daemon/wdm \
@@ -13,5 +14,5 @@ setup()
 		iset respawn
 		iset forks
 		iset exec daemon = "@/usr/sbin/entranced@"
-	}
+	idone
 }

@@ -1,3 +1,4 @@
+# SERVICE: daemon/spamd
 # NAME: spamassassin
 # DESCRIPTION: Spam filter
 # WWW:
@@ -10,9 +11,9 @@ OPTIONS="-c"
 
 setup()
 {
-	ireg daemon daemon/spamd && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset stdall = /dev/null
 		iset exec daemon = "@/usr/sbin/spamd:/usr/bin/spamd@ ${OPTIONS}"
-	}
+	idone
 }

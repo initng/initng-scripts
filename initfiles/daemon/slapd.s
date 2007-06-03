@@ -1,3 +1,4 @@
+# SERVICE: daemon/slapd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -8,7 +9,7 @@
 
 setup()
 {
-	ireg daemon daemon/slapd && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset suid = ldap
 		iset sgid = ldap
@@ -20,5 +21,5 @@ setup()
 		iset exec daemon = "@/usr/lib/openldap/slapd@"
 #endd
 		iset exec kill = "@killall@ -2 slapd"
-	}
+	idone
 }

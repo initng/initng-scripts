@@ -1,3 +1,4 @@
+# SERVICE: daemon/mini_httpd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -7,10 +8,10 @@ MINI_HTTPD_DOCROOT=/
 
 setup()
 {
-	ireg daemon daemon/mini_httpd && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iexec daemon
-	}
+	idone
 }
 
 daemon()

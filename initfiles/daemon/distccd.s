@@ -1,3 +1,4 @@
+# SERVICE: daemon/distccd
 # NAME: distcc
 # DESCRIPTION: Distributed compiler daemon
 # WWW: http://distcc.samba.org/
@@ -18,7 +19,7 @@ NICE="10"
 
 setup()
 {
-	ireg daemon daemon/distccd && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset suid = distcc
 #ifd gentoo
@@ -28,7 +29,7 @@ setup()
 #endd
 		iset forks
 		iexec daemon
-	}
+	idone
 }
 
 daemon()

@@ -1,3 +1,4 @@
+# SERVICE: daemon/bluetooth/hidd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -9,10 +10,11 @@ HIDD_OPTIONS="--server"
 
 setup()
 {
-	ireg daemon daemon/bluetooth/hidd && {
-		iset need = system/bootmisc daemon/bluetooth/hcid daemon/bluetooth/sdpd
+	iregister daemon
+		iset need = system/bootmisc daemon/bluetooth/hcid \
+		            daemon/bluetooth/sdpd
 		iset forks
 		iset pid_of = hidd
 		iset exec daemon = "@/usr/bin/hidd@ ${HIDD_OPTIONS}"
-	}
+	idone
 }

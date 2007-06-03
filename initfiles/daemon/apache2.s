@@ -1,3 +1,4 @@
+# SERVICE: daemon/apache2
 # NAME: Apache2
 # DESCRIPTION: The Apache web server, version 2
 # WWW: http://httpd.apache.org
@@ -10,7 +11,7 @@
 
 setup()
 {
-	ireg daemon daemon/apache2 && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset use = daemon/sshd daemon/mysql daemon/postgres system/mountfs
 		iset respawn
@@ -18,5 +19,5 @@ setup()
 		iset forks
 		iset exec daemon = "@/usr/sbin/apache2@ ${APACHE2_OPTS} -k start"
 		iset exec kill = "@/usr/sbin/apache2@ -k stop"
-	}
+	idone
 }

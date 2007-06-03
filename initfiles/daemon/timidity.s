@@ -1,3 +1,4 @@
+# SERVICE: daemon/timidity
 # NAME: timidity++
 # DESCRIPTION: Software MIDI synthesiser
 # WWW: http://timidity.sourceforge.net
@@ -10,13 +11,13 @@ TIMIDITY_OPTS="-B2,8 -Os"
 
 setup()
 {
-	ireg daemon daemon/timidity && {
+	iregister daemon
 		iset need = service/alsasound system/bootmisc
 #ifd gentoo
 		iset use = daemon/esound
 #endd
 		iexec daemon
-	}
+	idone
 }
 
 daemon()

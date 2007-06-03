@@ -1,10 +1,11 @@
+# SERVICE: daemon/hpiod
 # NAME: HPLIP
 # DESCRIPTION: Hewlett-Packard Linux Imaging and Printing - Imaging Daemon
 # WWW: http://hplip.sf.net
 
 setup()
 {
-	ireg daemon daemon/hpiod && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net/lo
 #ifd debian
 		iset pid_file = "/var/run/hplip/hpiod.pid"
@@ -13,5 +14,5 @@ setup()
 #endd
 		iset forks
 		iset exec daemon = "@/usr/sbin/hpiod@"
-	}
+	idone
 }

@@ -1,3 +1,4 @@
+# SERVICE; daemon/hddtemp
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -16,12 +17,12 @@ RUN_DAEMON="yes"
 
 setup()
 {
-	ireg daemon daemon/hddtemp && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset forks
 		iset pid_of = hddtemp
 		iexec daemon
-	}
+	idone
 }
 
 daemon()

@@ -1,3 +1,4 @@
+# SERVICE: daemon/smartd
 # NAME: smartmontools
 # DESCRIPTION: Monitoring daemon for S.M.A.R.T. hard drive diagnostics
 # WWW: http://smartmontools.sourceforge.net
@@ -12,7 +13,7 @@
 
 setup()
 {
-	ireg daemon daemon/smartd && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset forks
 		iset pid_of = smartd
@@ -21,7 +22,7 @@ setup()
 		iset pid_file = "/var/run/smartd.pid"
 #endd
 		iexec daemon
-	}
+	idone
 }
 
 daemon()

@@ -1,12 +1,13 @@
+# SERVICE: daemon/bluetooth/hid2hci
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service daemon/bluetooth/hid2hci && {
+	iregister service
 		iset need = system/bootmisc
 		iset exec start = "@/usr/sbin/hid2hci@ -0"
 		iset exec stop = "@/usr/sbin/hid2hci@ -1"
-	}
+	idone
 }

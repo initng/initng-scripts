@@ -1,15 +1,16 @@
+# SERVICE: daemon/apcupsd
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/apcupsd && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset pid_file = "/var/run/apcupsd.pid"
 		iset forks
 		iexec daemon
-	}
+	idone
 }
 
 daemon()

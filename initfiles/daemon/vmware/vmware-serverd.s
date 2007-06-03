@@ -1,11 +1,12 @@
+# SERVICE: daemon/vmware/vmware-serverd 
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/vmware/vmware-serverd && {
+	iregister daemon
 		iset need = system/bootmisc daemon/vmware/vmnet system/modules/vmmon
 		iset exec daemon = "@/opt/vmware/server/sbin/vmware-serverd@"
-	}
+	idone
 }

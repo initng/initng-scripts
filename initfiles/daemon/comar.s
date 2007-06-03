@@ -1,11 +1,12 @@
+# SERVICE: daemon/comar
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/comar && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset exec daemon = "@/usr/bin/comar@"
-	}
+	idone
 }

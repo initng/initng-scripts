@@ -1,11 +1,12 @@
+# SERVICE: daemon/rquotad
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/rquotad && {
+	iregister daemon
 		iset need = system/initial daemon/portmap virtual/net
 		iset exec daemon = "@rpc.rquotad@ -f"
-	}
+	idone
 }

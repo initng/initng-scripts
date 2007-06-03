@@ -1,11 +1,12 @@
+# SERVICE: daemon/svcgssd
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/svcgssd && {
+	iregister daemon
 		iset need = system/initial daemon/portmap
 		iset exec daemon = "@rpc.svcgssd@ -f"
-	}
+	idone
 }

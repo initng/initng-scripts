@@ -1,3 +1,4 @@
+# SERVICE: daemon/lirc/lircd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -10,16 +11,11 @@ LIRCD_OPTS="-d /dev/lirc/0"
 
 setup()
 {
-	ireg daemon daemon/lirc/lircd && {
+	iregister daemon
 		iset need = system/bootmisc system/modules
 		iset use = system/discover system/coldplug system/modules
 		iset pid_file = "/var/run/lircd.pid"
 		iset forks
-		iexec daemon
-	}
-}
-
-daemon()
-{
-	exec @/usr/sbin/lircd@ ${LIRCD_OPTS} -P /var/run/lircd.pid
+		iset exec daemon = "@/usr/sbin/lircd@ ${LIRCD_OPTS} -P /var/run/lircd.pid"
+	idone
 }

@@ -1,10 +1,11 @@
+# SERVICE: daemon/ddclient
 # NAME: ddclient
 # DESCRIPTION: Update client for DynDNS.com's dynamic IP service (and others)
 # WWW: http://ddclient.sourceforge.net/
 
 setup()
 {
-	ireg daemon daemon/ddclient && {
+	iregister daemon
 		iset suid = ddclient
 		iset sgid = ddclient
 		iset need = virtual/net system/bootmisc
@@ -12,5 +13,5 @@ setup()
 		iset forks
 		iset respawn
 		iset exec daemon = "@/usr/sbin/ddclient@"
-	}
+	idone
 }

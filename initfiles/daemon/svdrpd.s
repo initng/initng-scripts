@@ -1,3 +1,4 @@
+# SERVICE: daemon/svdrpd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -10,10 +11,10 @@ SERV_PORT="2001"
 
 setup()
 {
-	ireg daemon daemon/svdrpd && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/vdr
 		iset respawn
 		iset exec daemon = "@/usr/bin/svdrpd@ ${VDR_HOST} ${VDR_PORT} ${SERV_HOST} ${SERV_PORT}"
-	}
+	idone
 }

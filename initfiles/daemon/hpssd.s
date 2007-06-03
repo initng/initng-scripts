@@ -1,10 +1,11 @@
+# SERVICE: daemon/hpssd
 # NAME: HPLIP
 # DESCRIPTION: Hewlett-Packard Linux Imaging and Printing - Settings and Status Daemon
 # WWW: http://hplip.sourceforge.net
 
 setup()
 {
-	ireg daemon daemon/hpssd && {
+	iregister daemon
 		iset need = system/bootmisc daemon/hpiod
 #ifd debian
 		iset pid_file = "/var/run/hplip/hpssd.pid"
@@ -17,5 +18,5 @@ setup()
 #elsed
 		iset exec daemon = "@/usr/share/hplip/hpssd.py@"
 #endd
-	}
+	idone
 }

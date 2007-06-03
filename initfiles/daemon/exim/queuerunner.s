@@ -1,3 +1,4 @@
+# SERVICE: daemon/exim/queuerunner
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -12,11 +13,11 @@ QRPIDFILE="/var/run/exim4/eximqr.pid"
 
 setup()
 {
-	ireg daemon daemon/exim/queuerunner && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net daemon/exim/updateconf
 		iset conflict = daemon/exim/combined
 		iset pid_file = "${QRPIDFILE}"
 		iset forks
 		iexec daemon = "@/usr/sbin/exim4@ -oP ${QRPIDFILE} -q${QFLAGS}${QUEUEINTERVAL} ${COMMONOPTIONS} ${QUEUERUNNEROPTIONS}"
-	}
+	idone
 }

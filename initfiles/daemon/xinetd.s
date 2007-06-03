@@ -1,3 +1,4 @@
+# SERVICE: daemon/xinetd
 # NAME: xinetd
 # DESCRIPTION: inetd replacement
 # WWW: http://www.xinetd.org
@@ -8,8 +9,8 @@
 
 setup()
 {
-	ireg daemon daemon/xinetd && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset exec daemon = " @/usr/sbin/xinetd@ -dontfork ${XINETD_OPTS}"
-	}
+	idone
 }

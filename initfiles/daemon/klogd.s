@@ -1,3 +1,4 @@
+# SERVICE: daemon/klogd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -8,7 +9,7 @@
 
 setup()
 {
-	ireg daemon daemon/klogd && {
+	iregister daemon
 		iset need = system/bootmisc daemon/syslogd
 		iset stdall = /dev/null
 		iset daemon_stops_badly
@@ -17,5 +18,5 @@ setup()
 #elsed
 		iset exec daemon = "@/usr/sbin/klogd@ -n -c 1"
 #endd
-	}
+	idone
 }

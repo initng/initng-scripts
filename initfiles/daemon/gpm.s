@@ -1,3 +1,4 @@
+# SERVICE: daemon/gpm
 # NAME: GPM
 # DESCRIPTION: Console mouse driver
 # WWW: http://linux.schottelius.org/gpm/
@@ -14,7 +15,7 @@ MOUSEDEV="/dev/input/mice"
 
 setup()
 {
-	ireg daemon daemon/gpm && {
+	iregister daemon
 		iset need = system/bootmisc
 #ifd debian
 #elsed
@@ -26,7 +27,7 @@ setup()
 #elsed
 		iset exec daemon = "@/usr/sbin/gpm@ -m ${MOUSEDEV} -t ${MOUSE} ${APPEND}"
 #endd
-	}
+	idone
 }
 
 #ifd debian

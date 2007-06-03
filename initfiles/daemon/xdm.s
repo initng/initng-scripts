@@ -1,10 +1,11 @@
+# SERVICE: daemon/xdm
 # NAME: Xdm
 # DESCRIPTION: X.org graphical greeter
 # WWW: http://xorg.freedesktop.org
 
 setup()
 {
-	ireg daemon daemon/xdm && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset conflict = daemon/gdm daemon/kdm daemon/wdm \
 		                daemon/entranced daemon/slim
@@ -15,5 +16,5 @@ setup()
 #elsed
 		iset exec daemon = "@/usr/sbin/xdm:/usr/bin/xdm@ -nodaemon"
 #endd
-	}
+	idone
 }

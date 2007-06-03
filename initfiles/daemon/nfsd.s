@@ -1,3 +1,4 @@
+# SERVICE: daemon/nfsd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -11,7 +12,7 @@ RPCNFSDCOUNT="8"
 
 setup()
 {
-	ireg daemon daemon/nfsd && {
+	iregister daemon
 		iset need = system/initial daemon/portmap
 #ifd gentoo
 		iset need = virtual/net
@@ -21,7 +22,7 @@ setup()
 		iset pid_of = rpc.nfsd
 		iset exec daemon = "@rpc.nfsd@ ${RPCNFSDARGS} ${RPCNFSDCOUNT}"
 #endd
-	}
+	idone
 }
 
 #ifd gentoo

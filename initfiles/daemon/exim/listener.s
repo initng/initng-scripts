@@ -1,3 +1,4 @@
+# SERVICE: daemon/exim/listener
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -10,11 +11,11 @@
 
 setup()
 {
-	ireg daemon daemon/exim/listener && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net daemon/exim/updateconf
 		iset conflict = daemon/exim/combined
 		iset provide = virtual/mta
 		iset pid_file = "/var/run/exim4/exim.pid"
 		iset exec daemon = "@/usr/sbin/exim4@ -bdf ${SMTPLISTENEROPTIONS} ${COMMONOPTIONS}"
-	}
+	idone
 }

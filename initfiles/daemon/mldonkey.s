@@ -1,3 +1,4 @@
+# SERVICE: daemon/mldonkey
 # NAME: MLDonkey
 # DESCRIPTION: Multi-network P2P client.
 # WWW: http://mldonkey.sourceforge.net/Main_Page
@@ -10,7 +11,7 @@ LOG="/var/log/mldonkey.log"
 
 setup()
 {
-	ireg daemon daemon/mldonkey && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset suid = "${USER}"
 		iset nice = "${NICE}"
@@ -18,7 +19,7 @@ setup()
 		iset stdall = "${LOG}"
 		iset exec daemon = "@/usr/bin/mlnet@"
 		iexec kill
-	}
+	idone
 }
 
 kill()

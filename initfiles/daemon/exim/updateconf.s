@@ -1,3 +1,4 @@
+# SERVICE: daemon/exim/updateconf
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -10,8 +11,8 @@
 
 setup()
 {
-	ireg service daemon/exim/updateconf && {
+	iregister service
 		iset need = system/bootmisc
 		iset exec start = "@update-exim4.conf@ ${UPEX4OPTS}"
-	}
+	idone
 }

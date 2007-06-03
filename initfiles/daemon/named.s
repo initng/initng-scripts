@@ -1,3 +1,4 @@
+# SERVICE: daemon/named
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -9,10 +10,10 @@ PIDFILE="/var/run/named/named.pid"
 
 setup()
 {
-	ireg daemon daemon/named && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset suid = named
 		iset pid_file = "${PIDFILE}"
 		iset exec daemon = "@named@ -n ${CPU} ${OPTIONS} -u named"
-	}
+	idone
 }

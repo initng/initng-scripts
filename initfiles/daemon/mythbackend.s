@@ -1,21 +1,23 @@
+# SERVICE: daemon/mythbackend
 # NAME: MythTV
 # DESCRIPTION: Backend server for the mythtv PVR
 # WWW: http://www.mythtv.org
 
-HOME="/etc/mythtv"
+export HOME="/etc/mythtv"
 
 setup()
 {
-	ireg daemon daemon/mythbackend && {
+	iregister daemon
 		iset need = virtual/net/lo system/bootmisc
 		iset use = daemon/mysql
 		iset suid = mythtv
 		iset pid_of = mythbackend
 		iset forks
 		iset respawn
-		iset exec daemon = "@/usr/bin/mythbackend@"
 #ifd gentoo
 		iset exec daemon = "@/usr/bin/mythbackend@ --logfile /var/log/mythtv/mythbackend.log"
+#elsed
+		iset exec daemon = "@/usr/bin/mythbackend@"
 #endd
-	}
+	idone
 }

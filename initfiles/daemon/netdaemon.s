@@ -1,13 +1,14 @@
+# SERVICE: daemon/netdaemon
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/netdaemon && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset use = system/coldplug system/modules
 		iset pid_of = netdaemon
 		iset exec daemon = "@/usr/sbin/netdaemon@"
-	}
+	idone
 }

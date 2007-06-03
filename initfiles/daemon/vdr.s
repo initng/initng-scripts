@@ -1,3 +1,4 @@
+# SERVICE: daemon/vdr
 # NAME: VDR
 # DESCRIPTION: Video Disk Recorder - DVB Personal Video Recorder
 # WWW: http://www.cadsoft.de/vdr
@@ -13,7 +14,7 @@ EPGFILE="${HOME}/epg.data"
 
 setup()
 {
-	ireg daemon daemon/vdr && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/lircd
 		iset respawn
@@ -22,7 +23,7 @@ setup()
 		iset suid = "${USER}"
 		iset sgid = "${GROUP}"
 		iexec daemon
-	}
+	idone
 }
 
 daemon()

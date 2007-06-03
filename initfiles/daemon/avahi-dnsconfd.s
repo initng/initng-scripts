@@ -1,11 +1,13 @@
+# SERVICE: daemon/avahi-dnsconfd
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/avahi-dnsconfd && {
-		iset need = system/bootmisc daemon/dbus daemon/avahi-daemon virtual/net
+	iregister daemon
+		iset need = system/bootmisc daemon/dbus daemon/avahi-daemon \
+		            virtual/net
 		iset exec daemon = "@/usr/sbin/avahi-dnsconfd@"
-	}
+	idone
 }

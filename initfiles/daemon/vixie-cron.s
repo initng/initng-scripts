@@ -1,10 +1,11 @@
+# SERVICE: daemon/vixie-cron
 # NAME: vixie-cron
 # DESCRIPTION: A fully featured crond implementation
 # WWW: ftp://ftp.isc.org/isc/cron
 
 setup()
 {
-	ireg daemon daemon/vixie-cron && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset provide = virtual/cron
 #ifd gentoo
@@ -14,5 +15,5 @@ setup()
 #endd
 		iset forks
 		iset exec daemon = "@/usr/sbin/cron@"
-	}
+	idone
 }

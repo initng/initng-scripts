@@ -1,10 +1,11 @@
+# SERVICE: daemon/metalog
 # NAME: Metalog
 # DESCRIPTION: System logger
 # WWW: http://metalog.sourceforge.net
 
 setup()
 {
-	ireg daemon daemon/metalog && {
+	iregister daemon
 		iset provide = virtual/syslog
 		iset need = system/bootmisc
 #ifd debian
@@ -14,5 +15,5 @@ setup()
 		iset forks
 		iset daemon_stops_badly
 		iset exec daemon = "@/usr/sbin/metalog@ -B -p /var/run/metalog.pid"
-	}
+	idone
 }

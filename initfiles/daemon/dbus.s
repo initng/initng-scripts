@@ -1,3 +1,4 @@
+# SERVICE: daemon/dbus
 # NAME: D-Bus
 # DESCRIPTION: Application communication framework
 # WWW: http://dbus.freedesktop.org/
@@ -17,7 +18,7 @@ PIDFILE="/var/run/dbus.pid"
 
 setup()
 {
-	ireg daemon daemon/dbus && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset forks
 		iset pid_file = "${PIDFILE}"
@@ -26,7 +27,7 @@ setup()
 #elsed
 		iset exec daemon = "@/bin/dbus-daemon:/usr/bin/dbus-daemon:/usr/bin/dbus-daemon-1@ --system --fork"
 #endd
-	}
+	idone
 }
 
 #ifd debian

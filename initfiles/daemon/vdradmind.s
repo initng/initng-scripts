@@ -1,10 +1,11 @@
+# SERVICE: daemon/vdradmin
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/vdradmind && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/vdr daemon/svdrpd
 		iset pid_file = "/var/run/vdradmind.pid"
@@ -12,5 +13,5 @@ setup()
 		iset forks
 		iset exec daemon = "@vdradmind.pl@"
 		iset exec kill = "@vdradmind.pl@ --kill"
-	}
+	idone
 }

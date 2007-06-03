@@ -1,10 +1,11 @@
+# SERVICE: daemon/splash_update
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/splash_update && {
+	iregister daemon
 		iset exec daemon = "@/sbin/splash_update@"
-	}
+	idone
 }

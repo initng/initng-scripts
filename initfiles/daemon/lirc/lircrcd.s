@@ -1,3 +1,4 @@
+# SERVICE: daemon/lirc/lircrcd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -8,13 +9,13 @@ conf="/etc/lircrcd.conf"
 
 setup()
 {
-	ireg daemon daemon/lirc/lircrcd && {
+	iregister daemon
 		iset need = daemon/lirc/lircd
 		iset respawn
 		iset suid = "${user}"
 		iset pid_of = lircrcd
 		iexec daemon
-	}
+	idone
 }
 
 daemon()

@@ -1,3 +1,4 @@
+# SERVICE: daemon/pure-ftpd
 # NAME: Pure-FTPd
 # DESCRIPTION: Secure, production-quality and standard-conformant FTP server.
 # WWW: http://www.pureftpd.org/project/pure-ftpd
@@ -8,7 +9,7 @@
 
 setup()
 {
-	ireg daemon daemon/pure-ftpd && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/mysql
 		iset pid_file = "/var/run/pure-ftpd.pid"
@@ -20,5 +21,5 @@ setup()
 #elsed
 		iset exec daemon = "@/usr/sbin/pure-config.pl@ /etc/pure-ftpd/pure-ftpd.conf"
 #endd
-	}
+	idone
 }

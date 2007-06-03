@@ -1,10 +1,11 @@
+# SERVICE: daemon/denyhosts
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/denyhosts && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/sshd daemon/syslog-ng
 #ifd fedora
@@ -18,7 +19,7 @@ setup()
 #elsed
 		iset exec daemon = "@denyhosts@ --daemon -c /etc/denyhosts.conf"
 #endd
-	}
+	idone
 }
 
 #ifd fedora

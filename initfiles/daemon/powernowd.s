@@ -1,3 +1,4 @@
+# SERVICE: daemon/powernowd
 # NAME: powernowd
 # DESCRIPTION: CPU clock/voltage adjustment daemon
 # WWW: http://www.deater.net/john/powernowd.html
@@ -9,7 +10,7 @@ OPTIONS="-q -m 2"
 
 setup()
 {
-	ireg daemon daemon/powernowd && {
+	iregister daemon
 		iset need = system/bootmisc
 		iset use = service/speedstep
 #ifd debian
@@ -17,5 +18,5 @@ setup()
 #elsed
 		iset exec daemon = "@/usr/sbin/powernowd@ -q"
 #endd
-	}
+	idone[B
 }

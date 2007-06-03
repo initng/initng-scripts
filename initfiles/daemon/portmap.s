@@ -1,3 +1,4 @@
+# SERVICE: daemon/portmap
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -10,7 +11,7 @@
 
 setup()
 {
-	ireg daemon daemon/portmap && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset forks
 		iset pid_of = portmap
@@ -19,5 +20,5 @@ setup()
 #elsed
 		iset exec daemon = "@/sbin/portmap@ -d ${PORTMAP_OPTS}"
 #endd
-	}
+	idone
 }

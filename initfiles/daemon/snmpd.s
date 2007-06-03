@@ -1,3 +1,4 @@
+# SERVICE: daemon/snmpd
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -11,10 +12,10 @@ OPTIONS="-Lsd -a"
 
 setup()
 {
-	ireg daemon daemon/snmpd && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset pid_file = "${PIDFILE}"
 		iset forks
 		iset exec daemon = "@/usr/sbin/snmpd@ ${OPTIONS} -c ${CONFFILE} -p ${PIDFILE}"
-	}
+	idone
 }

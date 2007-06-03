@@ -1,11 +1,12 @@
+# SERVICE: daemon/mit-krb5kadmind
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/mit-krb5kadmind && {
+	iregister daemon
 		iset need = system/bootmisc daemon/mit-krb5kdc
 		iset exec daemon = "@kadmind@ -nofork"
-	}
+	idone
 }

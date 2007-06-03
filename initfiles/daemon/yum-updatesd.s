@@ -1,11 +1,12 @@
+# SERVICE: daemon/yum-updatesd
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg daemon daemon/yum-updatesd && {
+	iregister daemon
 		iset need = system/bootmisc virtual/net daemon/dbus
 		iset exec daemon = "@/usr/sbin/yum-updatesd@ -f"
-	}
+	idone
 }

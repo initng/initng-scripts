@@ -1,3 +1,4 @@
+# SERVICE: daemon/hald
 # NAME: HAL
 # DESCRIPTION: Hardware Abstraction Layer
 # WWW: http://www.freedesktop.org/Software/hal
@@ -12,7 +13,7 @@ PIDDIR="/var/run"
 
 setup()
 {
-	ireg daemon daemon/hald && {
+	iregister daemon
 		iset need = system/bootmisc daemon/dbus
 		iset use = daemon/acpid
 		iset stdall = "/dev/null"
@@ -21,7 +22,7 @@ setup()
 		iset pid_file = "${PIDDIR}/hald.pid"
 #endd
 		iexec daemon
-	}
+	idone
 }
 
 
