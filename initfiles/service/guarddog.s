@@ -1,21 +1,21 @@
+# SERVICE: service/guarddog
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service service/guarddog && {
+	iregister service
 		iset need = system/initial
 		iset provide = virtual/firewall
 		iset exec start = "/etc/rc.firewall"
 		iexec stop
-	}
+	idone
 }
 
 stop()
 {
-	if [ ! -x @/sbin/iptables:/sbin/ipchains@ ]
-	then
+	if [ ! -x @/sbin/iptables:/sbin/ipchains@ ]; then
 		echo "Cannot find @/sbin/ipchains@ or @/sbin/iptables@"
 		exit 1
 	fi

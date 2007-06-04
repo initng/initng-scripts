@@ -1,20 +1,20 @@
+# SERVICE: service/xorgconf
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service service/xorgconf && {
+	iregister service
 		iset need = system/bootmisc
 		iexec start
-	}
+	idone
 }
 
 start()
 {
 #ifd pingwinek
-        if [ ! -f /etc/X11/xorg.conf ]
-	then
+        if [ ! -f /etc/X11/xorg.conf ]; then
 		driver=`@makexorgconf@ 2>/dev/null`
 		echo "The X graphics driver is '${driver}'"
 	fi

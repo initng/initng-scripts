@@ -1,3 +1,4 @@
+# SERVICE: service/init/*
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -10,12 +11,9 @@ RCDIR="/etc/init.d"
 
 setup()
 {
-	[ "${SERVICE}" = service/init ] && exit 1
-
-	# service/init/*
-	ireg service && {
+	iregister service
 		iset need = system/bootmisc system/mountfs
 		iset exec start = "${RCDIR}/${NAME} start"
 		iset exec stop = "${RCDIR}/${NAME} stop"
-	}
+	idone
 }

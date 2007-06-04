@@ -1,3 +1,13 @@
+SUBDIRS(
+	alsasound
+	chvt
+	fbsplash
+	init
+	lm-sensors
+	readahead
+	splashy
+)
+
 FILE(GLOB S_FILES "*.s")
 
 PROCESS_SFILES(SERVICE_FILES ${S_FILES})

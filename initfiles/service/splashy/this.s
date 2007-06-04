@@ -1,3 +1,4 @@
+# SERVICE: service/splashy
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -11,16 +12,11 @@ SPL_MSG="Starting ${NAME} boot sequence"
 
 setup()
 {
-	ireg service service/splashy/chvt && {
-		iexec start = chvt
-		return 0
-	}
-
-	ireg service service/splashy && {
+	iregister service
 		iset need = system/initial
 		iexec start
 		iexec stop
-	}
+	idone
 }
 
 start()
@@ -35,17 +31,4 @@ stop()
 	[ -x @/sbin/splashy@ ] || exit 0
 	@start-stop-daemon@ --start --quiet --pidfile ${spl_pidfile} --exec ${DAEMON} -- boot 2> /dev/null
 	exec @/sbin/ngc@ -S "splashy,shutdown"
-}
-
-chvt()
-{
-	x_vt=""
-	for i in `@seq@ 0 10`
-	do
-		x_vt=`ps -C X -o args= | @sed@ 's/.* vt\([0-9]*\).*/\1/g'`
-		[ ! -z "${x_vt}" ] && break
-		sleep .2
-	done
-	[ "${x_vt}" -gt 0 ] && exit 0
-	exec @/usr/bin/chvt@ ${x_vt}
 }

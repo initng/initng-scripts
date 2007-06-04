@@ -1,3 +1,4 @@
+# SERVICE: service/ntpdate
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -15,12 +16,12 @@ NTPSERVERS="pool.ntp.org"
 
 setup()
 {
-	ireg service service/ntpdate && {
+	iregister service
 		iset need = system/initial system/mountfs/essential virtual/net
 #ifd gentoo
 		iset exec start = "@/usr/sbin/ntpdate@ ${NTPCLIENT_OPTS}"
 #elsed
 		iset exec start = "@/usr/sbin/ntpdate@ -b -s ${NTPOPTIONS} ${NTPSERVERS}"
 #endd
-	}
+	idone
 }

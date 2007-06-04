@@ -1,14 +1,15 @@
+# SERVICE: service/acct
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service service/acct && {
+	iregister service
 		iset need = system/initial system/mountfs/essential
 		iset exec stop = "@/usr/sbin/accton@"
 		iexec start
-	}
+	idone
 }
 
 start()

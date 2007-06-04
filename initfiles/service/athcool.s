@@ -1,12 +1,13 @@
+# SERVICE: service/athcool
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service service/athcool && {
+	iregister service
 		iset need = system/bootmisc
 		iset exec start = "@/usr/sbin/athcool@ on"
 		iset exec stop = "@/usr/sbin/athcool@ off"
-	}
+	idone
 }

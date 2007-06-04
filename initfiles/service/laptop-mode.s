@@ -1,22 +1,22 @@
+# SERVICE: service/laptop-mode
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service service/laptop-mode && {
+	iregister service
 		iset need = system/bootmisc
 		iexec start
 		iexec stop
-	}
+	idone
 }
 
 start()
 {
 	# Run it with "force" so that syslog.conf and hdparm settings
 	# are set correctly at system bootup.
-	if [ ! -x @/usr/sbin/laptop_mode:/usr/sbin/laptop-mode@ ]
-	then
+	if [ ! -x @/usr/sbin/laptop_mode:/usr/sbin/laptop-mode@ ]; then
 		echo "@/usr/sbin/laptop_mode:/usr/sbin/laptop-mode@ not found!"
 		exit 1
 	fi

@@ -1,10 +1,11 @@
+# SERVICE: service/speedstep
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service service/speedstep && {
+	iregister service
 		iset need = system/bootmisc \
 	        	    system/modules/cpufreq_ondemand \
 			    system/modules/cpufreq_userspace \
@@ -15,7 +16,7 @@ setup()
 		iset use = system/modules system/coldplug
 		iexec start
 		iexec stop
-	}
+	idone
 }
 
 start()
