@@ -1,3 +1,9 @@
+SUBDIRS(
+	ip
+	iwconfig
+	ppp
+)
+
 FILE(GLOB S_FILES "*.s")
 
 PROCESS_SFILES(SERVICE_FILES ${S_FILES})

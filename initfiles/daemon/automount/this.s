@@ -1,9 +1,9 @@
 # SERVICE: daemon/automount
-# NOTE: This service is specific to Fedora
 # NAME: Autofs
 # DESCRIPTION: kernel-based automounter for Linux
 # WWW:
 
+#ifd fedora
 PIDFILE="/var/lock/subsys/autofs"
 [ -f /etc/sysconfig/autofs ] && . /etc/sysconfig/autofs
 
@@ -17,3 +17,4 @@ setup()
 		iset exec daemon = "@automount@ --pid-file ${PIDFILE} ${OPTIONS}"
 	idone
 }
+#endd

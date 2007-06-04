@@ -1,9 +1,9 @@
 # SERVICE: daemon/postgres/*
-# NOTE: This service is specific to Debian
 # NAME: PostgreSQL
 # DESCRIPTION: Relational database
 # WWW: http://www.postgresql.org/
 
+#ifd debian
 . /usr/share/postgresql-common/init.d-functions
 
 setup()
@@ -29,3 +29,4 @@ kill()
 {
 	stop ${NAME}
 }
+#endd
