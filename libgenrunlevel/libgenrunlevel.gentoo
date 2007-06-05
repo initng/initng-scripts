@@ -3,7 +3,7 @@
 function copy_gentoo_services
 {
 	for s in /etc/runlevels/"${2}"/*; do
-		[ -f "/etc/initng/${1}/${s}.i" ] &&
+		[ -f "/etc/initng/${1}/${s}" ] &&
 			echo "${1}/${s}"
 	done
 }

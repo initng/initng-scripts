@@ -74,7 +74,7 @@ function copy_sysvinit_services
 		for i in /etc/rc${2}.d/S*; do
 			sname=`basename ${i}`
 			sname=${sname##S[0-9][0-9]}
-			[ -f "${CONFDIR}/${1}/${sname}.i" ] &&
+			[ -f "${CONFDIR}/${1}/${sname}" ] &&
 				echo "${1}/${sname}"
 		done
 	fi

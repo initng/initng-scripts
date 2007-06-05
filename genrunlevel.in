@@ -15,7 +15,8 @@ fi
 #
 # Show the help
 #
-function show_help {
+show_help()
+{
 cat >&2 << EOF
 USAGE:
 ${0} [options] [--all | runlevel1 runlevel2 ... runlevelN]
@@ -102,8 +103,8 @@ if [ -n "${migrate}" ]; then
 		while read SERVICE; do
 			if [ -e "${CONFDIR}/${SERVICE}.virtual" -o -e "${CONFDIR}/${SERVICE}.runlevel" ]; then
 				SERVICE="runlevel/${SERVICE}"
-			elif [ ! -e "${CONFDIR}/${SERVICE}.i" ]; then
-				NSERVICE="$(find "${CONFDIR}" -name $(basename "${SERVICE}").i | sed -r "s:^${CONFDIR}/(.*)\.i\$:\1:; s:\s::g")"
+			elif [ ! -e "${CONFDIR}/${SERVICE}" ]; then
+				NSERVICE="$(find "${CONFDIR}" -name $(basename "${SERVICE}") | sed -r "s:^${CONFDIR}/(.*)\$:\1:; s:\s::g")"
 				[ -n "${NSERVICE}" ] && SERVICE="${NSERVICE}"
 			fi
 			echo "${SERVICE}"
