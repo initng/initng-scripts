@@ -8,16 +8,15 @@ alsascrdir="/etc/alsa.d"
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
 		iset use = system/coldplug system/modules/depmod \
 		           system/modules
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	# We want to ensure snd-ioctl32 is loaded as it is needed for 32bit
 	# compatibility

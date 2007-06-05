@@ -11,14 +11,13 @@ DATA="/var/lib/mysql"
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 #ifd enlisy
 	if [ ! -d ${DATA} ]; then

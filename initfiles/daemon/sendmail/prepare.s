@@ -5,14 +5,13 @@
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	if [ -x /usr/bin/make -a -f /etc/mail/Makefile ]; then
 		@make@ all -C /etc/mail -s >/dev/null

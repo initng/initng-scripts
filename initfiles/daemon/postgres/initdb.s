@@ -20,14 +20,13 @@ PGGROUP="postgres"
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	[ -f ${PGDATA}/PG_VERSION ] && exit 0
 

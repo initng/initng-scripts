@@ -5,14 +5,13 @@
 
 setup()
 {
-	iregister task
+	iregister service
 		iset last
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
     [ -e /var/run/readahead-watch.pid ] && kill $(cat /var/run/readahead-watch.pid)
     [ -e /var/run/readahead-watch-boot.pid ] && kill $(cat /var/run/readahead.pid)

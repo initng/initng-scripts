@@ -16,14 +16,13 @@ SYSFS_PATH="/sys/devices/system/cpu/cpu0/cpufreq"
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc daemon/acpid
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
         CPUFREQ_MODULES="speedstep_centrino speedstep_ich powernow_k8 powernow_k7 powernow_k6 longrun longhaul acpi_cpufreq"
         CPUFREQ_MODULES_GREP="^speedstep_centrino\|^speedstep_ich\|^powernow_k8\|^powernow_k7\|^powernow_k6\|^longrun\|^longhaul\|^acpi_cpufreq"

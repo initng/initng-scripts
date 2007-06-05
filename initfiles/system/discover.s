@@ -1,11 +1,12 @@
+# SERVICE: system/discover
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service system/discover && {
+	iregister service
 		iset need = system/initial system/mountroot system/modules
 		iset exec start = "@discover-modprobe@ -v"
-	}
+	idone
 }

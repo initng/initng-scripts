@@ -5,14 +5,13 @@
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = daemon/ipw3945/real
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	count=0
 	while [ ! -d $(echo /sys/class/net/*/wireless | cut -f1 -d\ ) ]; do

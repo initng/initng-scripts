@@ -1,3 +1,4 @@
+# SERVICE: system/pcmcia
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -6,21 +7,18 @@
 
 setup()
 {
-	ireg service system/pcmcia && {
+	iregister service
 		iset need = system/bootmisc
 		iexec start
-	}
+	idone
 }
 
 start()
 {
 	cleanup() {
-		while read SN CLASS MOD INST DEV EXTRA
-		do
-			if [ "x${SN}" != "xSocket" ]
-			then
+		while read SN CLASS MOD INST DEV EXTRA; do
+			[ "x${SN}" != "xSocket" ] &&
 				/etc/pcmcia/${CLASS} stop ${DEV} 2> /dev/null
-			fi
 		done
 	}
 
@@ -37,16 +35,13 @@ start()
 	# confuse the process
 	[ -d /var/lib/pcmcia ] && @rm@ -rf /var/lib/pcmcia
 
-	if [ -e /proc/bus/pccard ]
-	then
+	if [ -e /proc/bus/pccard ]; then
 		echo "PCMCIA support detected ..."
 	else
 		echo "Trying to load pcmcia modules, should have been loaded with coldplug/pci or static-modules ..."
 		@/sbin/modprobe@ pcmcia_core ${CORE_OPTS}
-		if [ -n "${PCIC}" ]
-		then
-			if ! @/sbin/modprobe@ ${PCIC} ${PCIC_OPTS}
-			then
+		if [ -n "${PCIC}" ]; then
+			if ! @/sbin/modprobe@ ${PCIC} ${PCIC_OPTS}; then
 				echo "'@/sbin/modprobe@ ${PCIC}' failed"
 				echo "Trying alternative PCIC driver: ${PCIC_ALT}"
 				@/sbin/modprobe@ ${PCIC_ALT} ${PCIC_ALT_OPTS}

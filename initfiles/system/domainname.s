@@ -1,13 +1,14 @@
+# SERVICE: system/domainname
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service system/domainname && {
+	iregister service
 		iset need = system/initial
 		iexec start
-	}
+	idone
 }
 
 start()

@@ -3,18 +3,15 @@
 # DESCRIPTION:
 # WWW:
 
-PID_FILE="/var/run/NetworkManager/NetworkManager.pid"
-
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	[ -d /var/lib/NetworkManager ] ||
 		@/bin/mkdir@ -p /var/lib/NetworkManager

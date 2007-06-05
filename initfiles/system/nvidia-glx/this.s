@@ -1,3 +1,4 @@
+# SERVICE: system/nvidia-glx
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -7,30 +8,18 @@
 
 setup()
 {
-	ireg service system/nvidia-glx/dev && {
-		iexec start = dev_start
-		return 0
-	}
-
-	ireg service system/nvidia-glx && {
+	iregister service
 		iset need = system/bootmisc
 		iset use = service/nvidia-glx/dev
 		iexec start
 		iexec stop
-	}
-}
-
-dev_start()
-{
-	[ -d /etc/udev/devices ] &&
-		cp -a /etc/udev/devices/nvidia* /dev
+	idone
 }
 
 start()
 {
 	echo "Checking for nvidia kernel module..."
-	if [ -e "/lib/modules/`uname -r`/extra/nvidia/nvidia.ko" ]
-	then
+	if [ -e "/lib/modules/`uname -r`/extra/nvidia/nvidia.ko" ]; then
 		echo "Nvidia kernel module found."
 		@/usr/sbin/nvidia-config-display@ enable
 	else

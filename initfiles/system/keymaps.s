@@ -1,3 +1,4 @@
+# SERVICE: system/keymaps
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -26,11 +27,11 @@ CONFFILE="${CONFDIR}/${CONFFILEROOT}.${EXT}.gz"
 
 setup()
 {
-	ireg service system/keymaps && {
+	iregister service
 		iset need = system/bootmisc
 		iset use = system/sysctl
 		iexec start
-	}
+	idone
 }
 
 start()
@@ -64,21 +65,18 @@ start()
 		true
 	}
 
-	if [ -f /proc/sys/dev/mac_hid/keyboard_sends_linux_keycodes ]
-	then
+	if [ -f /proc/sys/dev/mac_hid/keyboard_sends_linux_keycodes ]; then
 		linux_keycodes=`@cat@ /proc/sys/dev/mac_hid/keyboard_sends_linux_keycodes`
 	else
 		linux_keycodes=1
 	fi
 
 	# load new map
-	if [ "${linux_keycodes}" -gt 0 -a -r "${CONFFILE}" ]
-	then
+	if [ "${linux_keycodes}" -gt 0 -a -r "${CONFFILE}" ]; then
 		# Switch console mode to UTF-8 or ASCII as necessary
 		unicode_start_stop
 		if
-			if [ "${CONSOLE_TYPE}" = "serial" ]
-			then
+			if [ "${CONSOLE_TYPE}" = "serial" ]; then
 				@/bin/loadkeys@ -q ${CONFFILE} 2>&1 >/dev/null
 			else
 				@/bin/loadkeys@ -q ${CONFFILE}
@@ -92,8 +90,7 @@ start()
 		fi
 	fi
 #elsed
-	if [ -e /etc/console/boottime.kmap.gz ]
-	then
+	if [ -e /etc/console/boottime.kmap.gz ]; then
 		@/bin/loadkeys@ -q /etc/console/boottime.kmap.gz >/dev/null 2>&1
 		exit 0
 	fi
@@ -105,8 +102,7 @@ start()
 		echo 1 >/proc/sys/dev/mac_hid/keyboard_sends_linux_keycodes
 
 	# New kbd support.
-	if [ -x @/bin/loadkeys@ ]
-	then
+	if [ -x @/bin/loadkeys@ ]; then
 		[ "${SET_WINDOWKEYS}" = "yes" ] && WINDOWKEYS_KEYMAP="windowkeys"
 		@/bin/loadkeys@ -q ${WINDOWKEYS_KEYMAP} ${KEYMAP} ${EXTENDED_KEYMAPS} >/dev/null 2>&1
 	else
@@ -118,11 +114,10 @@ start()
 	# See utf-8(7) for more information.
 	termencoding=
 #ifd sourcemage
-	if [ -n "${UNICODE_START}" ]
+	if [ -n "${UNICODE_START}" ]; then
 #elsed
-	if [ "${UNICODE}" = "yes" ]
+	if [ "${UNICODE}" = "yes" ]; then
 #endd
-	then
 		dumpkey_opts=""
 		[ -n "${DUMPKEYS_CHARSET}" ] && dumpkey_opts="-c ${DUMPKEYS_CHARSET}"
 		@/usr/bin/kbd_mode@ -u
@@ -132,8 +127,7 @@ start()
 		termencoding='\033(K'
 	fi
 
-	for n in `@seq@ 1 11`
-	do
+	for n in `@seq@ 1 11`; do
 		printf "${termencoding}" >${ttydev}${n}
 	done
 #endd

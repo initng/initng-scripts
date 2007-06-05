@@ -1,14 +1,15 @@
+# SERVICE: system/sraid
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service system/sraid && {
+	iregister service
 		iset need = system/initial system/mountroot
 		iset critical
 		iexec start
-	}
+	idone
 }
 
 start()
@@ -21,20 +22,16 @@ start()
 	retval=0
 
 	# If /etc/mdadm.conf exists, grab all the RAID devices from it
-	if [ -f /etc/mdadm.conf ]
-	then
-		while read a b drop
-		do
+	if [ -f /etc/mdadm.conf ]; then
+		while read a b drop; do
 			[ "${a}" = "ARRAY" ] &&
 			mdadm_devices="${mdadm_devices} ${b}"
 		done < /etc/mdadm.conf
 	fi
 
 	# If /etc/raidtab exists, grab all the RAID devices from it
-	if [ -f /etc/raidtab ]
-	then
-		while read a b drop
-		do
+	if [ -f /etc/raidtab ]; then
+		while read a b drop; do
 			[ "${a}" = "raiddev" ] &&
 			raidtools_devices="${raidtools_devices} ${b}"
 		done < /etc/raidtab
@@ -42,12 +39,10 @@ start()
 
 	echo "Starting up RAID devices ... "
 	rc=0
-	for i in ${mdadm_devices}
-	do
+	for i in ${mdadm_devices}; do
 		raiddev=${i##*/}
 		raidstat=`@egrep@ "^${raiddev} : active" /proc/mdstat`
-		if [ -z "${raidstat}" ]
-		then
+		if [ -z "${raidstat}" ]; then
 			# First scan the /etc/fstab for the "noauto"-flag
 			# for this device. If found, skip the initialization
 			# for it to avoid dropping to a shell on errors.
@@ -61,21 +56,18 @@ start()
 			echo "  Trying ${raiddev}..."
 			raiddev=""
 
-			if [ "${noauto}" -gt 0 ]
-			then
+			if [ "${noauto}" -gt 0 ]; then
 				retval=0
 				raiddev=" (skipped)"
 			fi
 
-			if [ "${retval}" -gt 0 -a -x "@/sbin/mdadm@" ]
-			then
+			if [ "${retval}" -gt 0 -a -x "@/sbin/mdadm@" ]; then
 				@/sbin/mdadm@ -As "${i}" >/dev/null 2>&1
 				retval=${?}
 			fi
 			echo "${raiddev}"
 
-			if [ "${retval}" -gt 0 ]
-			then
+			if [ "${retval}" -gt 0 ]; then
 				rc=1
 				echo "Raid is up..."
 			else
@@ -84,12 +76,10 @@ start()
 		fi
 	done
 
-	for i in ${raidtools_devices}
-	do
+	for i in ${raidtools_devices}; do
 		raiddev=${i##*/}
 		raidstat=`@egrep@ "^${raiddev} : active" /proc/mdstat`
-		if [ -z "${raidstat}" ]
-		then
+		if [ -z "${raidstat}" ]; then
 			# First scan the /etc/fstab for the "noauto"-flag
 			# for this device. If found, skip the initialization
 			# for it to avoid dropping to a shell on errors.
@@ -103,34 +93,29 @@ start()
 			echo "  Trying ${raiddev}..."
 			raiddev=""
 
-			if [ "${noauto}" -gt 0 ]
-			then
+			if [ "${noauto}" -gt 0 ]; then
 				retval=0
 				raiddev=" (skipped)"
 			fi
 
-			if [ "${retval}" -gt 0 -a -x @/sbin/raidstart@ ]
-			then
+			if [ "${retval}" -gt 0 -a -x @/sbin/raidstart@ ]; then
 				@/sbin/raidstart@ "${i}"
 				retval=${?}
 			fi
 
-			if [ "${retval}" -gt 0 -a -x @/sbin/raid0run@ ]
-			then
+			if [ "${retval}" -gt 0 -a -x @/sbin/raid0run@ ]; then
 				@/sbin/raid0run@ "${i}"
 				retval=${?}
 			fi
 
-			if [ "${retval}" -gt 0 -a -x @/sbin/raidadd@ -a -x @/sbin/raidrun@ ]
-			then
+			if [ "${retval}" -gt 0 -a -x @/sbin/raidadd@ -a -x @/sbin/raidrun@ ]; then
 				@/sbin/raidadd@ "${i}"
 				@/sbin/raidrun@ "${i}"
 				retval=${?}
 			fi
 
 			echo "${raiddev}"
-			if [ "${retval}" -gt 0 ]
-			then
+			if [ "${retval}" -gt 0 ]; then
 				rc=1
 				echo "Raid is up ..."
 			else
@@ -140,8 +125,7 @@ start()
 	done
 
 	# A non-zero return means there were problems.
-	if [ "${rc}" -gt 0 ]
-	then
+	if [ "${rc}" -gt 0 ]; then
 		echo
 		echo "An error occurred during the RAID startup"
 		echo "Dropping you to a shell; the system will reboot"

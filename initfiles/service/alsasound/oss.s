@@ -8,16 +8,15 @@ alsascrdir="/etc/alsa.d"
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
 		iset use = system/coldplug system/modules/depmod \
 		           system/modules
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	for mod in `@/sbin/modprobe@ -l | @grep@ "snd.*oss" | @sed@ -e "s:\/.*\/::" -e "s:\..*::"`; do
 		@/sbin/modprobe@ ${mod} &

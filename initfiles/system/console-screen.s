@@ -1,3 +1,4 @@
+# SERVICE: system/console-screen
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -8,21 +9,19 @@
 
 setup()
 {
-	ireg service system/console-screen && {
+	iregister service
 		iset need = system/initial system/keymaps \
 		            system/mountfs/essential
 		iexec start
-	}
+	idone
 }
 
 start()
 {
 	pidof usplash > /dev/null && exit 0
 
-	if [ -d /etc/console-tools/config.d ]
-	then
-		for i in `@run-parts@ --list /etc/console-tools/config.d`
-		do
+	if [ -d /etc/console-tools/config.d ]; then
+		for i in `@run-parts@ --list /etc/console-tools/config.d`; do
 		   . ${i}
 		done
 	fi
@@ -31,8 +30,7 @@ start()
 	[ -x "@/usr/bin/consolechars@" ] || exit 0
 
 	reset_vga_palette () {
-		if [ -f /proc/fb ]
-		then
+		if [ -f /proc/fb ]; then
 			# They have a framebuffer device.
 			# That means we have work to do...
 			echo -n "]R"
@@ -42,11 +40,9 @@ start()
 	VT="no"
 	# If we can't access the console, quit
 	CONSOLE_TYPE=`@fgconsole@ 2>/dev/null` || exit 0
-	if [ ! "${CONSOLE_TYPE}" = "serial" ]
-	then
+	if [ ! "${CONSOLE_TYPE}" = "serial" ]; then
 		@readlink@ /proc/self/fd/0 | @grep@ -q -e /dev/vc -e '/dev/tty[^p]' -e /dev/console
-		if [ ${?} -eq 0 ]
-		then
+		if [ ${?} -eq 0 ]; then
 			VT="yes"
 			reset_vga_palette
 		fi
@@ -55,15 +51,13 @@ start()
 	[ "${VT}" = "no" ] && exit 0
 
 	# start vcstime
-	if [ "${DO_VCSTIME}" = "yes" -a -x @/usr/sbin/vcstime@ ]
-	then
+	if [ "${DO_VCSTIME}" = "yes" -a -x @/usr/sbin/vcstime@ ]; then
 		echo Starting clock on text console: `basename @/usr/sbin/vcstime@` ...
 		@/usr/sbin/vcstime@ &
 	fi
 
 	# Global default font+sfm
-	if [ "${SCREEN_FONT}" ]
-	then
+	if [ "${SCREEN_FONT}" ]; then
 		echo "Setting up general console font ... "
 		SCREEN_FONT="-f ${SCREEN_FONT}"
 
@@ -73,8 +67,7 @@ start()
 		# Set for the first 6 VCs (as they are allocated in /etc/inittab)
 		NUM_CONSOLES=`@fgconsole@ --next-available`
 		NUM_CONSOLES=`@expr@ ${NUM_CONSOLES} - 1`
-		for vc in `@seq@ 0 ${NUM_CONSOLES}`
-		do
+		for vc in `@seq@ 0 ${NUM_CONSOLES}`; do
 			@/usr/bin/consolechars@ --tty=/dev/tty${vc} ${SETFONT_OPT} ${SCREEN_FONT} ${SCREEN_FONT_MAP} || {
 				echo " failed."
 				break
@@ -84,11 +77,9 @@ start()
 
 	# Per-VC font+sfm
 	PERVC_FONTS="`set | @grep@ "^SCREEN_FONT_vc[0-9]*="  | tr -d \' `"
-	if [ "${PERVC_FONTS}"  ]
-	then
+	if [ "${PERVC_FONTS}" ]; then
 		echo "Setting up per-VC fonts ... "
-		for font in ${PERVC_FONTS}
-		do
+		for font in ${PERVC_FONTS}; do
 			# extract VC and FONTNAME info from variable setting
 			vc=`echo ${font} | cut -b15- | cut -d= -f1`
 			eval font=\${SCREEN_FONT_vc${vc}}
@@ -103,23 +94,19 @@ start()
 	fi
 
 	# Global ACM
-	if [ "${APP_CHARSET_MAP}" ]
-	then
+	if [ "${APP_CHARSET_MAP}" ]; then
 		echo "Setting up general ACM ... "
 
-		for vc in `@seq@ 0 ${NUM_CONSOLES}`
-		do
+		for vc in `@seq@ 0 ${NUM_CONSOLES}`; do
 			@/usr/bin/charset@ --tty=/dev/tty${vc} G0 ${APP_CHARSET_MAP}
 		done
 	fi
 
 	# Per-VC ACMs
 	PERVC_ACMS="`set | @grep@ "^APP_CHARSET_MAP_vc[0-9]*="  | tr -d \' `"
-	if [ "${PERVC_ACMS}" ]
-	then
+	if [ "${PERVC_ACMS}" ]; then
 		echo "Setting up per-VC ACM's ... "
-		for acm in ${PERVC_ACMS}
-		do
+		for acm in ${PERVC_ACMS}; do
 			# extract VC and FONTNAME info from variable setting
 			vc=`echo ${acm} | cut -b19- | cut -d= -f1`
 			eval acm=\${APP_CHARSET_MAP_vc${vc}}
@@ -134,17 +121,14 @@ start()
 	[ -f /etc/environment ] && LOCALE_FILE=/etc/environment
 	# If we have the newer /etc/default/locale file, use that instead
 	[ -f /etc/default/locale ] && LOCALE_FILE=/etc/default/locale
-	if [ ! -z ${LOCALE_FILE} ]
-	then
-		for var in LANG LC_ALL LC_CTYPE
-		do
+	if [ ! -z ${LOCALE_FILE} ]; then
+		for var in LANG LC_ALL LC_CTYPE; do
 			value=`@egrep@ "^[^#]*${var}=" ${LOCALE_FILE} | @tail@ -n1 | @cut@ -d= -f2`
 			eval ${var}=${value}
 		done
 	fi
 	CHARMAP=`LANG=${LANG} LC_ALL=${LC_ALL} LC_CTYPE=${LC_CTYPE} @locale@ charmap`
-	if [ "${CHARMAP}" = "UTF-8" ]
-	then
+	if [ "${CHARMAP}" = "UTF-8" ]; then
 		@/usr/bin/unicode_start@ 2>/dev/null || true
 	else
 		@/usr/bin/unicode_stop@ 2>/dev/null || true
@@ -164,21 +148,17 @@ start()
 	[ -n "${KBDRATE_ARGS}" ] && @kbdrate@ -s ${KBDRATE_ARGS}
 
 	# Inform gpm if present, of potential changes.
-	if [ -f /var/run/gpm.pid ]
-	then
+	if [ -f /var/run/gpm.pid ]; then
 		@kill@ -WINCH `@cat@ /var/run/gpm.pid` 2> /dev/null
 	fi
 
 	# Allow user to remap keys on the console
-	if [ -r /etc/console-tools/remap ]
-	then
+	if [ -r /etc/console-tools/remap ]; then
 		@dumpkeys@ < /dev/tty1 |@sed@ -f /etc/console-tools/remap |@loadkeys@ --quiet
 	fi
 	# Set LEDS here
-	if [ "${LEDS}" != "" ]
-	then
-		for i in `@seq@ 1 12`
-		do
+	if [ "${LEDS}" != "" ]; then
+		for i in `@seq@ 1 12`; do
 			@setleds@ -D ${LEDS} < /dev/tty${i}
 		done
 	fi

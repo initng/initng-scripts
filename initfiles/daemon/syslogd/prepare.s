@@ -5,14 +5,13 @@
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	if [ ! -e /dev/xconsole ]; then
 		mknod -m 640 /dev/xconsole p

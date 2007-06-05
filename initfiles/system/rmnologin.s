@@ -1,13 +1,14 @@
+# SERVICE: system/rmnologin
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service system/rmnologin && {
+	iregister service
 		iset need = system/mountfs/essential
 		iexec start
-	}
+	idone
 }
 
 start()

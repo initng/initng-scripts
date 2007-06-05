@@ -1,3 +1,4 @@
+# SERVICE: system/consolefont
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -18,14 +19,14 @@ RC_TTY_NUMBER="11"
 
 setup()
 {
-	ireg service system/consolefont && {
+	iregister service
 		iset need = system/bootmisc system/keymaps
 #ifd fedora pingwinek
 		iset exec start = "/sbin/setsysfont"
 #elsed
 		iexec start
 #endd
-	}
+	idone
 }
 
 #ifd fedora pingwinek
@@ -33,10 +34,8 @@ setup()
 start()
 {
 #ifd debian
-	if [ -d /etc/console-tools/config.d ]
-	then
-		for i in `@run-parts@ --list /etc/console-tools/config.d`
-		do
+	if [ -d /etc/console-tools/config.d ]; then
+		for i in `@run-parts@ --list /etc/console-tools/config.d`; do
 			. ${i}
 		done
 	fi
@@ -45,19 +44,16 @@ start()
 	[ -n "${SYSFONT}" ] && CONSOLEFONT="${SYSFONT}"
 	[ -n "${FONT}" ] && CONSOLEFONT="${FONT}"
 
-	if [ -z "${CONSOLEFONT}" ]
-	then
+	if [ -z "${CONSOLEFONT}" ]; then
 		echo "Using the default console font"
 		exit 0
 	fi
 
 	retval=1
 
-	if [ -x @/bin/setfont@ ]
-	then
+	if [ -x @/bin/setfont@ ]; then
 		SETFONT=@/bin/setfont@
-	elif [ -x @/usr/bin/consolechars@ ]
-	then
+	elif [ -x @/usr/bin/consolechars@ ]; then
 		SETFONT=@/usr/bin/consolechars@
 		CONSOLEFONT="-f '${CONSOLEFONT}'"
 	else
@@ -66,25 +62,21 @@ start()
 	fi
 	# Get additional parameters
 	[ -n "${CONSOLETRANSLATION}" ] && param="-m ${CONSOLETRANSLATION}"
-	if [ -n "${SYSFONTACM}" ]
-	then
+	if [ -n "${SYSFONTACM}" ]; then
 		[ -f "/lib/kbd/consoletrans/${SYSFONTACM}_to_uni.trans" ] || SYSFONTACM=`echo ${SYSFONTACM} | @sed@ "s|iso0|8859-|g;s|iso|8859-|g"`
 		ARGS="${ARGS} -m ${SYSFONTACM}"
 	fi
 
 	# Set the console font
 	# We patched setfont to have --tty support ...
-	if ${SETFONT} --help 2>&1 | @grep@ -qe --tty || ${SETFONT} --help 2>&1 | @grep@ -qe -C
-	then
-		if ${SETFONT} --help 2>&1 | @grep@ -qe --tty
-		then
+	if ${SETFONT} --help 2>&1 | @grep@ -qe --tty || ${SETFONT} --help 2>&1 | @grep@ -qe -C; then
+		if ${SETFONT} --help 2>&1 | @grep@ -qe --tty; then
 			sf_param="--tty="
 		else
 			sf_param="-C "
 		fi
 
-		for x in `@seq@ 1 ${RC_TTY_NUMBER}`
-		do
+		for x in `@seq@ 1 ${RC_TTY_NUMBER}`; do
 			${SETFONT} ${CONSOLEFONT} ${param} \
 			${sf_param}/dev/tty${x} >/dev/null
 			retval=0

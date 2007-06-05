@@ -1,3 +1,4 @@
+# SERVICE: system/checkfs
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -9,12 +10,12 @@ FSCK_LOGFILE="/var/log/fsck/checkfs"
 
 setup()
 {
-	ireg service system/checkfs && {
+	iregister service
 		iset need = system/initial system/mountroot
 		iset use = system/sraid system/hdparm
 		iset never_kill
 		iexec start
-	}
+	idone
 }
 
 start()
@@ -33,8 +34,7 @@ start()
 
 	# See if we're on AC Power
 	# If not, we're not gonna run our check
-	if [ -x "@on_ac_power@" ]
-	then
+	if [ -x "@on_ac_power@" ]; then
 		@on_ac_power@ >/dev/null 2>&1
 		[ ${?} -eq 1 ] && BAT=yes
 	fi
@@ -42,8 +42,7 @@ start()
 	#
 	# Check the rest of the file systems.
 	#
-	if ! [ -f /fastboot -a -n "${BAT}" -a "${FSCKTYPES}" = "none" ]
-	then
+	if ! [ -f /fastboot -a -n "${BAT}" -a "${FSCKTYPES}" = "none" ]; then
 		force=""
 		[ -f /forcefsck ] && force="-f"
 		fix="-a"
@@ -54,20 +53,17 @@ start()
 		FSCKTYPES_OPT=""
 		[ "${FSCKTYPES}" ] && FSCKTYPES_OPT="-t ${FSCKTYPES}"
 
-		if [ "${VERBOSE}" = no ]
-		then
+		if [ "${VERBOSE}" = no ]; then
 			echo "Checking file systems"
 			@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -T -R -A ${fix} ${force} ${FSCKTYPES_OPT}
 			FSCKCODE=${?}
 
-			if [ ${FSCKCODE} -gt 1 ]
-			then
+			if [ ${FSCKCODE} -gt 1 ]; then
 				echo 1 "code ${FSCKCODE}"
 				handle_failed_fsck
 			fi
 		else
-			if [ "${FSCKTYPES}" ]
-			then
+			if [ "${FSCKTYPES}" ]; then
 				echo "Will now check all file systems of types ${FSCKTYPES}"
 			else
 				echo "Will now check all file systems"
@@ -76,8 +72,7 @@ start()
 			@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -V -R -A ${fix} ${force} ${FSCKTYPES_OPT}
 			FSCKCODE=${?}
 
-			if [ ${FSCKCODE} -gt 1 ]
-			then
+			if [ ${FSCKCODE} -gt 1 ]; then
 				handle_failed_fsck
 			else
 				echo "Done checking file systems."
@@ -88,12 +83,10 @@ start()
 
 	@rm@ -f /fastboot /forcefsck
 #elsed
-	if [ -f /fastboot ]
-	then
+	if [ -f /fastboot ]; then
 		@rm@ -f /fastboot
 	else
-		if [ -f /forcefsck ]
-		then
+		if [ -f /forcefsck ]; then
 			echo "A full fsck has been forced"
 			@logsave@ /dev/null @fsck@ -C -R -A -a -f || echo "fsck error: ${?}" >&2
 			@rm@ -f /forcefsck

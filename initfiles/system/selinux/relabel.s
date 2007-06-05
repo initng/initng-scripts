@@ -1,32 +1,20 @@
+# SERVICE: system/selinux/relabel
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service system/selinux/dev && {
-		iset need = system/initial/mountvirtfs
-		iexec start = dev_start
-		return 0
-	}
-
-	ireg service system/selinux/relabel && {
+	iregister service
 		iset need = system/mountroot
-		iexec start = relabel_start
-	}
+		iexec start
+	idone
 }
 
-dev_start()
-{
-	[ -x @/sbin/restorecon@ ] && @fgrep@ -q " /dev " /proc/mounts &&
-		@/sbin/restorecon@ -R /dev 2>/dev/null
-}
-
-relabel_start()
+start()
 {
 	check_selinux() {
-		while read dev mp fs stuff
-		do
+		while read dev mp fs stuff; do
 			[ "$fs" = "selinuxfs" ] && echo "$mp"
 		done
 	}
@@ -39,10 +27,8 @@ relabel_start()
 	selinuxfs="/selinux"
 	SELINUX=
 
-	if [ -n "${selinuxfs}" -a "`@cat@ /proc/self/attr/current`" != "kernel" ]
-	then
-		if [ -r ${selinuxfs}/enforce ]
-		then
+	if [ -n "${selinuxfs}" -a "`@cat@ /proc/self/attr/current`" != "kernel" ]; then
+		if [ -r ${selinuxfs}/enforce ]; then
 			SELINUX=`@cat@ ${selinuxfs}/enforce`
 		else
 			# assume enforcing if you can't read it
@@ -65,8 +51,7 @@ relabel_start()
 	}
 
 	# Check to see if a full relabel is needed
-	if [ -n "${SELINUX}" ]
-	then
+	if [ -n "${SELINUX}" ]; then
 		[ -f /.autorelabel ] || echo "${cmdline}" | @grep@ -q autorelabel &&
 			relabel_selinux
 	else

@@ -8,16 +8,15 @@ alsascrdir="/etc/alsa.d"
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
 		iset use = system/coldplug system/modules/depmod \
 		           system/modules
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	# List of drivers for each card.
 	for mod in `@/sbin/modprobe@ -c | @awk@ '$1 == "alias" && $2 ~ /^snd-card-[[:digit:]]$/ { print $2 } {}'`; do

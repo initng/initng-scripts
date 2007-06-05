@@ -1,3 +1,4 @@
+# SERVICE: system/urandom
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -12,11 +13,11 @@ SAVEDFILE="/var/run/random-seed"
 
 setup()
 {
-	ireg service system/urandom && {
+	iregister service
 		iset need = system/bootmisc
 		iexec start
 		iexec stop
-	}
+	idone
 }
 
 start()

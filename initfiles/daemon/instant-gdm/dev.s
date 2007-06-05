@@ -5,14 +5,13 @@
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	[ -e /sys/class/input/mice/dev ] || exit 0
 	@mkdir@ -p /dev/input

@@ -1,3 +1,4 @@
+# SERVICE: system/ifupdown-debian
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -8,11 +9,11 @@ IFSTATE="/etc/network/run/ifstate"
 
 setup()
 {
-	ireg service system/ifupdown-debian && {
+	iregister service
 		iset need = system/bootmisc
 		iexec start
 		iexec stop
-	}
+	idone
 }
 
 start()
@@ -31,28 +32,23 @@ start()
 		dest="${1%/}"
 		extras=""
 
-		while [ "${dest}" != "" ]
-		do
-			if [ -d "${dest}" ]
-			then
+		while [ "${dest}" != "" ]; do
+			if [ -d "${dest}" ]; then
 				cd "${dest}"
 				dest=`@/bin/pwd@`
 				break
 			fi
 
-			if [ -L "${dest}" ]
-			then
+			if [ -L "${dest}" ]; then
 				d2=`readlink "${dest}"`
-				if [ "${d2#/}" = "${d2}" ]
-				then
+				if [ "${d2#/}" = "${d2}" ]; then
 					dest="${dest%/*}/${d2}"
 				else
 					dest="${d2}"
 				fi
 			fi
 
-			while [ ! -e "${dest}" ]
-			do
+			while [ ! -e "${dest}" ]; do
 				extras="${dest##*/}/${extras}"
 				[ "${extras%%/*}" = ".." ] && return 1
 				destx="${dest%/*}"
@@ -67,17 +63,14 @@ start()
 	# if /etc/network/run is a symlink to a directory that doesn't exist,
 	# create it.
 
-	if [ -L "${RUN_DIR}" -a ! -d "${RUN_DIR}" ]
-	then
+	if [ -L "${RUN_DIR}" -a ! -d "${RUN_DIR}" ]; then
 		runmkdir="`myreadlink "${RUN_DIR}"`"
-		if [ ! "${runmkdir}" ]
-		then
+		if [ ! "${runmkdir}" ]; then
 			echo "failed."
 			report_err "Cannot create target of /etc/network/run"
 			exit 1
 		fi
-		if ! @mkdir@ -p "${runmkdir}"
-		then
+		if ! @mkdir@ -p "${runmkdir}"; then
 			echo "failed."
 			report_err "Failure creating directory ${runmkdir}"
 			exit 1
@@ -88,8 +81,7 @@ start()
 	# Doing this also signals that ifupdown is available for use
 
 	# We can always clean here, because debian's network script depends on this, it HAS to run first.
-	if ! /bin/true >${IFSTATE}
-	then
+	if ! /bin/true >${IFSTATE}; then
 		echo "failed."
 		report_err "Failure initializing ${IFSTATE}"
 		exit 1
@@ -102,14 +94,12 @@ stop()
 {
 	echo -n "Cleaning up ifupdown..."
 
-	if [ -f "${IFSTATE}" -a ! -L "${IFSTATE}" ]
-	then
+	if [ -f "${IFSTATE}" -a ! -L "${IFSTATE}" ]; then
 		@rm@ -f "${IFSTATE}"
 		exit 0
 	fi
 
-	if [ -f "${IFSTATE}" ]
-	then
+	if [ -f "${IFSTATE}" ]; then
 		# This is kinda bad :(
 		>${IFSTATE}
 	fi

@@ -5,10 +5,10 @@
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/initial
 		iset just_before = daemon/gdm daemon/kdm daemon/xdm \
 		                   daemon/wdm daemon/entranced
-		iset exec task = "${INITNG_PLUGIN_DIR}/scripts/splash/fbsplash.sh stop"
+		iset exec start = "${INITNG_PLUGIN_DIR}/scripts/splash/fbsplash.sh stop"
 	idone
 }

@@ -5,13 +5,12 @@
 
 setup()
 {
-	iregister task
-		iset once
-		iexec task
+	iregister service
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	x_vt=""
 	for i in `@seq@ 0 10`; do

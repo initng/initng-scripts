@@ -1,13 +1,14 @@
+# SERVICE: system/initrd-tools
 # NAME:
 # DESCRIPTION:
 # WWW:
 
 setup()
 {
-	ireg service system/initrd-tools && {
+	iregister service
 		iset need = system/initial
 		iexec start
-	}
+	idone
 }
 
 start()
@@ -16,25 +17,21 @@ start()
 	[ "${KEEPINITRD}" = yes ] && exit
 	command -v blockdev >/dev/null 2>&1 || exit 0
 
-	if ! [ -f /proc/mounts ]
-	then
+	if ! [ -f /proc/mounts ]; then
 		mount -n -t proc proc /proc || exit 1
 		trap 'umount -n /proc' EXIT
 	fi
 
 	@grep@ -q '^[^ ]* /initrd ' /proc/mounts || exit 0
 
-	if [ -c /initrd/dev/.devfsd ]
-	then
+	if [ -c /initrd/dev/.devfsd ]; then
 		umount /initrd/dev || exit 1
 	fi
 	umount /initrd || exit 1
 
-	if [ -b /dev/ram0 ]
-	then
+	if [ -b /dev/ram0 ]; then
 		blockdev --flushbufs /dev/ram0
-	elif [ -b /dev/rd/0 ]
-	then
+	elif [ -b /dev/rd/0 ]; then
 		blockdev --flushbufs /dev/rd/0
 	else
 		echo "Cannot find initrd device" >&2

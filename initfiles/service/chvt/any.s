@@ -5,10 +5,9 @@
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc "virtual/getty/${NAME}"
-		iset once
 		iset last
-		iset exec task = "@chvt@ ${NAME}"
+		iset exec start = "@chvt@ ${NAME}"
 	idone
 }

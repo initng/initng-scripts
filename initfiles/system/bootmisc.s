@@ -1,3 +1,4 @@
+# SERVICE: system/bootmisc
 # NAME:
 # DESCRIPTION:
 # WWW:
@@ -8,11 +9,11 @@
 
 setup()
 {
-	ireg service system/bootmisc && {
+	iregister service
 		iset need = system/initial system/mountfs/essential
 		iset use = system/hdparm system/swap system/clock
 		iexec start
-	}
+	idone
 }
 
 start()
@@ -22,10 +23,8 @@ start()
 		echo "System bootup in progress - please wait" > /etc/nologin &&
 		@cp@ /etc/nologin /etc/nologin.boot 2>&1 >/dev/null &
 
-	if [ -x @/sbin/env-update.sh@ ]
-	then
-		if [ /etc/env.d -nt /etc/profile.env ]
-		then
+	if [ -x @/sbin/env-update.sh@ ]; then
+		if [ /etc/env.d -nt /etc/profile.env ]; then
 			echo "Updating environment ..."
 			@/sbin/env-update.sh@ -u >/dev/null
 		fi

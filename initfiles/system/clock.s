@@ -1,3 +1,4 @@
+# SERVICE: system/clock
 # NAME: Clock
 # DESCRIPTION: Syncs the hardware clock and system time at startup and shutdown
 
@@ -11,12 +12,12 @@
 
 setup()
 {
-	ireg service system/clock && {
+	iregister service
 		iset need = system/initial
 		iset use = system/modules
 		iexec start
 		iexec stop
-	}
+	idone
 }
 
 setupopts() {

@@ -5,14 +5,13 @@
 
 setup()
 {
-	iregister task
+	iregister service
 		iset need = system/bootmisc system/modules/tun
-		iset once
-		iexec task
+		iexec start
 	idone
 }
 
-task()
+start()
 {
 	[ -h /dev/net/tun -a -c /dev/misc/net/tun ] || exit 0
 
