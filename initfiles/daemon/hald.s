@@ -17,9 +17,9 @@ setup()
 		iset need = system/bootmisc daemon/dbus
 		iset use = daemon/acpid
 		iset stdall = "/dev/null"
-		iset forks
 #ifd debian gentoo
 		iset pid_file = "${PIDDIR}/hald.pid"
+		iset forks
 #endd
 		iexec daemon
 	idone
@@ -29,8 +29,7 @@ setup()
 daemon()
 {
 #ifd debian
-	if [ ! -d ${PIDDIR} ]
-	then
+	if [ ! -d ${PIDDIR} ]; then
 		@mkdir@ -p ${PIDDIR}
 		chown ${DAEMONUSER}:${DAEMONUSER} ${PIDDIR}
 	fi
@@ -49,19 +48,7 @@ daemon()
 	killall hald
 	killall -9 hald
 
-	# Clear pid file.
-	@rm@ /var/run/hal/pid
-
-	# We have to probe what version it is, they use different arguments.
-	if @/usr/sbin/hald@ --help 2>&1 | @grep@ -- --retain-privileges
-	then
-		exec @/usr/sbin/hald@ --daemon=no --retain-privileges
-	elif @/usr/sbin/hald@ --help 2>&1 | @grep@ -- --drop-privileges
-	then
-		exec @/usr/sbin/hald@ --daemon=no --drop-privileges
-	else
-		exec @/usr/sbin/hald@ --daemon=no
-	fi
+	exec @/usr/sbin/hald@ --daemon=no
 	exit 1
 #endd
 }

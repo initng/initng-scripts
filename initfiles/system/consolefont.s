@@ -7,6 +7,8 @@ RC_TTY_NUMBER="11"
 #ifd fedora pingwinek mandriva
 #elsed lfs
 [ -f /etc/sysconfig/console ] && . /etc/sysconfig/console
+#elsed sourcemage
+[ -f /etc/sysconfig/keymap ] && . /etc/sysconfig/keymap
 #elsed debian ubuntu
 [ -f /etc/console-tools/config ] && . /etc/console-tools/config
 #elsed enlisy

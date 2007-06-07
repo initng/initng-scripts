@@ -45,10 +45,10 @@ migrate=
 while [ ${#} -gt 0 ]; do
 	case "${1}" in
 	--all)
-		all=true
+		all=1
 		;;
 	--overwrite)
-		overwrite=true
+		overwrite=1
 		;;
 	--dist)
 		shift
@@ -85,30 +85,28 @@ while [ ${#} -gt 0 ]; do
 done
 
 [ "${CONFDIR}" ] || CONFDIR="${DESTDIR}/etc/initng"
-mkdir -p "${CONFDIR}/runlevel"
 
 if [ -n "${migrate}" ]; then
-	RUNLEVELDIR="${CONFDIR}/runlevel"
-
-	if [ -e "${RUNLEVELDIR}/system.virtual" ]; then
-		CONFDIR="${RUNLEVELDIR}"
-	else
-		install -d -m 755 -o root -g root "${RUNLEVELDIR}"
-	fi
-
-	[ -e "${CONFDIR}/system.virtual" ] || exit 1
+	[ -d "${CONFDIR}/runlevel" ] && mv -f "${CONFDIR}/runlevel/* ${CONFDIR}"
 
 	for RUNLEVEL_FILE in "${CONFDIR}"/*.{runlevel,virtual}; do
 		cp "${RUNLEVEL_FILE}"{,.old}
 		while read SERVICE; do
-			if [ -e "${CONFDIR}/${SERVICE}.virtual" -o -e "${CONFDIR}/${SERVICE}.runlevel" ]; then
-				SERVICE="runlevel/${SERVICE}"
+			SERVICE="${SERVICE#runlevel/}"
+			if [ -e "${CONFDIR}/${SERVICE}.virtual"]; then
+				SERVICE="${SERVICE}.virtual"
+			elif [ -e "${CONFDIR}/${SERVICE}.runlevel" ]; then
+				SERVICE="${SERVICE}.runlevel"
 			elif [ ! -e "${CONFDIR}/${SERVICE}" ]; then
 				NSERVICE="$(find "${CONFDIR}" -name $(basename "${SERVICE}") | sed -r "s:^${CONFDIR}/(.*)\$:\1:; s:\s::g")"
-				[ -n "${NSERVICE}" ] && SERVICE="${NSERVICE}"
+				if [ -n "${NSERVICE}" ]; then
+					SERVICE="${NSERVICE}"
+				else
+					SERVICE="#${SERVICE} (not found)"
+				fi
 			fi
 			echo "${SERVICE}"
-		done < "${RUNLEVEL_FILE}.old" > "${RUNLEVELDIR}/$(basename "${RUNLEVEL_FILE}")"
+		done < "${RUNLEVEL_FILE}.old" > "${RUNLEVEL_FILE}"
 	done
 	exit 0
 fi
@@ -128,8 +126,8 @@ for l; do
 done
 
 for rl in ${runlevels}; do
-	write_runlevel ${rl} > "${CONFDIR}/${rl%.*}"
-	chmod 755 "${CONFDIR}/${rl%.*}"
+	write_runlevel ${rl} > "${CONFDIR}/${rl}"
+	chmod 755 "${CONFDIR}/${rl}"
 done
 
 echo "Done generating files."
