@@ -1,20 +1,3 @@
-SUBDIRS(
-	agetty
-	coldplug
-	fgetty
-	getty
-	initial
-	mingetty
-	modules
-	mountfs
-	mountroot
-	nvidia-glx
-	qingy
-	selinux
-	udev
-)
-
-
 FILE(GLOB S_FILES "*.s")
 
 PROCESS_SFILES(SERVICE_FILES ${S_FILES})
