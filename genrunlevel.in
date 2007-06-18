@@ -122,11 +122,11 @@ fi
 [ "${all}" ] && set -- $(get_runlevels)
 
 for l; do
-	create_list ${l}
+	create_list "${l}"
 done
 
 for rl in ${runlevels}; do
-	write_runlevel ${rl} > "${CONFDIR}/${rl}"
+	write_runlevel "${rl}" > "${CONFDIR}/${rl}"
 	chmod 755 "${CONFDIR}/${rl}"
 done
 

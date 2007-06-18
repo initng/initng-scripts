@@ -15,7 +15,7 @@ setup()
 #endd
 		iset use = system/modules system/coldplug daemon/cardmgr
 		iset provide = "virtual/net/${NAME}"
-		[ "${NAME}" != "lo" ] && iset provide = virtual/net
+		iset provide = virtual/net
 #ifd gentoo
 		iset exec start = "${INITNG_PLUGIN_DIR}/scripts/net/interface ${NAME} start"
 		iset exec stop = "${INITNG_PLUGIN_DIR}/scripts/net/interface ${NAME} stop"
