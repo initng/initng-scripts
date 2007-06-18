@@ -2,7 +2,7 @@
 
 function gen_runlevel_common
 {
-	if [ "${1}" = "runlevel/system.virtual" ]; then
+	if [ "${1}" = "system.virtual" ]; then
 		add_service "${1}" \
 			system/udev \
 			system/clock \
@@ -42,7 +42,7 @@ function gen_runlevel_common
 			add_service "${1}" service/iptables
 		fi
 	else
-		add_service "${1}" runlevel/system
+		add_service "${1}" system.virtual
 
 		# sshd
 		check_for ssh && add_service "${1}" daemon/sshd

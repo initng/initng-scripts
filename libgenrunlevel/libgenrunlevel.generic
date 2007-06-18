@@ -2,12 +2,12 @@
 
 function get_runlevels
 {
-	echo runlevel/{system.virtual,default.runlevel}
+	echo system.virtual default.runlevel
 }
 
 function gen_runlevel
 {
-	if [ "${1}" = "runlevel/system.virtual" ]; then
+	if [ "${1}" = "system.virtual" ]; then
 		add_service "${1}" system/consolefont
 		copy_sysvinit_services system ${default_sysvinit_runlevel}
 	fi

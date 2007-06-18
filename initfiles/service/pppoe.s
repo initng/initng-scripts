@@ -6,7 +6,7 @@
 setup()
 {
 	iregister service
-		iset need = system/bootmisc system/modules system/hostname
+		iset need = system/bootmisc system/hostname
 		iset use = system/modules system/coldplug
 		iset provide = virtual/net
 		iset stdout = "/dev/null"

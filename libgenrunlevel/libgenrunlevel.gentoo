@@ -11,14 +11,14 @@ function copy_gentoo_services
 function get_runlevels
 {
 	echo $({
-		ls --color=none /etc/runlevels | sed -e 's@^@runlevel/@; s/$/.runlevel/'
+		ls --color=none /etc/runlevels | sed -e 's/$/.runlevel/'
 		echo system.virtual
 	} | grep -v boot.runlevel | sort -u)
 }
 
 function gen_runlevel
 {
-	if [ "${1}" = "runlevel/system.virtual" ]; then
+	if [ "${1}" = "system.virtual" ]; then
 		add_service "${1}" system/consolefont
 		copy_gentoo_services system boot
 	fi
