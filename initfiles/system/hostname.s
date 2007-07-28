@@ -6,7 +6,7 @@
 #elsed
 HOSTNAME="localhost"
 #ifd fedora mandriva
-. /etc/sysconfig/network
+[ -f /etc/sysconfig/network ] && . /etc/sysconfig/network
 #elsed
 [ -f /etc/conf.d/hostname ] && . /etc/conf.d/hostname
 #endd
@@ -23,7 +23,7 @@ setup()
 #ifd debian
 start()
 {
-	[ -f /etc/hostname ] && HOSTNAME="$(</etc/hostname)"
+	[ -f /etc/hostname ] && HOSTNAME="$(@cat@ /etc/hostname)"
 
 	if [ -z "${HOSTNAME}" ]; then
 		# Keep current name if /etc/hostname is missing.
@@ -43,7 +43,7 @@ start()
 	# isn't setup, then we shouldn't go reseting the configuration #38172.
 	if [ -n "${HOSTNAME}" ]; then
 		@/bin/true@
-#ifd gentoo fedora
+#ifd gentoo fedora sourcemage
 	elif [ -f /etc/hostname ]; then
 		HOSTNAME=$(@cat@ /etc/hostname)
 #endd

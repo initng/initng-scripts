@@ -1,0 +1,24 @@
+#!/bin/sh
+export PATH="@LIB_INSTALL_DIR@/ibin:$PATH"
+
+find_file() {
+	FILE="@ETCDIR@/initng/$SERVICE.$1"
+	[ -r "$FILE"  ] || return 1
+	TYPE=$1
+	return 0
+}
+
+find_file virtual || find_file runlevel || exit
+
+while read DEP; do
+	case "$DEP" in
+		\#*) ;;
+		*)
+			DEPS="$DEPS $DEP"
+		;;
+	esac
+done < "$FILE"
+
+iregister $TYPE
+iset need = $DEPS
+idone

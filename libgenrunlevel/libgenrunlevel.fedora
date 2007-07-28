@@ -1,12 +1,10 @@
 #!/bin/bash
 
-function get_runlevels
-{
-	echo system.virtual default.runlevel
+get_runlevels() {
+	echo runlevel/system runlevel/default
 }
 
-function gen_runlevel
-{
+gen_runlevel() {
 	[ "${1}" == "system.virtual" ] && return 0
 
 	add_service "${1}" daemon/dcron daemon/hald daemon/klogd daemon/portmap
@@ -14,8 +12,7 @@ function gen_runlevel
 	# Check network interfaces
 	for i in $(ls /etc/sysconfig/network-scripts/ifcfg* | \
 		LANG=C sed -e '/\(ifcfg-lo\|rpmsave\|:\|rpmorig\|rpmnew\)/d' \
-			-e '/\(~\|\.bak\)$/d')
-	do
+			-e '/\(~\|\.bak\)$/d'); do
 		if grep -q "ONBOOT=yes" "${i}"; then
 			i=$(basename "${i}")
 			add_service "${1}" "net/${i#ifcfg-}"

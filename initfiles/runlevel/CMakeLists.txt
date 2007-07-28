@@ -1,1 +1,7 @@
-INSTALL_PROGRAMS(${SYSCONF_INSTALL_DIR}/initng/runlevel FILES fake-default.runlevel)
+INSTALL_PROGRAMS(${SYSCONF_INSTALL_DIR}/initng/runlevel FILES any)
+SET(RUNLEVEL_FILES
+	fake-default.runlevel
+	single.runlevel
+)
+
+INSTALL_FILES(${SYSCONF_INSTALL_DIR}/initng/runlevel FILES ${RUNLEVEL_FILES})

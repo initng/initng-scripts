@@ -3,20 +3,18 @@
 #
 # Search for libgenrunlevel
 #
-LIB="${0%/*}/libgenrunlevel"
-[ -d "${LIB}" ] || LIB="@LIB_INSTALL_DIR@"
-LIB="${LIB}/libgenrunlevel"
-
+LIB="@LIB_INSTALL_DIR@/libgenrunlevel"
 if [ ! -e "${LIB}" ]; then
 	echo "ERROR: ${LIB} not found!"
 	exit 1
 fi
+. "${LIB}" # load libgenrunlevel
+
 
 #
 # Show the help
 #
-show_help()
-{
+show_help() {
 cat >&2 << EOF
 USAGE:
 ${0} [options] [--all | runlevel1 runlevel2 ... runlevelN]
@@ -32,11 +30,6 @@ options:
 EOF
 }
 
-
-#
-# Load libgenrunlevel
-#
-. "${LIB}"
 
 migrate=
 
@@ -87,18 +80,20 @@ done
 [ "${CONFDIR}" ] || CONFDIR="${DESTDIR}/etc/initng"
 
 if [ -n "${migrate}" ]; then
-	[ -d "${CONFDIR}/runlevel" ] && mv -f "${CONFDIR}/runlevel/* ${CONFDIR}"
+	RUNLEVELDIR="${CONFDIR}/runlevel"
+	[ -d "${RUNLEVELDIR}" ] ||
+		install -d -m 755 -o root -g root "${RUNLEVELDIR}"
+	[ -f "${RUNLEVELDIR}/system.virtual" ] && CONFDIR="${RUNLEVELDIR}"
 
-	for RUNLEVEL_FILE in "${CONFDIR}"/*.{runlevel,virtual}; do
-		cp "${RUNLEVEL_FILE}"{,.old}
+	for RUNLEVEL_FILE in "${CONFDIR}"/*.runlevel "${CONFDIR}"/*.virtual; do
+		mv "${RUNLEVEL_FILE}" "${RUNLEVEL_FILE}~"
 		while read SERVICE; do
-			SERVICE="${SERVICE#runlevel/}"
-			if [ -e "${CONFDIR}/${SERVICE}.virtual"]; then
-				SERVICE="${SERVICE}.virtual"
-			elif [ -e "${CONFDIR}/${SERVICE}.runlevel" ]; then
-				SERVICE="${SERVICE}.runlevel"
-			elif [ ! -e "${CONFDIR}/${SERVICE}" ]; then
-				NSERVICE="$(find "${CONFDIR}" -name $(basename "${SERVICE}") | sed -r "s:^${CONFDIR}/(.*)\$:\1:; s:\s::g")"
+			if [ ! -f "${CONFDIR}/${SERVICE}.virtual"  -a \
+			     ! -f "${CONFDIR}/${SERVICE}.runlevel" -a \
+			     ! -f "${CONFDIR}/${SERVICE}" -a ]; then
+				NSERVICE="$(find "${CONFDIR}" -name \
+						$(basename "${SERVICE}") |
+				sed -r "s:^${CONFDIR}/(.*)\.i\$:\1:; s:\s::g")"
 				if [ -n "${NSERVICE}" ]; then
 					SERVICE="${NSERVICE}"
 				else
@@ -106,7 +101,7 @@ if [ -n "${migrate}" ]; then
 				fi
 			fi
 			echo "${SERVICE}"
-		done < "${RUNLEVEL_FILE}.old" > "${RUNLEVEL_FILE}"
+		done < "${RUNLEVEL_FILE}~" > "${RUNLEVEL_FILE}"
 	done
 	exit 0
 fi

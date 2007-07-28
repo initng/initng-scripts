@@ -1,7 +1,6 @@
 #!/bin/bash
 
-function gen_runlevel_common
-{
+gen_runlevel_common() {
 	if [ "${1}" = "system.virtual" ]; then
 		add_service "${1}" \
 			system/udev \
