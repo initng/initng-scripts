@@ -65,14 +65,6 @@ install: build
 	# Add here commands to install the package into debian/tmp.
 	cd $(CURDIR)/debian/build && $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 
-	mkdir -p $(CURDIR)/debian/tmp/etc/vim/ftdetect
-	mkdir -p $(CURDIR)/debian/tmp/etc/vim/syntax
-
-	mv $(CURDIR)/debian/tmp/usr/share/vim/vimfiles/syntax/initng.vim $(CURDIR)/debian/tmp/etc/vim/syntax/
-	mv $(CURDIR)/debian/tmp/usr/share/vim/vimfiles/ftdetect/initng.vim $(CURDIR)/debian/tmp/etc/vim/ftdetect/
-
-
-
 # Build architecture-independent files here.
 binary-indep: build install
 # We have nothing to do by default.
