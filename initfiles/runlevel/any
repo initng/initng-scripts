@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/sbin/runiscript
 export PATH="@LIB_INSTALL_DIR@/ibin:$PATH"
 
 find_file() {
