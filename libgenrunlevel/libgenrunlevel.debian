@@ -1,11 +1,11 @@
 #!/bin/bash
 
 get_runlevels() {
-	echo runlevel/system runlevel/default
+	echo runlevel/system.virtual runlevel/default.runlevel
 }
 
 gen_runlevel() {
-	if [ "${1}" = "system.virtual" ]; then
+	if [ "${1}" = "runlevel/system.virtual" ]; then
 		add_service "${1}" system/console-screen
 
 		[ -x /etc/init.d/ifupdown ] &&

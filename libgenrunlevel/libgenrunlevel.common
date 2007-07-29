@@ -1,7 +1,7 @@
 #!/bin/bash
 
 gen_runlevel_common() {
-	if [ "${1}" = "system.virtual" ]; then
+	if [ "${1}" = "runlevel/system.virtual" ]; then
 		add_service "${1}" \
 			system/udev \
 			system/clock \
@@ -75,7 +75,10 @@ gen_runlevel_common() {
 			add_service "${1}" service/alsasound
 
 			in_runlevel "${1}" system/coldplug ||
-				add_service "${1}" service/alsasound{/cards,/mixerstate}
+				add_service "${1}" \
+					service/alsasound \
+					service/alsasound/cards \
+					service/alsasound/mixerstate
 		fi
 
 		# Speed freq.
