@@ -7,14 +7,9 @@ setup()
 {
 	iregister service
 		iset need = system/mountroot system/checkfs
+		iset stderr = /dev/null
+		iset start_fail_ok
 		iset never_kill
-		iexec start
+		iset exec start = "@mount@ -v /home"
 	idone
-}
-
-start()
-{
-	@grep@ -q "[[:space:]]/home[[:space:]]" /etc/fstab &&
-		@mount@ -v /home
-	exit 0
 }

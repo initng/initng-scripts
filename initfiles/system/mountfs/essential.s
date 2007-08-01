@@ -19,8 +19,7 @@ setup()
 start()
 {
 	for mp in /tmp /usr /var /srv /opt; do
-		@grep@ -q "[[:space:]]${mp}[[:space:]]" /etc/fstab &&
-		@mount@ -v "${mp}" &
+		@mount@ -v "${mp}" 2>/dev/null &
 	done
 	wait
 	exit 0
@@ -35,17 +34,18 @@ stop()
 	@killalli5:killall5@ -9
 	sleep 1
 
-	FILES="`@sed@ 's:^\S*\s*::' /etc/mtab | @sort@ -r`"
+	MPS="$(
+		while read d mp d; do
+			echo ${mp}
+		done < /proc/mounts | @sort@ -r
+	)"
 
-	echo "${FILES}" | while read mp drop; do
+	echo "${MPS}" | while read mp; do
 		case "${mp}" in
-			/proc|/sys|/dev|/) ;;
-			*)
-				@mountpoint@ -q "${mp}" && {
-					@umount@ -r -d -f "${mp}" ||
-					echo "WARNING, failed to umount ${mp}"
-				}
-				;;
+		/proc|/sys|/dev|/) ;;
+		*)
+			@umount@ -r -d -f "${mp}"
+			;;
 		esac
 	done
 	exit 0
