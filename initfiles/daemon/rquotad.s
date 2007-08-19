@@ -3,10 +3,9 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
-		iset need = system/initial daemon/portmap virtual/net
+		iset need = system/initial virtual/portmap virtual/net
 		iset exec daemon = "@rpc.rquotad@ -f"
 	idone
 }

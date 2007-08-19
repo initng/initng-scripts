@@ -6,7 +6,7 @@
 setup()
 {
 	iregister daemon
-		iset need = system/initial daemon/portmap virtual/net
+		iset need = system/initial virtual/portmap virtual/net
 		iset daemon_stops_badly
 		iset exec daemon = "@rpc.mountd@ -F"
 	idone

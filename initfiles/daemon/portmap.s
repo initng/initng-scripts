@@ -13,9 +13,10 @@ setup()
 {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
+		iset provide = virtual/portmap
+#ifd debian linspire
 		iset forks
 		iset pid_of = portmap
-#ifd debian linspire
 		iset exec daemon = "@/sbin/portmap@ ${OPTIONS}"
 #elsed
 		iset exec daemon = "@/sbin/portmap@ -d ${PORTMAP_OPTS}"

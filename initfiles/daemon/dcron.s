@@ -8,6 +8,6 @@ setup()
 	iregister daemon
 		iset need = system/bootmisc
 		iset provide = virtual/cron
-		iset exec daemon = "@/usr/sbin/crond@ -n"
+		iset exec daemon = "@/usr/sbin/crond:/usr/sbin/cron@ -n"
 	idone
 }

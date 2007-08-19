@@ -13,7 +13,7 @@ RPCNFSDCOUNT="8"
 setup()
 {
 	iregister daemon
-		iset need = system/initial daemon/portmap
+		iset need = system/initial virtual/portmap
 #ifd gentoo
 		iset need = virtual/net
 		iexec daemon

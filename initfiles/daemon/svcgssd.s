@@ -6,7 +6,7 @@
 setup()
 {
 	iregister daemon
-		iset need = system/initial daemon/portmap
+		iset need = system/initial virtual/portmap
 		iset exec daemon = "@rpc.svcgssd@ -f"
 	idone
 }
