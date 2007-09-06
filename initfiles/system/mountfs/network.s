@@ -10,7 +10,7 @@ setup()
 	iregister service
 		iset need = system/initial system/mountfs/essential \
 			    virtual/net
-		iset use = daemon/portmap
+		iset use = virtual/portmap
 		iset never_kill
 		iexec start
 		iset exec stop = "@umount@ -a -f -t ${NET_FS}"
