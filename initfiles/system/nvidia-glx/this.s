@@ -19,7 +19,11 @@ setup()
 start()
 {
 	echo "Checking for nvidia kernel module..."
-	if [ -e "/lib/modules/`uname -r`/extra/nvidia/nvidia.ko" ]; then
+	if [ -e "/lib/modules/`uname -r`/extra/nvidia/nvidia.ko" ]
+#ifd fedora
+	|| [ -e "/lib/modules/`uname -r`/extra/nvidia-legacy/nvidia.ko" ]
+#endd
+	then
 		echo "Nvidia kernel module found."
 		@/usr/sbin/nvidia-config-display@ enable
 	else
