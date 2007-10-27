@@ -55,7 +55,7 @@ start()
 
 		if [ "${VERBOSE}" = no ]; then
 			echo "Checking file systems"
-			@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -T -R -A ${fix} ${force} ${FSCKTYPES_OPT}
+			@/sbin/logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -T -R -A ${fix} ${force} ${FSCKTYPES_OPT}
 			FSCKCODE=${?}
 
 			if [ ${FSCKCODE} -gt 1 ]; then
@@ -69,7 +69,7 @@ start()
 				echo "Will now check all file systems"
 			fi
 
-			@logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -V -R -A ${fix} ${force} ${FSCKTYPES_OPT}
+			@/sbin/logsave@ -s ${FSCK_LOGFILE} @fsck@ ${spinner} -V -R -A ${fix} ${force} ${FSCKTYPES_OPT}
 			FSCKCODE=${?}
 
 			if [ ${FSCKCODE} -gt 1 ]; then
@@ -88,10 +88,10 @@ start()
 	else
 		if [ -f /forcefsck ]; then
 			echo "A full fsck has been forced"
-			@logsave@ /dev/null @fsck@ -C -R -A -a -f || echo "fsck error: ${?}" >&2
-			@rm@ -f /forcefsck
+			@/sbin/logsave@ /dev/null @fsck@ -C -R -A -a -f || echo "fsck error: ${?}" >&2
+			@/bin/rm@ -f /forcefsck
 		else
-			@logsave@ /dev/null @fsck@ -C -T -R -A -a || echo "fsck error: ${?}" >&2
+			@/sbin/logsave@ /dev/null @fsck@ -C -T -R -A -a || echo "fsck error: ${?}" >&2
 		fi
 	fi
 #endd
