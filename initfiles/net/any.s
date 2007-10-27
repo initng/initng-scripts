@@ -39,7 +39,7 @@ start()
 	# Put up the interface
 	@/sbin/ifup@ ${NAME}
 	# Check so its up
-	@ifconfig@ ${NAME} | @grep@ -qF "UP"
+	@/sbin/ifconfig@ ${NAME} | @grep@ -qF "UP"
 }
 
 stop()
