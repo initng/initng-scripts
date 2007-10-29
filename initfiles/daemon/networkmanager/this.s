@@ -10,8 +10,7 @@ setup()
 	iregister daemon
 		iset need = system/bootmisc daemon/dbus \
 		            daemon/networkmanager/prepare
-		            system/modules/capability daemon/hald \
-		            daemon/dhcdbd
+		            system/modules/capability daemon/hald
 		iset provide = virtual/net
 		iset pid_file = "$PID_FILE"
 		iset forks

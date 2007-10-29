@@ -8,7 +8,7 @@ RPCBIND_ARGS=
 
 setup() {
 	iregister daemon
-		iset need = system/bootmisc virtual/net
+		iset need = system/bootmisc virtual/net virtual/net/lo
 		iset provide = virtual/portmap
 		iset forks
 		iset pid_of = rpcbind
