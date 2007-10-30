@@ -31,7 +31,7 @@
 #include <sys/wait.h>
 #include <getopt.h>
 
-#include <initng-paths.h>
+#include <initng/paths.h>
 
 /*#define DEBUG */
 
