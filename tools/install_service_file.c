@@ -18,22 +18,20 @@
  */
 #define TRUE 1
 #define FALSE 0
+
 #define _GNU_SOURCE
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 #include <getopt.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 
 #include <initng/paths.h>
-
-/*#define DEBUG */
 
 #undef D_
 #ifdef DEBUG
@@ -41,12 +39,6 @@
 #else
 #define D_(fmt,...)
 #endif
-
-/* the string "blah" must be the FIRST parameter, but his improves perf a
- * little bit */
-#define MATCH(PATTERN, LINE) \
-	(strncmp(PATTERN, skip_spaces(LINE), sizeof(PATTERN) - 1) == 0)
-#define LEN(STR) (sizeof(STR) - 1)
 
 #ifndef INITNG_ROOT
 #define INITNG_ROOT "/etc/initng"
@@ -86,15 +78,35 @@ static char **at_default_paths = NULL;
 
 #define LINE_LEN 1000
 
-#define TRIM_END(x) { \
-	/* skip ending spaces */ \
-	int t = strlen(x); \
-	while((x)[t - 1] == ' ') \
-	    (x)[t - 1] = '\0'; }
+/* the string "blah" must be the FIRST parameter, but his improves perf a
+ * little bit */
+#define LEN(STR) (sizeof(STR) - 1)
 
-#define TRIM_BEGINNING(x) { \
-	while((x)[0] == ' ' || (x)[0] == '\t') \
-	    (x)++; }
+static inline char *skip_spaces(const char *in)
+{
+	while (*in == ' ' || *in == '\t')
+		in++;
+	return (char *) in;
+}
+
+inline static int match(char *pattern, char *line)
+{
+	return (strcmp(pattern, skip_spaces(line)) == 0);
+}
+
+inline static void trim_end(char *x)
+{
+	char *p = strrchr(x, ' ');
+	
+	if (p == NULL)
+		return;
+
+	do {
+		p--;
+	} while (*p == ' ');
+	
+	p[1] = '\0';
+}
 
 static void overlay_add(char *opt, char *value)
 {
@@ -104,8 +116,8 @@ static void overlay_add(char *opt, char *value)
 	while (i < 1000 && overlay[i].opt)
 		i++;
 
-	TRIM_END(opt);
-	TRIM_END(value);
+	trim_end(opt);
+	trim_end(value);
 
 	D_("adding \"%s\" == \"%s\" on %i\n", opt, value, i);
 
@@ -140,7 +152,7 @@ static void load_overlay_file(const char *filename)
 		tmp = line;
 
 		/* skip leading spaces */
-		TRIM_BEGINNING(tmp);
+		tmp = skip_spaces(tmp);
 
 		/* skip these lines */
 		if (!tmp[0] || tmp[0] == '#' || tmp[0] == '\n')
@@ -162,7 +174,7 @@ static void load_overlay_file(const char *filename)
 		opt_len = 0;
 
 		/* skip spaces */
-		TRIM_BEGINNING(tmp);
+		tmp = skip_spaces(tmp);
 		if (!tmp[0])
 			continue;
 
@@ -695,13 +707,6 @@ static char *do_exec(char *data, int length)
 	return NULL;
 }
 
-static inline const char *skip_spaces(const char *in)
-{
-	while (*in == ' ' || *in == '\t')
-		in++;
-	return in;
-}
-
 static inline int empty_elsed(const char *in)
 {
 	in = skip_spaces(in);
@@ -922,7 +927,7 @@ int main(int argc, char **argv)
 		 * This is an internal set, to force an standard default path,
 		 * please us an direct @/usr/sbin/gdm@ instead.
 		 */
-		if (MATCH("#atdefpath", line)) {
+		if (match("#atdefpath", line)) {
 			D_("found #atdefpath. updating at default path\n");
 
 			/* get the data after #atdefpath data */
@@ -961,7 +966,7 @@ int main(int argc, char **argv)
 		/* either in_block != 0 or line started with '#' */
 		if (IN_BLOCK == EXEC_BLOCK) {
 			/* in_block == EXEC_BLOCK */
-			if (MATCH("#endexec", line)) {
+			if (match("#endexec", line)) {
 				D_("found #endexec, line %i\n", lineno);
 				/* Do the exec shit */
 				if (BLOCK_PRINTS_OUT) {
@@ -985,7 +990,7 @@ int main(int argc, char **argv)
 
 			/* #exec is an internal run, and output will be
 			 * outputed to outfile */
-			if (MATCH("#exec", line)) {
+			if (match("#exec", line)) {
 				D_("found #exec, line %i\n", lineno);
 				exec_buffer[0] = '\0';
 				exec_buffer_free = EXEC_BUFFER_LEN - 1;
@@ -993,7 +998,7 @@ int main(int argc, char **argv)
 				continue;
 			}
 
-			else if (MATCH("#endexec", line)) {
+			else if (match("#endexec", line)) {
 				fprintf(stderr, "ERROR: #endexec without "
 					"#exec, line %i\n", lineno);
 				fclose(out);
@@ -1004,7 +1009,7 @@ int main(int argc, char **argv)
 
 			/* #ifd debian, meens utput this to outfile if
 			 * distro == debian */
-			else if (MATCH("#ifd", line)) {
+			else if (match("#ifd", line)) {
 				D_("found #ifd, line %i\n", lineno);
 				PUSH_STACK(IF_BLOCK);
 				STACK_TOP.print_out = 0;
@@ -1018,7 +1023,7 @@ int main(int argc, char **argv)
 				continue;
 			}
 
-			else if (MATCH("#elsed", line)) {
+			else if (match("#elsed", line)) {
 				if (IN_BLOCK != IF_BLOCK) {
 					fprintf(stderr, "ERROR: unexpected "
 						"#elsed, line %i\n", lineno);
@@ -1038,7 +1043,7 @@ int main(int argc, char **argv)
 				}
 			}
 
-			else if (MATCH("#endd", line)) {
+			else if (match("#endd", line)) {
 				if (IN_BLOCK != IF_BLOCK) {
 					fprintf(stderr, "ERROR: unexpected "
 						"#endd, line %i\n", lineno);
