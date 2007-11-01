@@ -82,17 +82,15 @@ static char **at_default_paths = NULL;
  * little bit */
 #define LEN(STR) (sizeof(STR) - 1)
 
-static inline char *skip_spaces(const char *in)
+inline static char *skip_spaces(const char *in)
 {
 	while (*in == ' ' || *in == '\t')
 		in++;
 	return (char *) in;
 }
 
-inline static int match(char *pattern, char *line)
-{
-	return (strcmp(pattern, skip_spaces(line)) == 0);
-}
+#define match(pattern, line) \
+	(strncmp(pattern, skip_spaces(line), LEN(pattern)) == 0)
 
 inline static void trim_end(char *x)
 {
@@ -101,9 +99,8 @@ inline static void trim_end(char *x)
 	if (p == NULL)
 		return;
 
-	do {
+	while (*p == ' ')
 		p--;
-	} while (*p == ' ');
 	
 	p[1] = '\0';
 }
@@ -195,20 +192,20 @@ static int _is_file(const char *filename, int executable)
 {
 	struct stat tmp;
 
-	D_("Trying, with file \"%s\":\n", filename);
+	D_("Trying with file \"%s\"... ", filename);
 	if (stat(filename, &tmp) == 0 && S_ISREG(tmp.st_mode)) {
 		if (executable) {
 			if (!(tmp.st_mode &
 				(S_IXUSR | S_IXGRP | S_IXOTH | S_ISUID |
 				 S_ISGID | S_ISVTX))) {
-				D_("Found it, but not an executable\n");
+				D_("found, but not an executable\n");
 				return FALSE;
 			}
 		}
-		D_("Found it.\n");
+		D_("found\n");
 		return TRUE;
 	}
-	D_("Did not find it.\n");
+	D_("not found\n");
 	return FALSE;
 }
 
@@ -843,7 +840,7 @@ int main(int argc, char **argv)
 			outfile = optarg;
 			break;
 		default:
-			fprintf(stdout, "Ups, that's that? <0%o>\n", i);
+			fprintf(stdout, "Ups, what's that? <0%o>\n", i);
 		}
 	}
 
@@ -1079,6 +1076,7 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
+#if 0 /* We don't really need to free anything, 'coz we will exit soon */
 	/* free the overlay table */
 	for (i = 0; i < 1000 && overlay[i].opt; i++) {
 		free((char *)overlay[i].opt);	/* const-cast */
@@ -1088,6 +1086,7 @@ int main(int argc, char **argv)
 			overlay[i].value = NULL;
 		}
 	}
+#endif
 
 	/* close bouth input and output file */
 	fclose(in);
