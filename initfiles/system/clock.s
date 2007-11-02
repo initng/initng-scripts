@@ -6,6 +6,8 @@
 [ -f /etc/default/rcS ] && . /etc/default/rcS
 #elsed fedora lfs mandriva
 [ -f /etc/sysconfig/clock ] && . /etc/sysconfig/clock
+#elsed sourcemage
+[ -f /etc/sysconfig/hwclock ] && . /etc/sysconfig/hwclock
 #elsed
 [ -f /etc/conf.d/clock ] && . /etc/conf.d/clock
 #endd
@@ -21,7 +23,7 @@ setup()
 }
 
 setupopts() {
-#ifd debian linspire lfs
+#ifd debian linspire lfs sourcemage
 	if [ "${UTC}" = "yes" ]
 #elsed
 	if [ "${CLOCK}" = "UTC" -o "${UTC}" = "true" ]
