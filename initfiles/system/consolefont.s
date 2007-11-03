@@ -42,9 +42,13 @@ start()
 		done
 	fi
 #endd
+#ifd sourcemage
+	CONSOLEFONT="$SETFONT_ARGS"
+#elsed
 	[ -n "${SCREEN_FONT}" ] && CONSOLEFONT="${SCREEN_FONT}"
 	[ -n "${SYSFONT}" ] && CONSOLEFONT="${SYSFONT}"
 	[ -n "${FONT}" ] && CONSOLEFONT="${FONT}"
+#endd
 
 	if [ -z "${CONSOLEFONT}" ]; then
 		echo "Using the default console font"
