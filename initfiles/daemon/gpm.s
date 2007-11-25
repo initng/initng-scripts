@@ -17,15 +17,11 @@ setup()
 {
 	iregister daemon
 		iset need = system/bootmisc
-#ifd debian
-#elsed
-		iset pid_file = "/var/run/gpm.pid"
-		iset forks
-#endd
+		iset use = system/udev
 #ifd debian
 		iexec daemon
 #elsed
-		iset exec daemon = "@/usr/sbin/gpm@ -m ${MOUSEDEV} -t ${MOUSE} ${APPEND}"
+		iset exec daemon = "@/usr/sbin/gpm@ -D -m ${MOUSEDEV} -t ${MOUSE} ${APPEND}"
 #endd
 	idone
 }
