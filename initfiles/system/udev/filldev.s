@@ -68,7 +68,10 @@ start()
 	@/bin/ln@ -snf fd/2 /dev/stderr
 	@/bin/ln@ -snf /proc/kcore /dev/core
 	@/bin/ln@ -snf /proc/asound/oss/sndstat /dev/sndstat
-	exec @/sbin/udevstart@
+
+        @mkdir@ -p /dev/.udev/db/ /dev/.udev/queue/
+        @/sbin/udevtrigger@
+        @/sbin/udevsettle@ --timeout=30 &
 #elsed
 	if [ ! -e /etc/udev/links.conf -a ! -d /lib/udev/devices ]; then
 		# Some manually, just to be sure.
