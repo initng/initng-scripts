@@ -15,6 +15,7 @@ setup()
 		iset need = system/bootmisc
 		iset use = system/modules system/coldplug system/ifrename
 		iset stdall = /dev/null
+		iset respawn
 #ifd debian
 		iexec daemon
 #elsed
