@@ -83,6 +83,7 @@ start()
 	# Since hwclock always exit's with a 0, need to check its output.
 	@/sbin/hwclock@ ${myadj} ${myopts}
 	@/sbin/hwclock@ --hctosys ${myopts}
+	exit 0
 }
 
 stop()
@@ -101,4 +102,5 @@ stop()
 
 	echo "Syncing system clock to hardware clock [${TBLURB}] ..."
 	@/sbin/hwclock@ --systohc ${myopts}
+	exit 0
 }
