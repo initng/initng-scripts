@@ -5,6 +5,8 @@
 
 #ifd debian
 [ -f /etc/default/ifplugd ] && . /etc/default/ifplugd
+#elsed sourcemage
+[ -f /etc/ifplugd/ifplugd.conf ] && . /etc/ifplugd/ifplugd.conf
 #elsed gentoo
 [ -f /etc/conf.d/ifplugd ] && . /etc/conf.d/ifplugd
 #endd
@@ -16,7 +18,7 @@ setup()
 		iset use = system/modules system/coldplug system/ifrename
 		iset stdall = /dev/null
 		iset respawn
-#ifd debian
+#ifd debian sourcemage
 		iexec daemon
 #elsed
 		iset exec daemon = "@/usr/sbin/ifplugd@ --no-daemon -i ${NAME}"
@@ -24,7 +26,7 @@ setup()
 	idone
 }
 
-#ifd debian
+#ifd debian sourcemage
 daemon()
 {
 	IF1=`echo ${NAME} | @sed@ "s/-/_/"`

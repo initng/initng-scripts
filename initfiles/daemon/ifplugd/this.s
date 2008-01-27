@@ -5,6 +5,8 @@
 
 #ifd debian
 [ -f /etc/default/ifplugd ] && . /etc/default/ifplugd
+#elsed sourcemage
+[ -f /etc/ifplugd/ifplugd.conf ] && . /etc/ifplugd/ifplugd.conf
 #elsed gentoo
 [ -f /etc/conf.d/ifplugd ] && . /etc/conf.d/ifplugd
 #endd
@@ -21,7 +23,7 @@ setup()
 
 start()
 {
-#ifd debian
+#ifd debian sourcemage
 	[ "${INTERFACES}" = "auto" -o "${INTERFACES}" = "all" ] &&
 #elsed gentoo
 	[ "${WIRELESS_INTERFACES}" = "no" -a "${INTERFACES}" = "" ] &&
@@ -35,8 +37,7 @@ start()
 			gsub( /\W/, "", $1); print $1
 		}' < /proc/net/dev)
 
-	for IF in ${INTERFACES}
-	do
+	for IF in ${INTERFACES}; do
 #ifd gentoo
 		@echo@ ${OMIT_INTERFACES} | @/bin/grep@ -qw ${IF} ||
 #endd
