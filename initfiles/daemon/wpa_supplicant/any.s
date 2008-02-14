@@ -3,6 +3,12 @@
 # DESCRIPTION: IEEE802.1x (WPA) encryption for wireless LAN connections
 # WWW: http://hostap.epitest.fi/wpa_supplicant
 
+#ifd gentoo
+CONFFILE=/etc/wpa_supplicant/wpa_supplicant.conf
+#elsed
+CONFFILE=/etc/wpa_supplicant.conf
+#endd
+
 setup()
 {
 	iregister daemon
@@ -19,7 +25,7 @@ daemon()
 {
 	. ${INITNG_PLUGIN_DIR}/scripts/net/functions
 
-	eval opts=\"\$\{wpa_supplicant_${ifvar}\} -i${iface} -c/etc/wpa_supplicant.conf -B\"
+	eval opts=\"\$\{wpa_supplicant_${ifvar}\} -i${iface} -c/etc/${CONFFILE} -B\"
 	[ -f /sbin/wpa_cli.action ] &&
 		opts="${opts} -w -P/var/run/wpa_supplicant-${iface}.pid"
 
