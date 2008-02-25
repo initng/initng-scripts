@@ -11,9 +11,8 @@ setup()
 #ifd debian
 		iset need = daemon/syslogd/prepare
 #endd
-		iset pid_file = "/var/run/metalog.pid"
-		iset forks
+		iset respawn
 		iset daemon_stops_badly
-		iset exec daemon = "@/usr/sbin/metalog@ -B -p /var/run/metalog.pid"
+		iset exec daemon = "@/usr/sbin/metalog@"
 	idone
 }
