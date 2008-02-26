@@ -4,11 +4,9 @@
 # WWW: http://distcc.samba.org/
 
 #ifd gentoo
-DISTCCD_PIDFILE="/var/run/distccd/distccd.pid"
 DISTCCD_NICE="10"
 DISTCCD_OPTS="--port 3632 --log-level critical --allow 192.168.1.0/24"
 #elsed
-PIDFILE="/var/run/distccd/distccd.pid"
 PORT="3632"
 ALLOW="192.168.0.0/24"
 LISTEN="0.0.0.0"
@@ -22,12 +20,6 @@ setup()
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset suid = distcc
-#ifd gentoo
-		iset pid_file = "${DISTCCD_PIDFILE}"
-#elsed
-		iset pid_file = "${PIDFILE}"
-#endd
-		iset forks
 		iexec daemon
 	idone
 }
@@ -35,10 +27,11 @@ setup()
 daemon()
 {
 #ifd gentoo
-	exec /usr/bin/distccd -N ${DISTCCD_NICE} --pid-file ${DISTCCD_PIDFILE} \
-	                      ${DISTCCD_OPTS}
+	exec @/usr/bin/distccd@ --daemon --no-detach -N ${DISTCCD_NICE} \
+				${DISTCCD_OPTS}
 #elsed
-	exec @/usr/bin/distccd@ -N ${NICE} --pid-file ${PIDFILE} --port ${PORT} \
-	                        --allow ${ALLOW} --listen ${LISTEN}
+	exec @/usr/bin/distccd@ --daemon --no-detach -N ${NICE} \
+				--port ${PORT} --allow ${ALLOW} \
+				--listen ${LISTEN}
 #endd
 }
