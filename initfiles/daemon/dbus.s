@@ -4,16 +4,7 @@
 # WWW: http://dbus.freedesktop.org/
 
 #ifd debian pingwinek
-DAEMONUSER="messagebus"
 [ -f /etc/default/dbus ] && . /etc/default/dbus
-#endd
-
-#ifd fedora altlinux mandriva
-PIDFILE="/var/run/messagebus.pid"
-#elsed debian pingwinek sourcemage
-PIDFILE="/var/run/dbus/pid"
-#elsed
-PIDFILE="/var/run/dbus.pid"
 #endd
 
 setup()
@@ -25,7 +16,7 @@ setup()
 #ifd debian
 		iexec daemon
 #elsed
-		iset exec daemon = "@/bin/dbus-daemon:/usr/bin/dbus-daemon:/usr/bin/dbus-daemon-1@ --system --fork"
+		iset exec daemon = "@/bin/dbus-daemon:/usr/bin/dbus-daemon:/usr/bin/dbus-daemon-1@ --system --nofork"
 #endd
 	idone
 }
@@ -34,27 +25,6 @@ setup()
 daemon()
 {
 	[ "${ENABLED}" = 0 ] && exit 0
-	#Debian and Ubuntu are using different files
-	DAEMON=/usr/bin/dbus-daemon
-
-	if [ ! -d ${PIDDIR} ]
-	then
-		@mkdir@ -p ${PIDDIR}
-		chown ${DAEMONUSER} ${PIDDIR}
-		chgrp ${DAEMONUSER} ${PIDDIR}
-	fi
-	if [ -e ${PIDFILE} ]
-	then
-		PIDDIR=/proc/`@cat@ ${PIDFILE}`
-		if [ -d ${PIDDIR} -a  "`readlink -f ${PIDDIR}/exe`" = "${DAEMON}" ]
-		then
-			echo "${DESC} already started; not starting."
-		else
-			echo "Removing stale PID file ${PIDFILE}."
-			@rm@ -f ${PIDFILE}
-		fi
-	fi
-
-	exec ${DAEMON} --system ${PARAMS}
+	exec /usr/bin/dbus-daemon --system ${PARAMS} --nofork
 }
 #endd
