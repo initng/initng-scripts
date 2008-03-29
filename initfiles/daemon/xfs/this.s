@@ -8,8 +8,7 @@ XFS_PORT="-1"
 . /etc/conf.d/xfs
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 #ifd gentoo

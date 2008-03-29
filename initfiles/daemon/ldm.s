@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon 
 		iset need = system/bootmisc
 		iset use = daemon/xfs system/modules system/coldplug

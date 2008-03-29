@@ -6,8 +6,7 @@
 asoundcfg="/etc/asound.state"
 alsascrdir="/etc/alsa.d"
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset use = system/coldplug system/modules/depmod \
@@ -16,8 +15,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	# List of drivers for each card.
 	for mod in `@/sbin/modprobe@ -c | @awk@ '$1 == "alias" && $2 ~ /^snd-card-[[:digit:]]$/ { print $2 } {}'`; do
 		@/sbin/modprobe@ ${mod} &

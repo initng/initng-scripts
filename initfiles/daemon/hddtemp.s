@@ -15,8 +15,7 @@ RUN_DAEMON="yes"
 [ -f /etc/conf.d/hddtemp ] && . /etc/conf.d/hddtemp
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset forks
@@ -25,8 +24,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	[ -n "${SYSLOG}" -a "${SYSLOG}" != "0" ] && SYSLOG_ARG="-S ${SYSLOG}"
 	[ "${RUN_DAEMON}" = "true" -o "${RUN_DAEMON}" = "yes" ] && DAEMON_ARG="-d -l ${INTERFACE} -p ${PORT} -s ${SEPARATOR}"
 	[ -x "@/usr/sbin/hddtemp@" ] || exit 1

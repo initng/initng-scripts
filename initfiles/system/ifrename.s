@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountfs/essential system/modules
 		iset require_file = /etc/iftab

@@ -5,8 +5,7 @@
 
 [ -f /etc/conf.d/net ] && . /etc/conf.d/net
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
@@ -14,8 +13,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	eval opts=\${pump_${NAME}}
 	eval d=\${dhcp_${NAME}}
 	[ -z "$d" ] && d="$dhcp"

@@ -3,8 +3,7 @@
 # DESCRIPTION: Hewlett-Packard Linux Imaging and Printing - Settings and Status Daemon
 # WWW: http://hplip.sourceforge.net
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc daemon/hpiod
 #ifd debian

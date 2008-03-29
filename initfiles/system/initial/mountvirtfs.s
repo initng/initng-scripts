@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iexec start
 		iset critical
 	idone
 }
 
-start()
-{
+start() {
 	# test, if all necessary directories exist.
 	if [ ! -d /proc -o ! -d /sys ]; then
 		echo "The /sys or /proc is missing, can't mount it!" >&2

@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	@rm@ -f /dev/tty5[0-9]
 	@/sbin/modprobe@ faketty
 	for tmp in 0 1 2 3 4 5 6 7 8 9; do

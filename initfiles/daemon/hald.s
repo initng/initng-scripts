@@ -7,8 +7,7 @@
 [ -f /etc/default/hal ] && . /etc/default/hal
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc daemon/dbus
 		iset use = daemon/acpid
@@ -18,8 +17,7 @@ setup()
 }
 
 
-daemon()
-{
+daemon() {
 #ifd gentoo
 	@/usr/sbin/hald@ --help | grep -qw -- "--use-syslog" &&
 	DAEMON_OPTS="--use-syslog"

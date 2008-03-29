@@ -4,8 +4,7 @@
 # WWW:
 
 #ifd debian linspire pingwinek ubuntu
-setup()
-{
+setup() {
 	iregister service
 		iset stdall = "/dev/null"
 		iset need = system/bootmisc
@@ -25,8 +24,7 @@ setup()
 }
 
 #ifd debian linspire ubuntu
-start()
-{
+start() {
 	mkdir -p /var/run/network
 	for i in $(@awk@ '$0~/^auto / { for (i=2; i<=NF; i++) print $i }' /etc/network/interfaces); do
 		ngc --quiet -u net/${i} &
@@ -34,22 +32,19 @@ start()
 	wait
 }
 
-stop()
-{
+stop() {
 	for i in $(@awk@ '$0~/^auto / { for (i=2; i<=NF; i++) print $i }' /etc/network/interfaces); do
 		ngc --quiet -d net/${i} &
 	done
 	wait
 }
 #elsed pingwinek
-start()
-{
+start() {
 	/etc/net/scripts/initconf write
 	/etc/net/scripts/network.init start
 }
 
-stop()
-{
+stop() {
 	/etc/net/scripts/network.init stop
 }
 #endd

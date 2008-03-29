@@ -3,8 +3,7 @@
 # DESCRIPTION: Music Player Daemon
 # WWW: http://www.musicpd.org
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = service/alsasound system/bootmisc
 		iset stdall = /dev/null

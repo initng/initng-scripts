@@ -13,8 +13,7 @@ MOUSEDEV="/dev/input/mice"
 [ -f /etc/conf.d/gpm ] && . /etc/conf.d/gpm
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = system/udev
@@ -27,8 +26,7 @@ setup()
 }
 
 #ifd debian
-daemon()
-{
+daemon() {
 	[ -n "${responsiveness}" ] && responsiveness="-r ${responsiveness}"
 	[ -n "${sample_rate}" ] && sample_rate="-s ${sample_rate}"
 

@@ -7,8 +7,7 @@
 [ -f /etc/default/dbus ] && . /etc/default/dbus
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset forks
@@ -22,8 +21,7 @@ setup()
 }
 
 #ifd debian
-daemon()
-{
+daemon() {
 	[ "${ENABLED}" = 0 ] && exit 0
 	exec /usr/bin/dbus-daemon --system ${PARAMS} --nofork
 }

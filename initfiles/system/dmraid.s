@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset use = system/modules system/udev
 		iset exec start = "@/sbin/dmraid@ --activate yes --ignorelocking"

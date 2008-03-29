@@ -9,8 +9,7 @@
 [ -f /etc/conf.d/exim ] && . /etc/conf.d/exim
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset exec start = "@update-exim4.conf@ ${UPEX4OPTS}"

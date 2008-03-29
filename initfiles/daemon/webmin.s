@@ -3,8 +3,7 @@
 # DESCRIPTION: Web-based system configuration interface
 # WWW: http://www.webmin.com
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/syslog-ng daemon/syslogd

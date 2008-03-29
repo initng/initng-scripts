@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset provide = virtual/syslog
 		iset need = system/bootmisc

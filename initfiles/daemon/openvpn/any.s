@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset exec daemon = "@/usr/sbin/openvpn@ --config /etc/openvpn/${NAME}/local.conf --writepid /var/run/openvpn-${NAME}.pid --cd /etc/openvpn/${NAME}"

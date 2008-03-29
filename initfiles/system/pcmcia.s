@@ -5,16 +5,14 @@
 
 [ -f /etc/conf.d/pcmcia ] && . /etc/conf.d/pcmcia
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	cleanup() {
 		while read SN CLASS MOD INST DEV EXTRA; do
 			[ "x${SN}" != "xSocket" ] &&

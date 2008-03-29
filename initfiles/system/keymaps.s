@@ -25,8 +25,7 @@ CONFFILE="${CONFDIR}/${CONFFILEROOT}.${EXT}.gz"
 [ -f /etc/keymaps.conf ] && . /etc/keymaps.conf
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset use = system/sysctl
@@ -34,8 +33,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 #ifd fedora
 	[ -n "${KEYTABLE}" -a -d "/lib/kbd/keymaps" ] &&
 		KEYMAP="${KEYTABLE}.map"

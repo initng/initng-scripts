@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc system/modules/tun
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	[ -h /dev/net/tun -a -c /dev/misc/net/tun ] || exit 0
 
 	echo "Detected broken /dev/net/tun symlink, fixing..."

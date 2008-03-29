@@ -12,8 +12,7 @@ EPGFILE="${HOME}/epg.data"
 #LANG="de_DE"
 [ -f /etc/conf.d/vdr ] && . /etc/conf.d/vdr
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/lircd
@@ -26,8 +25,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	for plugin in ${PLUGINS}
 	do
 		# no joke!

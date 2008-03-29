@@ -11,8 +11,7 @@
 [ -f /etc/conf.d/ifplugd ] && . /etc/conf.d/ifplugd
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset use = system/modules system/coldplug system/ifrename
@@ -21,8 +20,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 #ifd debian sourcemage
 	[ "${INTERFACES}" = "auto" -o "${INTERFACES}" = "all" ] &&
 #elsed gentoo
@@ -46,8 +44,7 @@ start()
 	wait
 }
 
-stop()
-{
+stop() {
 	for DAEMON in `@/sbin/ngc@ -s | @awk@ '/daemon/ifplugd/\w+/ { print $2 }'`
 	do
 		@/sbin/ngc@ --instant --quiet -d ${DAEMON}

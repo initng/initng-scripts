@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister virtual
 		iset need = system/bootmisc daemon/vmware/vmnet \
 		            system/modules/vmmon

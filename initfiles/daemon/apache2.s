@@ -9,8 +9,7 @@
 	[ -f /etc/conf.d/apache2 ] && . /etc/conf.d/apache2
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset use = daemon/sshd daemon/mysql daemon/postgres system/mountfs

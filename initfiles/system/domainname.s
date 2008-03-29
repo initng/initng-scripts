@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	[ -f /etc/conf.d/domainname ] && . /etc/conf.d/domainname
 	[ -n "${NISDOMAIN}" ] && @/bin/domainname@ "${NISDOMAIN}"
 }

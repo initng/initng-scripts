@@ -3,8 +3,7 @@
 # DESCRIPTION: The Linux Userspace Device filesystem
 # WWW: http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev.html
 
-setup()
-{
+setup() {
 	iregister service
 		iset critical
 		iset need = system/udev/udevd
@@ -15,8 +14,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 #ifd gentoo enlisy
 	. /etc/conf.d/rc
 	if [ "${RC_DEVICE_TARBALL}" = "yes" -a -e /lib/udev-state/devices.tar.bz2 ]; then
@@ -94,8 +92,7 @@ start()
 }
 #ifd gentoo enlisy
 
-stop()
-{
+stop() {
 	. /etc/conf.d/rc
 	if [ "${RC_DEVICE_TARBALL}" = "yes" ]; then
 		cd /dev

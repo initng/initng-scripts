@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/initial virtual/portmap virtual/net
 		iset daemon_stops_badly

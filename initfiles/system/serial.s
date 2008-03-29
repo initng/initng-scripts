@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountroot \
 		            system/modules/serial
@@ -12,8 +11,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	[ -e /etc/serial.conf ] || exit 0
 
 	@grep@ -v "^#\|^ \|^$" /etc/serial.conf | while read device args; do

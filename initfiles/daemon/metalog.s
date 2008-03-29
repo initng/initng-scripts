@@ -3,8 +3,7 @@
 # DESCRIPTION: System logger
 # WWW: http://metalog.sourceforge.net
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset provide = virtual/syslog
 		iset need = system/bootmisc

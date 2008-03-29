@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net/lo
 		iset pid_file = "/var/run/fcron.pid"

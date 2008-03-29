@@ -6,8 +6,7 @@
 [ -f /etc/sysconfig/nvidia-config-display ] &&
 	. /etc/sysconfig/nvidia-config-display
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset use = service/nvidia-glx/dev
@@ -16,8 +15,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	echo "Checking for nvidia kernel module..."
 	if [ -e "/lib/modules/`uname -r`/extra/nvidia/nvidia.ko" ]
 #ifd fedora
@@ -36,8 +34,7 @@ start()
 	exit ${retval}
 }
 
-stop()
-{
+stop() {
 	@/usr/sbin/nvidia-config-display@ disable
 	retval=${?}
 	[ ${retval} = 0 ] && @rm@ -f /var/lock/subsys/nvidia-glx

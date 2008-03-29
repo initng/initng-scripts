@@ -9,8 +9,7 @@
 LIRCD_OPTS="-d /dev/lirc/0"
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc system/modules
 		iset use = system/discover system/coldplug system/modules

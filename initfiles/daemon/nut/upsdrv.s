@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service 
 		iset need = system/bootmisc system/modules
 		iset exec start = "@/usr/sbin/upsdrvctl@ start"

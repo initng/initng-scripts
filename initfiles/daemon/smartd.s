@@ -11,8 +11,7 @@
 [ -f /etc/conf.d/smartd ] && . /etc/conf.d/smartd
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset forks
@@ -25,8 +24,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 #ifd fedora mandriva
 	[ -f /etc/smartd.conf ] || smartd-conf.py > /etc/smartd.conf
 #endd

@@ -3,16 +3,14 @@
 # DESCRIPTION: The X font server
 # WWW: http://xorg.freedesktop.org
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	umask 133
 
 	if [ -x @/usr/sbin/chkfontpath@ ]; then

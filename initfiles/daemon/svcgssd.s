@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/initial virtual/portmap
 		iset exec daemon = "@rpc.svcgssd@ -f"

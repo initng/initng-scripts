@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister virtual
 		iset critical
 		iset need = system/initial/loglevel \

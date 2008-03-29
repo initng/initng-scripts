@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/sshd daemon/syslog-ng
@@ -23,8 +22,7 @@ setup()
 }
 
 #ifd fedora
-denyhosts_daemon()
-{
+denyhosts_daemon() {
 		export HOSTNAME=$(@/bin/hostname@)
 		exec @/usr/bin/denyhosts.py@ --daemon --config /etc/denyhosts.conf
 }

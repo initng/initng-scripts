@@ -3,8 +3,7 @@
 # DESCRIPTION: Anonymising proxy network
 # WWW: http://tor.eff.org
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 #ifd debian

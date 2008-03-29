@@ -6,8 +6,7 @@
 asoundcfg="/etc/asound.state"
 alsascrdir="/etc/alsa.d"
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset use = system/coldplug system/modules/depmod \
@@ -16,8 +15,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	# We want to ensure snd-seq is loaded as it is needed for things like
 	# timidity even if we do not use a real sequencer.
 	for mod in `@/sbin/modprobe@ -l | @sed@ -ne '{ s|.*/\([^/]*\)\.ko$|\1|; /^snd[_-]seq/ { /oss/ !p } }'`; do

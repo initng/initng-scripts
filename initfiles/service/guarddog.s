@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iset provide = virtual/firewall
@@ -13,8 +12,7 @@ setup()
 	idone
 }
 
-stop()
-{
+stop() {
 	if [ ! -x @/sbin/iptables:/sbin/ipchains@ ]; then
 		echo "Cannot find @/sbin/ipchains@ or @/sbin/iptables@"
 		exit 1

@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister virtual
 		iset need = system/agetty/tty2 system/agetty/tty3 \
 		            system/agetty/tty4 system/agetty/tty5 \

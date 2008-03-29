@@ -6,8 +6,7 @@
 
 CONFIG="/etc/wwwoffle/wwwoffle.conf"
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = daemon/wwwoffle virtual/net
 		iset last

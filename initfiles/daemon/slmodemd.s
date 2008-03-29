@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc service/alsasound
 		iset exec daemon = "@/usr/sbin/slmodemd@ --country"

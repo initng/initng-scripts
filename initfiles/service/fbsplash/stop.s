@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iset just_before = daemon/gdm daemon/kdm daemon/xdm \

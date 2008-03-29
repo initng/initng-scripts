@@ -3,8 +3,7 @@
 # DESCRIPTION: The Linux Userspace Device filesystem
 # WWW: http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev.html
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/udev/udevd system/udev/move_rules \
 		            system/mountfs/essential
@@ -12,8 +11,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	[ -x "@/sbin/udevtrigger@" ] || exit 0
 
 	# Check if it supports the --retry-failed argument before

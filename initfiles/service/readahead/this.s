@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/mountfs/essential
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	# Check if @/usr/sbin/readahead-list@ exits.
 	[ -x @/usr/sbin/readahead-list@ ] || exit 0
 

@@ -7,8 +7,7 @@
 [ -f /etc/default/gdm ] && . /etc/default/gdm
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/xfs service/faketty service/xorgconf

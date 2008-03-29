@@ -7,8 +7,7 @@
 [ -f /etc/default/klogd ] && . /etc/default/klogd
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc daemon/syslogd
 		iset stdall = /dev/null

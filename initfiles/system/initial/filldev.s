@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial/mountvirtfs
 		iset use = system/udev/mountdev
@@ -13,8 +12,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	echo "Mounting devpts at /dev/pts ..."
 	@/bin/mkdir@ -p /dev/pts &&
 		@mount@ -n -t devpts -o gid=5,mode=0620 none /dev/pts &

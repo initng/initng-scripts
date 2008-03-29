@@ -3,8 +3,7 @@
 # DESCRIPTION: X.org graphical greeter
 # WWW: http://xorg.freedesktop.org
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset conflict = daemon/gdm daemon/kdm daemon/wdm \

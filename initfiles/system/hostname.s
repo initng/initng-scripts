@@ -12,8 +12,7 @@ HOSTNAME="localhost"
 #endd
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iexec start
@@ -21,8 +20,7 @@ setup()
 }
 
 #ifd debian
-start()
-{
+start() {
 	[ -f /etc/hostname ] && HOSTNAME="$(@cat@ /etc/hostname)"
 
 	if [ -z "${HOSTNAME}" ]; then
@@ -37,8 +35,7 @@ start()
 }
 #elsed
 
-start()
-{
+start() {
 	# If the hostname is already set via the kernel, and /etc/hostname
 	# isn't setup, then we shouldn't go reseting the configuration #38172.
 	if [ -n "${HOSTNAME}" ]; then

@@ -9,8 +9,7 @@ NICE="1"
 LOG="/var/log/mldonkey.log"
 [ -f /etc/conf.d/mldonkey ] && . /etc/conf.d/mldonkey
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset suid = "${USER}"
@@ -22,8 +21,7 @@ setup()
 	idone
 }
 
-kill()
-{
+kill() {
 	echo kill | @/usr/bin/netcat:/usr/bin/telnet@ 127.0.0.1 4000 >/dev/null
 	@pkill@ mlnet
 	exec [ ${?} -le 1 ]

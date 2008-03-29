@@ -3,8 +3,7 @@
 # DESCRIPTION: sendmail-compatible mail transport agent
 # WWW: http://www.postfix.org/
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset exec start = "@newaliases@"

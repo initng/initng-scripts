@@ -3,8 +3,7 @@
 # DESCRIPTION: Multi-format streaming audio server
 # WWW: http://www.icecast.org/
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset respawn

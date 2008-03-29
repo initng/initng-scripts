@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = service/alsasound virtual/net/lo
 		iset exec daemon = "@/usr/bin/pbbuttonsd@"

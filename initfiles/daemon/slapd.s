@@ -7,8 +7,7 @@
 [ -f /etc/conf.d/slapd ] && . /etc/conf.d/slapd
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset suid = ldap

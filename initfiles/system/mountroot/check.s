@@ -6,8 +6,7 @@
 dm_dir="/dev/mapper"
 dm_file="${dm_dir}/control"
 
-setup()
-{
+setup() {
  	iregister service
 		iset need = system/initial
 		iset use = system/hdparm system/mountroot/evms \
@@ -18,8 +17,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	[ -f /fastboot ] && exit 0
 
 	retval=0

@@ -3,8 +3,7 @@
 # DESCRIPTION: Anonymising proxy server
 # WWW: http://www.privoxy.org
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset respawn

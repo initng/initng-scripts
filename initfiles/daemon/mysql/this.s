@@ -5,8 +5,7 @@
 
 PIDFILE="/var/run/mysqld/mysqld.pid"
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net/lo
 		iset use = daemon/mysql/initdb

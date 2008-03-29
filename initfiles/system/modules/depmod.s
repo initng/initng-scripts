@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountroot
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	# Should not fail if kernel do not have module
 	# support compiled in ...
 	[ -f /proc/modules ] || exit 0

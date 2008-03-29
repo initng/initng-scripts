@@ -8,8 +8,7 @@ FSCK_LOGFILE="/var/log/fsck/checkfs"
 [ -f /etc/default/rcS ] && . /etc/default/rcS
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountroot
 		iset use = system/sraid system/hdparm
@@ -18,8 +17,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 #ifd debian
 	handle_failed_fsck() {
 		echo "File system check failed."

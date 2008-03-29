@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial/mountvirtfs system/mountroot \
 		            system/checkfs
@@ -16,8 +15,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	for mp in /tmp /usr /var /srv /opt; do
 		@mount@ -v "${mp}" 2>/dev/null &
 	done
@@ -25,8 +23,7 @@ start()
 	exit 0
 }
 
-stop()
-{
+stop() {
 	echo "Sending all processes the TERM signal ..."
 	@killalli5:killall5@ -15
 	sleep 3

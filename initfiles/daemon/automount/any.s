@@ -9,8 +9,7 @@ MOUNTPOINT="/mnt/${NAME}"
 PIDFILE="/var/run/autofs.${NAME}.pid"
 CONFFILE="/etc/autofs/auto.${NAME}"
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset use = system/modules/autofs4
 		iset need = system/bootmisc

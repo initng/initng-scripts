@@ -5,8 +5,7 @@
 
 NET_FS="afs,cifs,coda,davfs,gfs,ncpfs,nfs,nfs4,ocfs2,shfs,smbfs"
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountfs/essential \
 			    virtual/net
@@ -17,8 +16,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	@mount@ -a -F -t "${NET_FS}" 2>/dev/null ||
 	@mount@ -a -t "${NET_FS}"
 }

@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountroot \
 		            system/modules/loop
@@ -13,8 +12,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	load_modules() {
 		[ -r "${1}" ] || return 1
 		@grep@ -v "^#" "${1}" | @grep@ -v "^$" | while read MODULE MODARGS; do

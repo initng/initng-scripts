@@ -10,8 +10,7 @@ SPL_MSG="Starting ${NAME} boot sequence"
 
 . /etc/init.d/splashy-functions.sh
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iexec start
@@ -19,15 +18,13 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	[ -x @/sbin/splashy@ ] || exit 0
 	@start-stop-daemon@ --start --quiet --pidfile ${spl_pidfile} --exec @/sbin/splashy@ -- boot 2>/dev/null
 	exec @/sbin/ngc@ -S "splashy,boot"
 }
 
-stop()
-{
+stop() {
 	[ -x @/sbin/splashy@ ] || exit 0
 	@start-stop-daemon@ --start --quiet --pidfile ${spl_pidfile} --exec ${DAEMON} -- boot 2> /dev/null
 	exec @/sbin/ngc@ -S "splashy,shutdown"

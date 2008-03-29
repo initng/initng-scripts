@@ -3,16 +3,14 @@
 # DESCRIPTION: The Linux Userspace Device filesystem
 # WWW: http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev.html
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/udev/udevd system/mountroot/rootrw
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	for file in /dev/.udev/tmp-rules--*; do
 		dest=${file##*tmp-rules--}
 		[ "$dest" = '*' ] && break

@@ -3,8 +3,7 @@
 # DESCRIPTION: IM (AIM/MSN/Jabber/Yahoo IM) to IRC gateway (daemon mode)
 # WWW: http://www.bitlbee.org
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset suid = nobody
 		iset conflict = daemon/bitlbee-bitlbeed

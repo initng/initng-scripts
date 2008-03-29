@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset exec daemon = "@/usr/sbin/dhcpd@ -f"

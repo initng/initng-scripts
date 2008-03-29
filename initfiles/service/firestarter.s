@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountroot virtual/net/lo
 		iset provide = virtual/firewall

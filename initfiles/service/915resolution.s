@@ -9,16 +9,14 @@
 [ -f /etc/default/915resolution ] && . /etc/default/915resolution
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/mountfs/essential
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 #ifd fedora
 	for mode in "${VBMODES[@]}"; do
 		@915resolution@ $mode >/dev/null

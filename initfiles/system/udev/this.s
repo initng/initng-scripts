@@ -3,8 +3,7 @@
 # DESCRIPTION: The Linux Userspace Device filesystem
 # WWW: http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev.html
 
-setup()
-{
+setup() {
 	iregister virtual
 		iset critical
 		iset need = system/udev/filldev system/udev/udevd

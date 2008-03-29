@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/mountfs/essential
 		iset also_start = service/readahead/stopper
@@ -14,8 +13,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 
 	# If /usr or /var is mounted on another filesystem, make sure they will also be checked
 	mountpoint -q /usr &&

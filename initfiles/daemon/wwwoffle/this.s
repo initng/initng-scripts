@@ -6,8 +6,7 @@
 
 CONFIG="/etc/wwwoffle/wwwoffle.conf"
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset stdall = "/var/log/wwwoffle.log"

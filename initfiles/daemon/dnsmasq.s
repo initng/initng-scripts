@@ -3,8 +3,7 @@
 # DESCRIPTION: Forwarding DNS server
 # WWW: http://www.thekelleys.org.uk/dnsmasq/
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/initial virtual/net
 		iset stdall = /dev/null

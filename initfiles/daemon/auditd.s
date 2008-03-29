@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/bootmisc
 		iset exec start = "@/etc/init.d/auditd@ start"

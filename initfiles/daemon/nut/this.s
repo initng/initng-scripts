@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister virtual
 		iset also_stop = daemon/nut/upsdrv daemon/nut/upsd \
 				 daemon/nut/upsmon

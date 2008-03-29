@@ -9,8 +9,7 @@ RCDIR="/etc/rc.d/init.d"
 RCDIR="/etc/init.d"
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc system/mountfs
 		iset exec start = "${RCDIR}/${NAME} start"

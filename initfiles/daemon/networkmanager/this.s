@@ -5,8 +5,7 @@
 
 PID_FILE="/var/run/NetworkManager/NetworkManager.pid"
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc daemon/dbus \
 		            daemon/networkmanager/prepare

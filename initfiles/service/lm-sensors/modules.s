@@ -9,8 +9,7 @@
 [ -f /etc/conf.d/lm_sensors ] && . /etc/conf.d/lm_sensors
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc system/modules/i2c-core
 		iset use = system/modules
@@ -20,8 +19,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	i=0
 	while true; do
 		eval module=\"\${MODULE_${i}}"
@@ -34,8 +32,7 @@ start()
 	done
 }
 
-stop()
-{
+stop() {
 	i=0
 	while true; do
 		eval module=\"\${MODULE_${i}}"

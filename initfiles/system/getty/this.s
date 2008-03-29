@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister virtual
 		iset need = system/getty/2 system/getty/3 system/getty/4 \
 			    system/getty/5 system/getty/6

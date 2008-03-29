@@ -3,8 +3,7 @@
 # DESCRIPTION: Scheduler with functionality similar to cron
 # WWW: ftp://jurix.jura.uni-sb.de/pub/jurix/source/chroot/appl/at/
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset pid_file = "/var/run/atd.pid"

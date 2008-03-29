@@ -3,8 +3,7 @@
 # DESCRIPTION: The "slim" desktop-independent login manager.
 # WWW: http://slim.berlios.de/
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset conflict = daemon/kdm daemon/wdm daemon/xdm \

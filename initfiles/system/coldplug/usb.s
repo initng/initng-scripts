@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/coldplug/pci system/initial
 		iset use = system/modules/depmod system/modules

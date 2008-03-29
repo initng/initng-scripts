@@ -3,8 +3,7 @@
 # DESCRIPTION: Wine Windows emulator
 # WWW: http://www.winehq.com
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
@@ -12,8 +11,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	if [ -ne /proc/sys/fs/binfmt_misc/windows ]; then
 		mount -t binfmt_misc none /proc/sys/fs/binfmt_misc &>/dev/null
 		echo ':windows:M::MZ::/usr/bin/wine:' >/proc/sys/fs/binfmt_misc/register || :
@@ -21,8 +19,7 @@ start()
 	fi
 }
 
-stop()
-{
+stop() {
 	echo "-1" >/proc/sys/fs/binfmt_misc/windows || :
 	echo "-1" >/proc/sys/fs/binfmt_misc/windowsPE || :
 }

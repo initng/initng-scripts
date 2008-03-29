@@ -10,8 +10,7 @@ OPTIONS="-Lsd -a"
 [ -f /etc/snmp/snmpd.options ] && . /etc/snmp/snmpd.options
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset pid_file = "${PIDFILE}"

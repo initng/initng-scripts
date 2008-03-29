@@ -9,8 +9,7 @@
 TIMIDITY_OPTS="-B2,8 -Os"
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = service/alsasound system/bootmisc
 #ifd gentoo
@@ -20,7 +19,6 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	exec @/usr/bin/timidity@ -iA ${TIMIDITY_OPTS}
 }

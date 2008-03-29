@@ -9,8 +9,7 @@
 [ -f /etc/conf.d/exim ] && . /etc/conf.d/exim
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net daemon/exim/updateconf
 		iset conflict = daemon/exim/combined

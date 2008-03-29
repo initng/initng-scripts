@@ -3,8 +3,7 @@
 # DESCRIPTION: File and print server for Windows clients
 # WWW: http://www.samba.org
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset respawn

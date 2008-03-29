@@ -3,8 +3,7 @@
 # DESCRIPTION: Graphical login/display manager
 # WWW: http://xcomputerman.com/pages/entrance.html
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset provide = virtual/dm

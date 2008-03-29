@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister virtual
 		iset need = system/qingy/tty2 system/qingy/tty3 \
 		            system/qingy/tty4 system/qingy/tty5 \

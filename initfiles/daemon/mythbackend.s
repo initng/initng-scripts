@@ -5,8 +5,7 @@
 
 export HOME="/etc/mythtv"
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = virtual/net/lo system/bootmisc
 		iset use = daemon/mysql

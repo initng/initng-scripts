@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 #ifd pingwinek
         if [ ! -f /etc/X11/xorg.conf ]; then
 		driver=`@makexorgconf@ 2>/dev/null`

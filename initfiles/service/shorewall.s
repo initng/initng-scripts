@@ -3,8 +3,7 @@
 # DESCRIPTION: High-level tool for configuring Netfilter.
 # WWW: http://www.shorewall.net/
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc virtual/net
 		iset use = daemon/ulogd

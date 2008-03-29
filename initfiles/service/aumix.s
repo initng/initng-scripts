@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset use = service/alsasound
 		iset need = system/initial system/bootmisc
@@ -14,8 +13,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	if [ -f /etc/aumixrc ]; then
 		@/usr/bin/aumix@ -f /etc/aumixrc -L
 	else

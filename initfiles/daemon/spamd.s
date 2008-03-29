@@ -9,8 +9,7 @@
 OPTIONS="-c"
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset stdall = /dev/null

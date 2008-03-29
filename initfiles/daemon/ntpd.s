@@ -7,8 +7,7 @@
 [ -f /etc/conf.d/ntpd ] && . /etc/conf.d/ntpd
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset use = service/ntpdate

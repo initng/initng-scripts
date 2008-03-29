@@ -12,8 +12,7 @@ DROPBEAR_EXTRA_ARGS=""
 NO_START="0"
 [ -f /etc/default/dropbear ] && . /etc/default/dropbear
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset conflict = daemon/sshd
@@ -25,8 +24,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	[ -z "$DROPBEAR_BANNER" ] ||
 		DROPBEAR_EXTRA_ARGS="$DROPBEAR_EXTRA_ARGS -b $DROPBEAR_BANNER"
 	[ -n "$DROPBEAR_RSAKEY" ] ||

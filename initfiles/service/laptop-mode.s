@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
@@ -12,8 +11,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	# Run it with "force" so that syslog.conf and hdparm settings
 	# are set correctly at system bootup.
 	if [ ! -x @/usr/sbin/laptop_mode:/usr/sbin/laptop-mode@ ]; then
@@ -26,8 +24,7 @@ start()
 	exit 0
 }
 
-stop()
-{
+stop() {
 	[ -e /var/run/laptop-mode-enabled ] || exit 0
 	@rm@ -f /var/run/laptop-mode-enabled
 	@/usr/sbin/laptop_mode:/usr/sbin/laptop-mode@ stop >/dev/null

@@ -15,8 +15,7 @@ NICE="10"
 
 [ -f /etc/conf.d/distccd ] && . /etc/conf.d/distccd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset suid = distcc
@@ -24,8 +23,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 #ifd gentoo
 	exec @/usr/bin/distccd@ --daemon --no-detach -N ${DISTCCD_NICE} \
 				${DISTCCD_OPTS}

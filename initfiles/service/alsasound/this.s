@@ -6,8 +6,7 @@
 asoundcfg="/etc/asound.state"
 alsascrdir="/etc/alsa.d"
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset use = system/coldplug system/modules \
@@ -21,8 +20,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	for DRIVER in `@/sbin/lsmod@ | @awk@ '$1~/^snd.*/{print $1}'`; do
 		TMP=${DRIVER##snd-}
 		TMP=${TMP##snd_}

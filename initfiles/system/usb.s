@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 #ifd fedora
@@ -15,8 +14,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 #ifd fedora
 	# Make sure we insert usbcore if its a module
 	if [ -f /proc/modules ]; then

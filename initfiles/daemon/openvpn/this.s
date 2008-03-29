@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc system/modules/tun
 		iexec start
@@ -12,8 +11,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	if [ ! -d /etc/openvpn ]; then
 		echo "Cant find openvpn conf dir! ..."
 		exit 1
@@ -28,8 +26,7 @@ start()
 	exit 0
 }
 
-stop()
-{
+stop() {
 	cd /etc/openvpn
 	for VPN in *; do
 		[ -e ${VPN}/local.conf ] &&

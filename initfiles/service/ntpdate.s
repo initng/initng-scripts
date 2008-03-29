@@ -14,8 +14,7 @@ NTPSERVERS="pool.ntp.org"
 [ -f /etc/conf.d/ntp ] && . /etc/conf.d/ntp
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountfs/essential virtual/net
 #ifd gentoo

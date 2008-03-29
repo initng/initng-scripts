@@ -7,8 +7,7 @@
 [ -f /etc/conf.d/pure-ftpd ] && . /etc/conf.d/pure-ftpd
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/mysql

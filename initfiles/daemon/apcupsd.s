@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset pid_file = "/var/run/apcupsd.pid"
@@ -13,8 +12,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	rm -f /etc/apcupsd/powerfail /etc/nologin
 	exec @/usr/sbin/apcupsd@ -f /etc/apcupsd/apcupsd.conf
 }

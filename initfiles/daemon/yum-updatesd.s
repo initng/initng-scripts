@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net daemon/dbus
 		iset exec daemon = "@/usr/sbin/yum-updatesd@ -f"

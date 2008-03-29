@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	ireg daemon
 		iset need = system/bootmisc virtual/net
 		iset exec daemon = "@/usr/sbin/krb5kdc@ -n"

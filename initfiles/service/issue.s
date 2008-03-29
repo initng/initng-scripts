@@ -21,16 +21,14 @@ distro="Source Mage GNU/Linux"
 distro="Unknown distro"
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountroot
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	arch=`@uname@ -m`
 	a="a"
 

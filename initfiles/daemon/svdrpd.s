@@ -9,8 +9,7 @@ SERV_HOST="localhost"
 SERV_PORT="2001"
 [ -f /etc/conf.d/svdrpd ] && . /etc/conf.d/svdrpd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/vdr

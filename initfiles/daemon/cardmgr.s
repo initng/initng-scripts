@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc system/pcmcia
 		iset pid_file = "/var/run/cardmgr.pid"

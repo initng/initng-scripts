@@ -11,8 +11,7 @@
 [ -f /etc/conf.d/ifplugd ] && . /etc/conf.d/ifplugd
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = system/modules system/coldplug system/ifrename
@@ -27,8 +26,7 @@ setup()
 }
 
 #ifd debian sourcemage
-daemon()
-{
+daemon() {
 	IF1=`echo ${NAME} | @sed@ "s/-/_/"`
 	A=`eval echo \$\{ARGS_${IF1}\}`
 	[ -z "${A}" ] && A="${ARGS}"

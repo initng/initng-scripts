@@ -7,8 +7,7 @@
 [ -f /etc/console-tools/config ] && . /etc/console-tools/config
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/keymaps \
 		            system/mountfs/essential
@@ -16,8 +15,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	pidof usplash > /dev/null && exit 0
 
 	if [ -d /etc/console-tools/config.d ]; then

@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister virtual
 		iset need = system/bootmisc virtual/net \
 	        	    daemon/exim/updateconf daemon/exim/queuerunner \

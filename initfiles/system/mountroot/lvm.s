@@ -6,8 +6,7 @@
 dm_dir="/dev/mapper"
 dm_file="${dm_dir}/control"
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/modules/lvm \
 			    system/modules/lvm-mod system/mountroot/dmsetup
@@ -15,8 +14,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	@mknod@ --mode=600 /dev/lvm c 109 0
 	if [ ! -f /dev/.devfsd ]; then
 		major=`@grep@ "[0-9] misc$" /proc/devices | @sed@ 's/[ ]\+misc//'`

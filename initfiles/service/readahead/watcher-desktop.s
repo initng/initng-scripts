@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/mountfs/essential
 		iset also_start = service/readahead/stopper
@@ -13,8 +12,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	# Move away the old pid created by service/readahead/watcher
 	mv /var/run/readahead-watch.pid /var/run/readahead-watch-boot.pid
 

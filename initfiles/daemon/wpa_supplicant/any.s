@@ -9,8 +9,7 @@ CONFFILE=/etc/wpa_supplicant/wpa_supplicant.conf
 CONFFILE=/etc/wpa_supplicant.conf
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = system/ifrename system/modules
@@ -21,8 +20,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	. ${INITNG_PLUGIN_DIR}/scripts/net/functions
 
 	eval opts=\"\$\{wpa_supplicant_${ifvar}\} -i${iface} -c/etc/${CONFFILE} -B\"
@@ -45,7 +43,6 @@ daemon()
 	@/sbin/ngc@ --quiet --instant -u net/${iface}
 }
 
-kill()
-{
+kill() {
 	@pkill@ -f "/sbin/wpa_supplicant .* -i${NAME} "
 }

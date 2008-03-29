@@ -9,8 +9,7 @@ STATEFILE="/etc/sysconfig/iptables"
 STATEFILE="/var/lib/iptables/rules-save"
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountfs/essential \
 		            system/hostname virtual/net/lo
@@ -19,8 +18,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	[ -f "${STATEFILE}" ] || exit 0
 	@/sbin/iptables-restore@ -c < "${STATEFILE}"
 }

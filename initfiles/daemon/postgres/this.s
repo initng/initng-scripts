@@ -21,8 +21,7 @@ PGGROUP="postgres"
 PGLOG="${PGDATA}/postgresql.log"
 PGOPTS="-p5432"
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = daemon/postgres/initdb

@@ -3,8 +3,7 @@
 # DESCRIPTION: Subversion server daemon
 # WWW: http://subversion.tigris.org/
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset exec daemon = "@/usr/bin/svnserve@ --daemon --foreground --root"

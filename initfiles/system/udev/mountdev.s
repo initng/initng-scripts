@@ -3,8 +3,7 @@
 # DESCRIPTION: The Linux Userspace Device filesystem
 # WWW: http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev.html
 
-setup()
-{
+setup() {
 	iregister service
 		iset critical
 		iset need = system/initial/mountvirtfs
@@ -12,8 +11,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	error() {
 		echo "${*}" >&2
 		exit 1

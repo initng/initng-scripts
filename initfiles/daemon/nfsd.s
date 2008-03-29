@@ -10,8 +10,7 @@ RPCNFSDCOUNT="8"
 [ -f /etc/sysconfig/nfs ] && . /etc/sysconfig/nfs
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/initial virtual/portmap
 #ifd gentoo
@@ -26,14 +25,12 @@ setup()
 }
 
 #ifd gentoo
-daemon()
-{
+daemon() {
 	@/sbin/rpc.lockd@
 	exec @/usr/sbin/rpc.nfsd@ ${RPCNFSDCOUNT}
 }
 
-kill()
-{
+kill() {
 	@/bin/killall@ -2 nfsd
 }
 #endd

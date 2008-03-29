@@ -7,8 +7,7 @@
 [ -f /etc/default/acpid ] && . /etc/default/acpid
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc daemon/acpid/modules
 		iset use = system/discover system/coldplug

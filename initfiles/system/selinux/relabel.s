@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/mountroot
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	check_selinux() {
 		while read dev mp fs stuff; do
 			[ "$fs" = "selinuxfs" ] && echo "$mp"

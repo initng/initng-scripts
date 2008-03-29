@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iset use = "net/bridge/${NAME}" "net/iwconfig/${NAME}"
@@ -14,14 +13,12 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	eval @ip@ addr add \${config_$NAME} ${NAME}
 	@ip@ link set ${NAME} up
 }
 
-stop()
-{
+stop() {
 	@ip@ link set ${NAME} down
 	eval @ip@ addr del \${config_$NAME} ${NAME}
 }

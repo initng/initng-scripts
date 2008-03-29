@@ -3,8 +3,7 @@
 # DESCRIPTION: Graphical login manager for the K Desktop Environment (KDE)
 # WWW: http://www.kde.org/
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset conflict = daemon/gdm daemon/wdm daemon/xdm \

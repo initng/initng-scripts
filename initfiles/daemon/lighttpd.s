@@ -3,8 +3,7 @@
 # DESCRIPTION: Very high performance web server.
 # WWW: http://www.lighttpd.net/
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset use = system/modules system/coldplug

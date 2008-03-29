@@ -5,8 +5,7 @@
 
 [ -f /etc/conf.d/net ] && . /etc/conf.d/net
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = system/modules system/coldplug
@@ -22,8 +21,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	eval opts=\"\$\{dhcpcd_${NAME}\}\"
 #ifd gentoo
 	# Gentoo dhcpcd supports the -o option which stops the

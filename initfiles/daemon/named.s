@@ -8,8 +8,7 @@ KEY="/etc/bind/rndc.key"
 PIDFILE="/var/run/named/named.pid"
 [ -f /etc/conf.d/named ] && . /etc/conf.d/named
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset suid = named

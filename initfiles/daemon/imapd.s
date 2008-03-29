@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/initial daemon/portmap virtual/net
 		iset exec daemon = "@rpc.idmapd@ -f"

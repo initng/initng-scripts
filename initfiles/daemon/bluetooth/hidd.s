@@ -8,8 +8,7 @@ HIDD_OPTIONS="--server"
 [ -f /etc/conf.d/bluetooth ] && . /etc/conf.d/bluetooth
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc daemon/bluetooth/hcid \
 		            daemon/bluetooth/sdpd

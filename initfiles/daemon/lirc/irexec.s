@@ -6,8 +6,7 @@
 user="nobody"
 [ -f /etc/conf.d/irexec ] && . /etc/conf.d/irexec
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset suid = "${user}"
 		iset need = daemon/lirc/lircd system/bootmisc

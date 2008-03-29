@@ -3,8 +3,7 @@
 # DESCRIPTION: The standard Linux SSH server
 # WWW: http://www.openssh.com/
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset conflict = daemon/dropbear

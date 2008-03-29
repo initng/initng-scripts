@@ -6,15 +6,13 @@
 [ -f /etc/sysconfig/nvidia-config-display ] &&
 	. /etc/sysconfig/nvidia-config-display
 
-setup()
-{
+setup() {
 	iregister service
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	[ -d /etc/udev/devices ] &&
 		cp -a /etc/udev/devices/nvidia* /dev
 }

@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	if [ ! -e /dev/xconsole ]; then
 		mknod -m 640 /dev/xconsole p
 	else

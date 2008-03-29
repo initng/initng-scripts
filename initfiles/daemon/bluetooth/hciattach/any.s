@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc daemon/bluetooth/hcid
 		iset exec start = "@/usr/sbin/hciattach@ ${NAME}"

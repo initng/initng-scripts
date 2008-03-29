@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	if [ -x /usr/bin/make -a -f /etc/mail/Makefile ]; then
 		@make@ all -C /etc/mail -s >/dev/null
 	else

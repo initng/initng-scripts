@@ -3,8 +3,7 @@
 # DESCRIPTION: A fully featured crond implementation
 # WWW: ftp://ftp.isc.org/isc/cron
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset provide = virtual/cron

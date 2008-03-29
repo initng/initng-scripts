@@ -11,8 +11,7 @@ SAVEDFILE="/var/lib/urandom/random-seed"
 SAVEDFILE="/var/run/random-seed"
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
@@ -20,8 +19,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 #ifd debian
 	[ -f /proc/sys/kernel/random/poolsize ] && POOLSIZE="`@cat@ /proc/sys/kernel/random/poolsize`"
 	# Load and then save ${POOLSIZE} bytes,
@@ -50,8 +48,7 @@ start()
 	@dd@ if=/dev/urandom of=${SAVEDFILE} count=1 >/dev/null 2>&1
 }
 
-stop()
-{
+stop() {
 	umask 077
 #ifd debian
 	@dd@ if=/dev/urandom of=${SAVEDFILE} bs=${POOLSIZE} count=1 >/dev/null 2>&1

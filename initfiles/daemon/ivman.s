@@ -3,8 +3,7 @@
 # DESCRIPTION: Automounter
 # WWW: http://ivman.sf.net
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc daemon/dbus daemon/hald
 		iset exec daemon = "@/usr/bin/ivman@ --nofork"

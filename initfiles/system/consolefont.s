@@ -19,8 +19,7 @@ RC_TTY_NUMBER="11"
 [ -f /etc/conf.d/consolefont ] && . /etc/conf.d/consolefont
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc system/keymaps
 #ifd fedora pingwinek
@@ -33,8 +32,7 @@ setup()
 
 #ifd fedora pingwinek
 #elsed
-start()
-{
+start() {
 #ifd debian
 	if [ -d /etc/console-tools/config.d ]; then
 		for i in `@run-parts@ --list /etc/console-tools/config.d`; do

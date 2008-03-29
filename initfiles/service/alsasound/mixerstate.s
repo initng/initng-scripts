@@ -6,8 +6,7 @@
 asoundcfg="/etc/asound.state"
 alsascrdir="/etc/alsa.d"
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc service/alsasound
 		iset exec stop = "@alsactl@ -f ${asoundcfg} store"
@@ -15,8 +14,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	if [ ! -r "${asoundcfg}" ]; then
 		echo "No mixer config in ${asoundcfg}, you have to unmute your card!"
 		# this is not fatal!

@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset stdall = "/dev/null"
 		iset need = system/bootmisc
@@ -34,16 +33,14 @@ setup()
 
 #ifd gentoo arch enlisy
 #elsed
-start()
-{
+start() {
 	# Put up the interface
 	@/sbin/ifup@ ${NAME}
 	# Check so its up
 	@/sbin/ifconfig@ ${NAME} | @grep@ -qF "UP"
 }
 
-stop()
-{
+stop() {
 	# Shut down.
 	@/sbin/ifdown@ ${NAME}
 	exit 0

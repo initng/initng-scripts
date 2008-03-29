@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = "bootmisc"
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	eval essid=\${essid_$NAME}
 	@iwconfig@ essid ${NAME} ${essid}
 	eval @iwconfig@ key ${NAME} \${key_$essid}

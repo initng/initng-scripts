@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		[ "${NAME}" = dm-mod ] || iset use = system/modules/depmod
@@ -14,14 +13,12 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	@/sbin/modprobe@ -q ${NAME}
 	exit 0
 }
 
-stop()
-{
+stop() {
 	@/sbin/modprobe@ -q -r ${NAME}
 	exit 0
 }

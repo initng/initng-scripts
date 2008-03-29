@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset pid_file = "/var/run/mdnsd.pid"
 		iset forks

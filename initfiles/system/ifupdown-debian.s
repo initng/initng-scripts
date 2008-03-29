@@ -7,8 +7,7 @@ RUN_DIR="/etc/network/run"
 IFSTATE="/etc/network/run/ifstate"
 [ -f /etc/default/ifupdown ] && . /etc/default/ifupdown
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
@@ -16,8 +15,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	[ -x "@/sbin/ifup@" -a -x "@/sbin/ifdown@" ] || exit 0
 
 	MYNAME="${0##*/}"
@@ -90,8 +88,7 @@ start()
 	exit 0
 }
 
-stop()
-{
+stop() {
 	echo -n "Cleaning up ifupdown..."
 
 	if [ -f "${IFSTATE}" -a ! -L "${IFSTATE}" ]; then

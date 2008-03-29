@@ -12,8 +12,7 @@
 [ -f /etc/conf.d/clock ] && . /etc/conf.d/clock
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iset use = system/modules
@@ -61,8 +60,7 @@ setupopts() {
 }
 
 
-start()
-{
+start() {
 	[ -x @/sbin/hwclock@ ] || exit 0
 #ifd debian
 	[ "${HWCLOCKACCESS}" = "no" ] && exit 0
@@ -86,8 +84,7 @@ start()
 	exit 0
 }
 
-stop()
-{
+stop() {
 	[ -x @/sbin/hwclock@ ] || exit 0
 #ifd debian
 	[ "${HWCLOCKACCESS}" = "no" ] && exit 0

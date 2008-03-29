@@ -3,8 +3,7 @@
 # DESCRIPTION: Daemon used for user switching stuff
 # WWW: http://consolekit.freedesktop.org
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset pid_file = "/var/run/console-kit-daemon.pid"

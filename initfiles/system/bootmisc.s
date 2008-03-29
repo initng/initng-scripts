@@ -7,8 +7,7 @@
 [ -f /etc/conf.d/bootmisc ] && . /etc/conf.d/bootmisc
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountfs/essential
 		iset use = system/hdparm system/swap system/clock
@@ -16,8 +15,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 #ifd gentoo
 	[ "${DELAYLOGIN}" = "yes" ] &&
 		echo "System bootup in progress - please wait" > /etc/nologin &&

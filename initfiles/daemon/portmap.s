@@ -9,8 +9,7 @@
 [ -f /etc/conf.d/portmap ] && . /etc/conf.d/portmap
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset provide = virtual/portmap

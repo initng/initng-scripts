@@ -2,8 +2,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc daemon/dbus
 		iset use = system/coldplug system/modules/depmod

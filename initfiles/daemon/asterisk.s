@@ -10,8 +10,7 @@ ASTERISK_USER="asterisk"
 [ -f /etc/conf.d/asterisk ] && . /etc/conf.d/asterisk
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net
 		iset use = daemon/postgres daemon/mysql

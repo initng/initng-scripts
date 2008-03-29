@@ -18,16 +18,14 @@ PGGROUP="postgres"
 [ -f /etc/conf.d/postgresql ] && . /etc/conf.d/postgresql
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	[ -f ${PGDATA}/PG_VERSION ] && exit 0
 
 	if [ ! -d ${PGDATA} ]; then

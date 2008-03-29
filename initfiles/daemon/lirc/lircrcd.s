@@ -7,8 +7,7 @@ user="nobody"
 conf="/etc/lircrcd.conf"
 [ -f /etc/conf.d/lircrcd ] && . /etc/conf.d/lircrcd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = daemon/lirc/lircd
 		iset respawn
@@ -18,8 +17,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	[ -n "${socket}" ] && socket="--output=${socket}"
 	[ -n "${permission}" ] && permission="--permission=${permission}"
 	exec @lircrcd@ --output="${socet}" ${permission} "${conf}"

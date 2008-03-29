@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net/lo \
 		            system/modules/blkbk system/modules/blktap \
@@ -16,8 +15,7 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	grep -q "control_d" /proc/xen/capabilities && exit 1
 	exec @/usr/sbin/xend@ start
 }

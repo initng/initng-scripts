@@ -3,8 +3,7 @@
 # DESCRIPTION: Very Secure FTP Daemon
 # WWW: http://vsftpd.beasts.org
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc virtual/net/lo
 		iset use = virtual/net

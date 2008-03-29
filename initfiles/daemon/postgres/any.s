@@ -6,8 +6,7 @@
 #ifd debian
 . /usr/share/postgresql-common/init.d-functions
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset provide = virtual/postgres
@@ -20,13 +19,11 @@ setup()
 	idone
 }
 
-daemon()
-{
+daemon() {
 	start ${NAME}
 }
 
-kill()
-{
+kill() {
 	stop ${NAME}
 }
 #endd

@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon 
 		iset need = system/bootmisc daemon/nut/upsd daemon/nut/upsdrv
 		iset forks

@@ -3,8 +3,7 @@
 # DESCRIPTION: Update client for no-ip.com's dynamic IP service
 # WWW: http://www.no-ip.com
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = virtual/net system/bootmisc
 		iset pid_of = noip2

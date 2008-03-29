@@ -9,16 +9,14 @@ CONFFILE=/etc/conf.d/hdparm
 CONFFILE=/etc/default/hdparm
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	[ -f "${CONFFILE}" ] || exit 0
 	. "${CONFFILE}"
 	for device in /dev/hd?; do

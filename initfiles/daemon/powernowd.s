@@ -8,8 +8,7 @@ OPTIONS="-q -m 2"
 [ -f /etc/default/powernowd ] && . /etc/default/powernowd
 #endd
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset use = service/speedstep
@@ -18,5 +17,5 @@ setup()
 #elsed
 		iset exec daemon = "@/usr/sbin/powernowd@ -q"
 #endd
-	idone[B
+	idone
 }

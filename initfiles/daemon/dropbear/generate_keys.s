@@ -12,16 +12,14 @@ DROPBEAR_EXTRA_ARGS=""
 NO_START="0"
 [ -f /etc/default/dropbear ] && . /etc/default/dropbear
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	[ ! -s ${RSA1_KEY} ] &&
 		${KEYGEN} -q -t rsa1 -f ${RSA1_KEY} -C '' -N '' 2>&1 >/dev/null
 

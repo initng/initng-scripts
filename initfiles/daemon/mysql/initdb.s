@@ -9,16 +9,14 @@ DATA="/srv/mysql"
 DATA="/var/lib/mysql"
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 #ifd enlisy
 	if [ ! -d ${DATA} ]; then
 		@mkdir@ -p ${DATA}

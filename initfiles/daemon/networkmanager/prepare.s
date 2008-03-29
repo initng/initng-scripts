@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	[ -d /var/lib/NetworkManager ] ||
 		@/bin/mkdir@ -p /var/lib/NetworkManager
 	[ -d /var/run/NetworkManager ] ||

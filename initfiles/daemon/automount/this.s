@@ -7,8 +7,7 @@
 PIDFILE="/var/lock/subsys/autofs"
 [ -f /etc/sysconfig/autofs ] && . /etc/sysconfig/autofs
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/modules/autofs4
 		iset need = system/bootmisc

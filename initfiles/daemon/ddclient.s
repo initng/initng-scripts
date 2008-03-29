@@ -5,8 +5,7 @@
 
 PIDFILE="/var/run/ddclient/ddclient.pid"
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset suid = ddclient
 		iset sgid = ddclient

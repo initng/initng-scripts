@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 #ifd unknown_system
 	iregister service
 #elsed
@@ -29,8 +28,7 @@ setup()
 }
 
 #ifd unknown_system
-start()
-{
+start() {
 	# needed to make /dev/input/mice for X
 	if [ -e /sys/class/input/mice/dev ]; then
 		@mkdir@ -p /dev/input

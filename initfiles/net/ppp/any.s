@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc system/modules
 		iset use = system/coldplug daemon/bluetooth/rfcomm

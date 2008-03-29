@@ -3,8 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial system/mountroot
 		iset critical
@@ -12,8 +11,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	# You need a properly configured /etc/raidtab for raidtools usage or a
 	# properly configured /etc/mdadm.conf for mdadm usage. Devices in
 	# /etc/mdadm.conf are initialized first, so any duplicate devices in

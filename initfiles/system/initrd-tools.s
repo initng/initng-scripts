@@ -3,16 +3,14 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/initial
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	. /etc/default/initrd-tools.sh
 	[ "${KEEPINITRD}" = yes ] && exit
 	command -v blockdev >/dev/null 2>&1 || exit 0

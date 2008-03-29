@@ -9,8 +9,7 @@
 [ -f /etc/conf.d/lm_sensors ] && . /etc/conf.d/lm_sensors
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc service/lm-sensors/modules
 		iset use = system/modules
@@ -19,8 +18,7 @@ setup()
 	idone
 }
 
-start()
-{
+start() {
 	# set alarm values on the sensor chip(s)
 	@/usr/bin/sensors@ -s
 	# clear out any alarms that may be present

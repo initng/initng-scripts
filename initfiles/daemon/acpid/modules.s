@@ -8,16 +8,14 @@ MODULES="all"
 [ -f /etc/default/acpid ] && . /etc/default/acpid
 #endd
 
-setup()
-{
+setup() {
 	iregister service
 		iset need = system/bootmisc
 		iexec start
 	idone
 }
 
-start()
-{
+start() {
 	# Check for ACPI support on kernel side
 	[ -d /proc/acpi ] || exit 0
 
