@@ -3,12 +3,9 @@
 # DESCRIPTION:
 # WWW:
 
-setup()
-{
+setup() {
 	iregister daemon
 		iset need = system/bootmisc
-		iset pid_file = "/var/run/nscd/nscd.pid"
-		iset forks
-		iset exec daemon = "@/usr/sbin/nscd@"
+		iset exec daemon = "@/usr/sbin/nscd@ --debug"
 	idone
 }
