@@ -25,7 +25,7 @@ start() {
 	LOC="/lib/modules/`uname -r`/kernel/drivers/acpi"
 	if [ -d ${LOC} ]; then
 		# we doesn't support linux 2.4, so we need to look for .ko
-		MODAVAIL=`@find@ ${LOC} -type f -name "*.ko" -printf "%f\n" | @sed@ 's/\.ko$//'`
+		MODAVAIL=`@find@ ${LOC} -type f -name "*.ko" -or -name "*.ko.gz" -printf "%f\n" | @sed@ 's/\.ko.*$//'`
 	else
 		MODAVAIL=""
 	fi
@@ -34,10 +34,10 @@ start() {
 	[ "${MODULES}" = "all" ] && MODULES="${MODAVAIL}"
 
 	if [ -n "${MODULES}" ]; then
-		for mod in ${MODULES}
-		do
+		for mod in ${MODULES}; do
 			echo ${MODAVAIL} | @grep@ -q -w "${mod}" || continue
-			echo ${LIST} | @grep@ -q -w "${mod}" || @/sbin/modprobe@ -q ${mod} >/dev/null 2>&1
+			echo ${LIST} | @grep@ -q -w "${mod}" ||
+				@/sbin/modprobe@ -q ${mod} >/dev/null 2>&1
 		done
 	fi
 	exit 0
