@@ -41,6 +41,8 @@ start() {
 			[ -f $cfg ] && /sbin/hwup static-${cfg} ${cfg} -o auto > /dev/null 2>&1
 		done
 	fi
+#elsed
+	ln -sf input/mice /dev/mouse
 #endd
 
 	# Copy contents of /etc/udev/devices and /lib/udev/devices
@@ -66,6 +68,7 @@ start() {
 		@/bin/ln@ -snf fd/2 /dev/stderr &
 		@/bin/ln@ -snf /proc/kcore /dev/core &
 		@/bin/ln@ -snf /proc/asound/oss/sndstat /dev/sndstat &
+		wait
 	fi
 
 	# udevtrigger is available since udev 088
