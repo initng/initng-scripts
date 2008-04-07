@@ -5,7 +5,7 @@
 
 setup() {
 	iregister service
-		iset need = system/bootmisc virtual/net
+		iset need = system/bootmisc
 		iset use = daemon/ulogd
 		iset provide = virtual/firewall
 		iset exec start = "@/sbin/shorewall@ -q start"

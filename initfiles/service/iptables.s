@@ -12,7 +12,7 @@ STATEFILE="/var/lib/iptables/rules-save"
 setup() {
 	iregister service
 		iset need = system/initial system/mountfs/essential \
-		            system/hostname virtual/net/lo
+		            system/hostname
 		iset provide = virtual/firewall
 		iexec start
 	idone
