@@ -120,7 +120,7 @@ start() {
 		[ -n "${DUMPKEYS_CHARSET}" ] && dumpkey_opts="-c ${DUMPKEYS_CHARSET}"
 		@/usr/bin/kbd_mode@ -u
 		@dumpkeys@ ${dumpkey_opts} | loadkeys --unicode
-		termencoding='\033%%G'
+		termencoding='\033%G'
 	else
 		termencoding='\033(K'
 	fi
