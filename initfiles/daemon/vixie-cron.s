@@ -7,6 +7,6 @@ setup() {
 	iregister daemon
 		iset need = system/bootmisc
 		iset provide = virtual/cron
-		iset exec daemon = "@/usr/sbin/cron@ -f"
+		iset exec daemon = "@/usr/sbin/cron@ -n"
 	idone
 }
