@@ -77,11 +77,14 @@ start() {
 	# if this directories are not present /dev will not be updated by udev
 	@/bin/mkdir@ -p /dev/.udev/db/ /dev/.udev/queue/
 
-	# send hotplug events
-	@/sbin/udevtrigger@
-
-	# wait for the udevd childs to finish
-	@/sbin/udevsettle@
+	# send hotplug events and wait for the udevd childs to finish
+	if [ `@/sbin/udevd@ --version` -ge 122 ]; then
+		@/sbin/udevadm@ trigger
+		@/sbin/udevadm@ settle
+	else
+		@/sbin/udevtrigger@
+		@/sbin/udevsettle@
+	fi
 
 	chmod 0666 /dev/null
 
