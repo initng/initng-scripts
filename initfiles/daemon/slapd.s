@@ -1,7 +1,7 @@
 # SERVICE: daemon/slapd
-# NAME:
-# DESCRIPTION:
-# WWW:
+# NAME: slapd
+# DESCRIPTION: OpenLDAP stand-alone LDAP daemon
+# WWW: http://www.openldap.org/
 
 #ifd gentoo
 [ -f /etc/conf.d/slapd ] && . /etc/conf.d/slapd
