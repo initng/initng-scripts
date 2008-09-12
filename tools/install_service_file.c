@@ -31,7 +31,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-#include <initng/paths.h>
+#include <initng/initng-paths.h>
 
 #undef D_
 #ifdef DEBUG
