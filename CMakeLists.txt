@@ -1,10 +1,12 @@
+cmake_minimum_required(VERSION 2.2)
+
+if(COMMAND cmake_policy)
+       cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
 PROJECT(initng-scripts C)
 
 SET(VERSION "0.0.1-svn" CACHE STRING "Version number of the project")
-
-IF(CMAKE_BACKWARDS_COMPATIBILITY LESS 2.2)
-	MESSAGE(FATAL_ERROR "Error: Your CMake version is too old. This project requires version 2.2 or newer.")
-ENDIF(CMAKE_BACKWARDS_COMPATIBILITY LESS 2.2)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 INCLUDE(InitngMacros)
@@ -13,12 +15,10 @@ INCLUDE(InitngMacros)
 SET(CMAKE_COLOR_MAKEFILE TRUE)
 
 SET(CMAKE_INSTALL_PREFIX "" CACHE INTERNAL "")
-SET(INCLUDE_INSTALL_DIR /usr/include CACHE STRING "Install location for header files.")
 SET(SBIN_INSTALL_DIR /sbin CACHE STRING "Install location for binaries.")
 SET(LIB_INSTALL_DIR /lib CACHE STRING "Install location for libraries.")
 SET(SYSCONF_INSTALL_DIR /etc CACHE STRING "Install location for configuration files.")
 SET(DATA_INSTALL_DIR /usr/share CACHE STRING "Install location for data files.")
-MARK_AS_ADVANCED(INCLUDE_INSTALL_DIR)
 MARK_AS_ADVANCED(SBIN_INSTALL_DIR)
 MARK_AS_ADVANCED(LIB_INSTALL_DIR)
 MARK_AS_ADVANCED(SYSCONF_INSTALL_DIR)
@@ -31,6 +31,8 @@ OPTION(INSTALL_SCRIPTS_NET "Install network helper scripts" ON)
 OPTION(INSTALL_SCRIPTS_SPLASH "Install splash helper scripts" OFF)
 OPTION(INSTALL_DEBUG "Install debug ifiles" OFF)
 OPTION(INSTALL_RUNLEVELS "Generate and install system.virtual and default.runlevel" OFF)
+
+PKGCONFIG(libinitng INITNG_INCLUDE_DIR INITNG_LINK_DIR INITNG_LINK_FLAGS INITNG_CFLAGS)
 
 IF(INSTALL_FIXES)
 	ADD_SUBDIRECTORY(fixes)
