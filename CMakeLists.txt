@@ -35,7 +35,10 @@ OPTION(INSTALL_SCRIPTS_SPLASH "Install splash helper scripts" OFF)
 OPTION(INSTALL_DEBUG "Install debug ifiles" OFF)
 OPTION(INSTALL_RUNLEVELS "Generate and install system.virtual and default.runlevel" OFF)
 
-pkg_search_module(INITNG REQUIRED libinitng)
+SET(REQUIRED_API 0.1)
+MARK_AS_ADVANCED(REQUIRED_API)
+
+pkg_search_module(INITNG REQUIRED libinitng-${REQUIRED_API})
 
 IF(INSTALL_FIXES)
 	ADD_SUBDIRECTORY(fixes)
