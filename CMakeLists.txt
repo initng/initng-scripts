@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 2.2)
 
 if(COMMAND cmake_policy)
-       cmake_policy(SET CMP0003 NEW)
+	cmake_policy(SET CMP0003 NEW)
+	cmake_policy(SET CMP0002 OLD)
 endif(COMMAND cmake_policy)
+
+INCLUDE(FindPkgConfig)
 
 PROJECT(initng-scripts C)
 
@@ -32,7 +35,7 @@ OPTION(INSTALL_SCRIPTS_SPLASH "Install splash helper scripts" OFF)
 OPTION(INSTALL_DEBUG "Install debug ifiles" OFF)
 OPTION(INSTALL_RUNLEVELS "Generate and install system.virtual and default.runlevel" OFF)
 
-PKGCONFIG(libinitng INITNG_INCLUDE_DIR INITNG_LINK_DIR INITNG_LINK_FLAGS INITNG_CFLAGS)
+pkg_search_module(INITNG REQUIRED libinitng)
 
 IF(INSTALL_FIXES)
 	ADD_SUBDIRECTORY(fixes)
