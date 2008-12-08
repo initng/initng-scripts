@@ -1,7 +1,7 @@
 # SERVICE: daemon/dovecot
-# NAME:
-# DESCRIPTION:
-# WWW:
+# NAME: Dovecot
+# DESCRIPTION: IMAP and POP3 server, written with security primarily in mind.
+# WWW: http://www.dovecot.org/
 
 setup() {
 	iregister daemon
