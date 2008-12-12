@@ -1,7 +1,7 @@
 # SERVICE: daemon/syslog-ng
-# NAME:
-# DESCRIPTION:
-# WWW:
+# NAME: syslog-ng
+# DESCRIPTION: Flexible syslog replacement.
+# WWW: http://www.balabit.com/network-security/syslog-ng/
 
 setup() {
 	iregister daemon
@@ -9,7 +9,9 @@ setup() {
 		iset need = system/bootmisc
 #ifd debian
 		iset need = daemon/syslogd/prepare
-#endd
+		iset exec daemon = "@/usr/sbin/syslog-ng@ --foreground"
+#elsed
 		iset exec daemon = "@/sbin/syslog-ng@ --foreground"
+#endd
 	idone
 }
