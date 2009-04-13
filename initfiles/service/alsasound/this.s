@@ -21,6 +21,8 @@ setup() {
 }
 
 start() {
+	[ -e /proc/modules ] || exit 0
+
 	for DRIVER in `@/sbin/lsmod@ | @awk@ '$1~/^snd.*/{print $1}'`; do
 		TMP=${DRIVER##snd-}
 		TMP=${TMP##snd_}
