@@ -5,7 +5,7 @@
 
 setup() {
 	iregister daemon
-		iset need = system/bootmisc
+		iset need = system/bootmisc virtual/net
 		iset respawn
 		iset daemon_stops_badly
 		iset exec daemon = "@/usr/sbin/privoxy@ --no-daemon --user privoxy.privoxy /etc/privoxy/config"
