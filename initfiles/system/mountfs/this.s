@@ -3,7 +3,7 @@
 # DESCRIPTION:
 # WWW:
 
-LOCAL_FS="reiserfs,reiser4,reiserfs,reiser4,ext2,ext3,xfs,jfs,vfat,ntfs,ntfs-3g,tmpfs,subfs,bind,auto"
+LOCAL_FS="reiserfs,reiser4,reiserfs,reiser4,ext2,ext3,ext4,xfs,jfs,vfat,ntfs,ntfs-3g,tmpfs,subfs,bind,auto"
 
 setup() {
 	iregister service
