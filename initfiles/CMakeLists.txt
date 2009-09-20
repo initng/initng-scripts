@@ -1,4 +1,4 @@
-SUBDIRS(daemon net system service runlevel config)
+SUBDIRS(daemon net system service runlevel)
 
 IF(INSTALL_DEBUG)
 	ADD_SUBDIRECTORY(debug)
