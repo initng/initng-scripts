@@ -16,8 +16,8 @@ setup() {
 		iset provide = "virtual/net/${NAME}"
 		iset provide = virtual/net
 #ifd gentoo
-		iset exec start = "${INITNG_PLUGIN_DIR}/scripts/net/interface ${NAME} start"
-		iset exec stop = "${INITNG_PLUGIN_DIR}/scripts/net/interface ${NAME} stop"
+		iset exec start = "${INITNG_MODULE_DIR}/scripts/net/interface ${NAME} start"
+		iset exec stop = "${INITNG_MODULE_DIR}/scripts/net/interface ${NAME} stop"
 #elsed arch
 		iset exec start = "/sbin/ifconfig ${NAME} up"
 		iset exec stop = "/sbin/ifconfig ${NAME} down"

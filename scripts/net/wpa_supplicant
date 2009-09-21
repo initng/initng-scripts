@@ -3,7 +3,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # Contributed by Roy Marples (uberlord@gentoo.org)
 
-. ${INITNG_PLUGIN_DIR}/scripts/net/functions
+. ${INITNG_MODULE_DIR}/scripts/net/functions
 
 wpa_supplicant() {
 	LC_ALL=C /usr/sbin/wpa_supplicant "$@"

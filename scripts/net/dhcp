@@ -6,7 +6,7 @@
 
 action="$1"
 
-. ${INITNG_PLUGIN_DIR}/scripts/net/functions
+. ${INITNG_MODULE_DIR}/scripts/net/functions
 . "${libdir}/system"
 
 # Bring the interface up

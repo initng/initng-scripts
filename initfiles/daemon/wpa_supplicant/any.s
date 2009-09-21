@@ -21,7 +21,7 @@ setup() {
 }
 
 daemon() {
-	. ${INITNG_PLUGIN_DIR}/scripts/net/functions
+	. ${INITNG_MODULE_DIR}/scripts/net/functions
 
 	eval opts=\"\$\{wpa_supplicant_${ifvar}\} -i${iface} -c/etc/${CONFFILE} -B\"
 	[ -f /sbin/wpa_cli.action ] &&

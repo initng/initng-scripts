@@ -221,7 +221,7 @@ function_wrap() {
 #############################################################################
 
 # Load some Gentoo functions to save re-writing loads of stuff
-[[ -z ${libdir} ]] && libdir="${INITNG_PLUGIN_DIR}/scripts/net"
+[[ -z ${libdir} ]] && libdir="${INITNG_MODULE_DIR}/scripts/net"
 source "${libdir}/gentoo-functions"
 
 RC_VERBOSE="yes"

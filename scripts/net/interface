@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "${INITNG_PLUGIN_DIR}/scripts/net/functions"
+. "${INITNG_MODULE_DIR}/scripts/net/functions"
 
 interface_get_vars() {
 	echo "config_$1 routes_$1 fallback_$1 fallback_route_$1 metric_$1"

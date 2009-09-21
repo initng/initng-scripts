@@ -15,6 +15,6 @@ export nis_domain_${interface}="${nisdomain}"
 export nis_servers_${interface}="${nissrv}"
 
 # This is a hack
-export INITNG_PLUGIN_DIR=/lib/initng
+export INITNG_MODULE_DIR=/lib/initng
 
-${INITNG_PLUGIN_DIR}/scripts/net/dhcp "$@"
+${INITNG_MODULE_DIR}/scripts/net/dhcp "$@"

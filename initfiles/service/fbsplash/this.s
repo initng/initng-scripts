@@ -7,7 +7,7 @@ setup() {
 	iregister service
 		iset need = system/initial
 		iset also_start = service/fbsplash/stop
-		iset exec start = "${INITNG_PLUGIN_DIR}/scripts/splash/fbsplash.sh start"
-		iset exec stop = "${INITNG_PLUGIN_DIR}/scripts/splash/fbsplash.sh shutdown"
+		iset exec start = "${INITNG_MODULE_DIR}/scripts/splash/fbsplash.sh start"
+		iset exec stop = "${INITNG_MODULE_DIR}/scripts/splash/fbsplash.sh shutdown"
 	idone
 }

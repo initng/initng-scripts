@@ -44,6 +44,10 @@
 #define INITNG_ROOT "/etc/initng"
 #endif
 
+#ifndef INITNG_MODULE_DIR
+#define INITNG_MODULE_DIR "/lib/initng"
+#endif
+
 static char **path;
 
 /* for the latter paths, a trailing '/' is required ! */
@@ -63,7 +67,7 @@ struct s_overlay {
 } overlay[1001];
 
 static struct s_overlay const STATIC_OVERLAYS[] = {
-	{"/lib/initng", INITNG_PLUGIN_DIR},
+	{"/lib/initng", INITNG_MODULE_DIR},
 	{"/etc/initng", INITNG_ROOT},
 	{0, 0}
 };

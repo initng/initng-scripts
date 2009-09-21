@@ -35,4 +35,4 @@ export ntp_servers_${interface}="${new_domain_name_servers}"
 export nis_domain_${interface}="${new_nis_domain}"
 export nis_servers_${interface}="${new_nis_servers}"
 
-${INITNG_PLUGIN_DIR}/scripts/net/dhcp ${action}
+${INITNG_MODULE_DIR}/scripts/net/dhcp ${action}

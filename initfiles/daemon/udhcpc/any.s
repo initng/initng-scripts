@@ -20,6 +20,6 @@ daemon() {
 	[ -n "${h}" -a ! "${h}" = "(none)" -a ! "${h}" = "localhost" ] &&
 		echo "${opts}" | @grep@ -w -- '-h' || opts="${opts} --hostname=${h}"
 	exec @udhcpc@ ${opts} --now \
-		--script=${INITNG_PLUGIN_DIR}/scripts/net/udhcpc-wrapper \
+		--script=${INITNG_MODULE_DIR}/scripts/net/udhcpc-wrapper \
 		--foreground --interface=${NAME}
 }
