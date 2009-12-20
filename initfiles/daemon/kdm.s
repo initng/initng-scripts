@@ -9,7 +9,7 @@ setup() {
 		iset conflict = daemon/gdm daemon/wdm daemon/xdm \
 		                daemon/entranced daemon/slim
 		iset use = daemon/xfs system/modules system/coldplug \
-		           service/faketty
+		           service/faketty daemon/hald
 		iset provide = virtual/dm
 		iset exec daemon = "@kdm@ -nodaemon"
 	idone
