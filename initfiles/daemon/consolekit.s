@@ -6,7 +6,6 @@
 setup() {
 	iregister daemon
 		iset need = system/bootmisc
-		iset pid_file = "/var/run/console-kit-daemon.pid"
-		iset exec daemon = "@/usr/sbin/console-kit-daemon@"
+		iset exec daemon = "@/usr/sbin/console-kit-daemon@ --no-daemon"
 	idone
 }
