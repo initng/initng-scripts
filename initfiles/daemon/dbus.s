@@ -5,6 +5,8 @@
 
 #ifd debian pingwinek
 [ -f /etc/default/dbus ] && . /etc/default/dbus
+#elsed
+PIDFILE=/var/run/dbus.pid
 #endd
 
 setup() {
