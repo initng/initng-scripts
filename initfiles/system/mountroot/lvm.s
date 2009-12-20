@@ -15,6 +15,7 @@ setup() {
 }
 
 start() {
+	config='global { locking_dir = "/dev/.lvm" }'
 	@mknod@ --mode=600 /dev/lvm c 109 0
 	if [ ! -f /dev/.devfsd ]; then
 		major=`@grep@ "[0-9] misc$" /proc/devices | @sed@ 's/[ ]\+misc//'`
@@ -22,6 +23,6 @@ start() {
 		[ -d ${dm_dir} ] || @mkdir@ --mode=755 ${dm_dir}
 		[ -c ${dm_file} -o -z "${major}" -o -z "${minor}" ] || @mknod@ --mode=600 ${dm_file} c ${major} ${minor}
 	fi
-	@/sbin/vgscan@ --ignorelockingfailure --mknodes
-	@/sbin/vgchange@ --ignorelockingfailure -a y
+	@/sbin/vgscan@ --config "${config}" --mknodes
+	@/sbin/vgchange@ --config "${config}" -a y
 }
