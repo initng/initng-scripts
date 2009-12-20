@@ -12,6 +12,7 @@ setup() {
 #endd
 		iset respawn
 		iset daemon_stops_badly
+		iset stdall = "/dev/null"
 		iset exec daemon = "@/usr/sbin/metalog@"
 	idone
 }
